@@ -6,7 +6,7 @@ fix_check = function(pkg=".") {
     fixns = utils::menu(c("Yes","No"), title = "Current changes are not committed. Are you sure?")
     if (fixns != 1) {
       message("Cancelled by user.")
-      resturn(invisible(NULL))
+      return(invisible(NULL))
     }
   } 
   

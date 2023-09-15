@@ -1,10 +1,16 @@
 utils::globalVariables(c(
 	".",
+	"changed",
+	"content",
+	"content.old",
+	"function_name",
 	"gitmoddate",
 	"gitpath",
 	"gitversion",
 	"isinstalled",
 	"LibPath",
+	"matches",
+	"name",
 	"needsupdate",
 	"newdiskversion",
 	"ondiskmoddate",
@@ -12,5 +18,6 @@ utils::globalVariables(c(
 	"ondiskversion",
 	"package",
 	"Package",
+	"path",
 	"Version"
 ))

@@ -8,7 +8,7 @@
 delete_backups = function(pkg = ".") {
   
   pkg = devtools::as.package(pkg)
-  backups = fs::dir_ls(pkg$path, glob = "*.old")
+  backups = fs::dir_ls(pkg$path,recurse = TRUE,all = TRUE, glob = "*.old")
   if (length(backups) > 0) {
     message("About to delete the following files:")
     lapply(backups, message)

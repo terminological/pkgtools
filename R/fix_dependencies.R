@@ -29,21 +29,24 @@ fix_dependencies = function(pkg = ".", check = qcheck(quiet=TRUE)) {
     purrr::discard(is.na)
   
   
-  
-  message("fixing imports/suggests issues.")
-  if (length(nsUnneeded) > 0) {
-    lapply(nsUnneeded, desc$del_dep)
-    message("removed unnecessary packages: ",paste0(nsUnneeded, collapse=", "))
+  if (length(nsUnneeded) + length(nsMissing) > 0 ) {
+    message("fixing imports/suggests issues.")
+    if (length(nsUnneeded) > 0) {
+      lapply(nsUnneeded, desc$del_dep)
+      message("removed unnecessary packages: ",paste0(nsUnneeded, collapse=", "))
+    } else {
+      message("no unnecesary packages")
+    }
+    
+    if (length(nsMissing) > 0) {
+      message("added missing packages: ",paste0(nsMissing, collapse=", "))
+      lapply(nsMissing, desc$set_dep, type="Imports")
+    } else {
+      message("no missing packages")
+    }
+    
+    .write_safe(desc, file = desc_path)
   } else {
-    message("no unnecesary packages")
+    message("no imports/suggests issues.")
   }
-  
-  if (length(nsMissing) > 0) {
-    message("added missing packages: ",paste0(nsMissing, collapse=", "))
-    lapply(nsMissing, desc$set_dep, type="Imports")
-  } else {
-    message("no missing packages")
-  }
-  
-  .write_safe(desc, file = desc_path)
 }

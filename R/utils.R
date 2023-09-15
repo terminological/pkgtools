@@ -78,10 +78,10 @@
 
 
 # if no files then change is arbitrarily far in the past.
-.latestchange = function(dir) {
+.latestchange = function(dir, exc = "[.](Rproj|Rhistory|git.*)") {
   max(c(
     as.POSIXct("1900-01-01"),
-    fs::file_info(fs::dir_ls(dir,recurse = TRUE,type = "file"))$modification_time
+    fs::file_info(fs::dir_ls(dir,recurse = TRUE,type = "file",regexp = exc,invert = TRUE))$modification_time
   ))
 }
 

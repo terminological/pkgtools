@@ -65,34 +65,41 @@ unstable = function(path = ".", ..., force = TRUE, upgrade = "never", quiet=TRUE
         v2 = gitversion
       message("installing `",package,"` (v",v2,") from: ",gitpath)
       if (package != pkg$package) {
+        devtools::document(gitpath,quiet = TRUE)
         remotes::install_local(gitpath, force = force, upgrade = upgrade, quiet=TRUE)
         devtools::reload(pkgload::inst(package), quiet=TRUE)
       }
       return(v2)
     }, .progress = "installing development packages")
   ) %>% dplyr::select(
-    package, gitpath, gitmoddate, version = newdiskversion
+    package, gitpath, gitmoddate, version = newdiskversion, old_version = gitversion
   )
   
   # update imports to include new version info.
   descpath = fs::path(pkg$path,"DESCRIPTION")
   desc = desc::desc(file=descpath)
   
-  deps = dplyr::bind_rows(
-    desc$get_deps() %>% dplyr::anti_join(out, by="package"),
-    out %>% dplyr::transmute(type = "Imports", package=package, version = sprintf(">= %s",version))
-  ) %>% dplyr::filter(package != pkg$package)
-  desc$set_deps(deps)
-  desc$write(descpath)
+  vchange = out %>% dplyr::filter(version != old_version)
+  if (nrow(vchange) > 0) {
+    deps = dplyr::bind_rows(
+      desc$get_deps() %>% dplyr::anti_join(vchange, by="package"),
+      vchange %>% dplyr::transmute(type = "Imports", package=package, version = sprintf(">= %s",version))
+    ) %>% dplyr::filter(package != pkg$package)
+    desc$set_deps(deps)
+    desc$write(descpath)
+  }
   
   # install the main package
+  devtools::document(pkg$path)
   remotes::install_local(pkg$path, force = force, upgrade = upgrade, quiet=TRUE)
-  if (pkg$package != "pkgutils") {
-    devtools::reload(pkgload::inst(pkg$package), quiet=TRUE)
-  } else {
+  # if (pkg$package != "pkgutils") {
+  #   devtools::reload(pkgload::inst(pkg$package), quiet=TRUE)
+  # } else {
     # try to prevent documentation db corruption
-    devtools::load_all(pkgload::inst(pkg$package), quiet=TRUE)
-  }
+  # devtools::load_all(pkg$path, quiet=TRUE)
+  # }
+  pkgload::unregister(pkg$package)
+  library(pkg$package, character.only =TRUE)
   
   return(invisible(out))
 }

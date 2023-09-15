@@ -50,13 +50,14 @@ fix_unqualified_fns = function(
     nsqualifier = nsqualifier
   ) %>%
     dplyr::rowwise() %>%
-    dplyr::mutate(function_name = list(ls(envir = asNamespace(package)))) %>%
-    tidyr::unnest(function_name) %>%
+    # dplyr::mutate(function_name = list(ls(envir = asNamespace(package)))) %>%
+    dplyr::mutate(function_name = list(as.character(utils::ls.str(envir = asNamespace(as.character(package)),mode = "function")))) %>%
+    tidyr::unnest(function_name) # %>%
     # dplyr::mutate( f = purrr::map2(function_name, package, function(f,p) {
     #   tryCatch(utils::getFromNamespace(f,p), error = function(e) {function(){}})
     # })) %>%
     # dplyr::mutate( generic = .isGeneric(f)) %>%
-    dplyr::select(-f)
+    # dplyr::select(-f)
   
   # functions from base or this package
   # these don;t need to be qualified
@@ -73,7 +74,7 @@ fix_unqualified_fns = function(
     dplyr::filter(dplyr::row_number()==1) %>%
     dplyr::ungroup() %>%
     # this restricts functions to be matched by excluding base or current package
-    dplyr::filter(package %in% c(pkg$package, "base")) %>%
+    dplyr::filter(!package %in% c(pkg$package, "base")) %>%
     ## dplyr::filter(!function_name %in% theseFunctions) %>%
     # there are a few functions (like the magittr pipe) that need different
     # treatment outside of the scope of this library
@@ -156,7 +157,7 @@ fix_unqualified_fns = function(
   }
   
   
-  nsMissing = tmp %>% dplyr::filter(!(pkg %in% imports)) %>% dplyr::pull(pkg) %>% unique()
+  nsMissing = files %>% dplyr::filter(!(pkg %in% imports)) %>% dplyr::pull(pkg) %>% unique()
   
   if(length(nsMissing) > 0) {
     if (!.punkmode()) {
@@ -179,5 +180,4 @@ fix_unqualified_fns = function(
   if (!.punkmode()) message("Done. You may want to run some tests before deleting the backup files.")
   return(files)
 }
-
 

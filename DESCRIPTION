@@ -1,6 +1,6 @@
 Package: pkgtools
 Title: Code generation and linting functions for R packages
-Version: 0.0.0.9014
+Version: 0.0.0.9024
 Authors@R: person(
   given = "Robert",
   family = "Challen",
@@ -18,14 +18,16 @@ Imports:
     desc,
     devtools,
     dplyr,
+    forcats,
     fs,
+    gert,
     here,
     magrittr,
     pkgload,
     purrr,
     readr,
+    remotes,
     stringi,
     stringr,
     tibble,
-    tidyr,
-    yaml
+    tidyr
