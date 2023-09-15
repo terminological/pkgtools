@@ -169,7 +169,7 @@ fix_unqualified_fns = function(
     
     if (fixns==1) {
       x = apply(nsMissing, desc$set_dep, type="Imports")
-      .write_safe(desc, file = description_file)
+      .write_safe(desc, file = description_file, dry_run=dry_run)
     }
   }
   
