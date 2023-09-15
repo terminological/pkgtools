@@ -13,6 +13,7 @@ utils::globalVariables(c(
 	"name",
 	"needsupdate",
 	"newdiskversion",
+	"old_version",
 	"ondiskmoddate",
 	"ondiskpath",
 	"ondiskversion",
