@@ -1,0 +1,16 @@
+utils::globalVariables(c(
+	".",
+	"gitmoddate",
+	"gitpath",
+	"gitversion",
+	"isinstalled",
+	"LibPath",
+	"needsupdate",
+	"newdiskversion",
+	"ondiskmoddate",
+	"ondiskpath",
+	"ondiskversion",
+	"package",
+	"Package",
+	"Version"
+))
