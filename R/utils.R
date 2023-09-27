@@ -13,12 +13,8 @@
 
 # move a file ensuring a backup exists
 .move_safe = function(file, new_file = paste0(file,".old")) {
-  if (!fs::file_exists(new_file)) {
-    suppressMessages(fs::file_move(file, new_file))
-  } else {
-    .move_safe(file = new_file)
-    suppressMessages(fs::file_move(file, new_file))
-  }
+  if (fs::file_exists(new_file)) .move_safe(file = new_file)
+  suppressMessages(fs::file_move(file, new_file))
   return(new_file)
 }
 
@@ -61,20 +57,7 @@
     stringr::str_replace_all("@UTF([0-9A-F]{4})UTF@", "\\\\u\\1") 
 }
 
-# this makes no checks and accepts no responsibility
-.bump_dev_version = function(pkg = ".") {
-  pkg = devtools::as.package(pkg)
-  file = fs::path(pkg$path,"DESCRIPTION")
-  desc = desc::desc(file)
-  v = as.character(desc$get_version())
-  dev = stringr::str_extract(v,"[0-9]+\\.[0-9]+\\.[0-9]+\\.([0-9]+)",group = 1)
-  if (is.na(dev)) dev="8999"
-  dev = as.character(as.integer(dev)+1)
-  v2 = sprintf("%s.%s",stringr::str_extract(v, "[0-9]+\\.[0-9]+\\.[0-9]+"), dev)
-  desc$set_version(v2)
-  desc$write(file)
-  return(v2)
-}
+
 
 
 # if no files then change is arbitrarily far in the past.

@@ -11,7 +11,7 @@ fix_check = function(pkg=".") {
   } 
   
   fix_unqualified_fns(pkg,dry_run = FALSE)
-  check = qcheck(quiet=TRUE)
+  check = qcheck(pkg=pkg, quiet=TRUE)
   fix_non_standard_files(pkg, check)
   fix_global_variables(pkg, check)
   fix_utf8_encoding(pkg,check)

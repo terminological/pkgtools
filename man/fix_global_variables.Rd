@@ -4,7 +4,7 @@
 \alias{fix_global_variables}
 \title{Adds non standard and hidden files to the .\code{Rbuildignore} file}
 \usage{
-fix_global_variables(pkg = ".", check = qcheck(quiet = TRUE))
+fix_global_variables(pkg = ".", check)
 }
 \arguments{
 \item{pkg}{the package location}

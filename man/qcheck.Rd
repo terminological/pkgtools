@@ -4,14 +4,14 @@
 \alias{qcheck}
 \title{Check the package structure without running any code}
 \usage{
-qcheck(..., quiet = FALSE)
+qcheck(pkg = ".", ..., args = "", quiet = FALSE)
 }
 \arguments{
+\item{pkg}{the path of the package to check}
+
 \item{...}{
   Arguments passed on to \code{\link[devtools:check]{devtools::check}}
   \describe{
-    \item{\code{pkg}}{The package to use, can be a file path to the package or a
-package object.  See \code{\link[devtools:as.package]{as.package()}} for more information.}
     \item{\code{document}}{By default (\code{NULL}) will document if your installed
 roxygen2 version matches the version declared in the \code{DESCRIPTION}
 file. Use \code{TRUE} or \code{FALSE} to override the default.}
@@ -31,13 +31,6 @@ default), check will proceed even if all suggested packages aren't found.}
 \verb{\\donttest{}} are also run. When \code{cran = TRUE}, this only affects R 3.6 and
 earlier; in R 4.0, code in \verb{\\donttest{}} is always run as part of CRAN
 submission.}
-    \item{\code{args}}{Character vector of arguments to pass to \verb{R CMD check}. Pass each
-argument as a single element of this character vector (do not use spaces to
-delimit arguments like you would in the shell). For example, to skip
-running of examples and tests, use \code{args = c("--no-examples", "--no-tests")} and not \code{args = "--no-examples --no-tests"}. (Note that
-instead of the \code{--output} option you should use the \code{check_dir} argument,
-because  \code{--output} cannot deal with spaces and other special characters on
-Windows.)}
     \item{\code{env_vars}}{Environment variables set during \verb{R CMD check}}
     \item{\code{check_dir}}{Path to a directory where the check is performed.
 If this is not \code{NULL}, then the a temporary directory is used, that
@@ -54,6 +47,8 @@ errors as well. If \code{"note"}, then any check failure generated an
 error. Its default can be modified with the \code{RCMDCHECK_ERROR_ON}
 environment variable. If that is not set, then \code{"never"} is used.}
   }}
+
+\item{args}{additional r cmd check args}
 
 \item{quiet}{do it without producing messages}
 }

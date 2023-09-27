@@ -2,5 +2,4 @@
 ^\.Rproj\.user$
 ^\.github$
 ^LICENSE\.md$
-^DESCRIPTION\.old$
-^DESCRIPTION\.old\.old$
+^docs$

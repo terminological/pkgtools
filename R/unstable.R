@@ -9,7 +9,8 @@
 #' This function scans the current package and first order dependencies, looking
 #' for local development directories for any packages imported. Looks for
 #' changes in files in local development directories of package and first order
-#' dependencies versus files currently installed in r library.
+#' dependencies versus files currently installed in r library. After installation
+#' it restarts R.
 #' 
 #' Any recent file change in development directories triggers a dev version bump
 #' and local package installation. After a call to `unstable()` any dependencies
@@ -19,11 +20,18 @@
 #'   have all your other packages code in a sibling directory
 #' @inheritParams remotes::install_local
 #' @inheritDotParams remotes::install_local
+#' @param load_lib load the package using a library command
 #'
 #' @return nothing
 #' @export
-unstable = function(path = ".", ..., force = TRUE, upgrade = "never", quiet=TRUE) {
+unstable = function(path = ".", ..., force = TRUE, upgrade = "never", quiet=TRUE, load_lib=TRUE) {
   
+  #TODO: 1) vectorise
+  #TODO: 2) on.exit code to restart / sys.on.exit
+  #TODO: 3) check running context to make sure it is in globalenv before restarting.
+  
+  renv_mode =  (path != "." && fs::file_exists(fs::path(getwd(),"renv.lock")))
+  if (renv_mode) stop("renv setup detected. ")
   pkg = devtools::as.package(path)
   
   git_directory = fs::path_expand_r(getOption("pkgtools.git", fs::path_dir(pkg$path)))
@@ -60,13 +68,17 @@ unstable = function(path = ".", ..., force = TRUE, upgrade = "never", quiet=TRUE
   out = toload %>% dplyr::mutate(
     newdiskversion = purrr::pmap_chr(., function(package, gitpath, gitversion, needsbump, ...) {
       if (needsbump)
-        v2 = .bump_dev_version(gitpath)
+        v2 = bump_dev_version(gitpath)
       else 
         v2 = gitversion
       message("installing `",package,"` (v",v2,") from: ",gitpath)
       if (package != pkg$package) {
         devtools::document(gitpath,quiet = TRUE)
+        # if (renv_mode) {
+        #   renv::install(gitpath, rebuild = TRUE)
+        # } else {
         remotes::install_local(gitpath, force = force, upgrade = upgrade, quiet=TRUE)
+        # }
         devtools::reload(pkgload::inst(package), quiet=TRUE)
       }
       return(v2)
@@ -91,7 +103,11 @@ unstable = function(path = ".", ..., force = TRUE, upgrade = "never", quiet=TRUE
   
   # install the main package
   devtools::document(pkg$path)
-  remotes::install_local(pkg$path, force = force, upgrade = upgrade, quiet=TRUE)
+  # if (renv_mode) {
+  #   renv::install(pkg$path, rebuild = TRUE)
+  # } else {
+    remotes::install_local(pkg$path, force = force, upgrade = upgrade, quiet=TRUE)
+  # }
   # if (pkg$package != "pkgutils") {
   #   devtools::reload(pkgload::inst(pkg$package), quiet=TRUE)
   # } else {
@@ -99,8 +115,17 @@ unstable = function(path = ".", ..., force = TRUE, upgrade = "never", quiet=TRUE
   # devtools::load_all(pkg$path, quiet=TRUE)
   # }
   pkgload::unregister(pkg$package)
-  library(pkg$package, character.only =TRUE)
-  
+  # restart R before loading
+  # TODO: check https://henrikbengtsson.github.io/startup/reference/restart.html
+  if (interactive()) {
+    if (load_lib) {
+      try(
+        rstudioapi::restartSession(command = sprintf("library(\"%s\", character.only =TRUE)",pkg$package)
+      ),silent = TRUE)
+    } else {
+      try(rstudioapi::restartSession(),silent = TRUE)
+    }
+  }
   return(invisible(out))
 }
 

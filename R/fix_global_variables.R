@@ -6,8 +6,9 @@
 #'
 #' @return nothing
 #' @export
-fix_global_variables = function(pkg = ".", check = qcheck(quiet=TRUE)) {
+fix_global_variables = function(pkg = ".", check) {
   pkg = devtools::as.package(pkg)
+  if (rlang::is_missing(check)) check = qcheck(pkg=pkg$path, quiet=TRUE)
   
   globals_path = fs::path(pkg$path, "R/globals.R")
   
@@ -20,14 +21,18 @@ fix_global_variables = function(pkg = ".", check = qcheck(quiet=TRUE)) {
     purrr::discard(is.na)
   
   gl = tryCatch(readr::read_file(globals_path), error = function(e) "utils::globalVariables(c())\n")
-  exist = gl %>% stringr::str_extract("globalVariables\\((c\\([\\s\\S]*?\\))\\)",1)
+  exist = gl %>% stringr::str_extract("globalVariables\\([\\s\\n\\r]*(c\\([\\s\\S]*?\\))[\\s\\n\\r]*\\)",1)
   cur_glob = eval(parse(text= exist))
   
   new_glob = sort(unique(c(cur_glob,check_glob)))
   form_glob = sprintf("globalVariables(c(\n\t%s\n))",paste0('"',new_glob,'"',collapse = ",\n\t"))
   
-  gl2 = gl %>% stringr::str_replace("globalVariables\\(c\\([\\s\\S]*?\\)\\)", form_glob)
+  gl2 = gl %>% stringr::str_replace("globalVariables\\([\\s\\n\\r]*c\\([\\s\\S]*?\\)[\\s\\n\\r]*\\)", form_glob)
   
-  .write_safe(gl2, globals_path)
+  if (!identical(gl,gl2)) {
+    .write_safe(gl2, globals_path)
+  } else {
+    message("complete. No missing global variables to fix.")
+  }
   invisible(NULL)
 }

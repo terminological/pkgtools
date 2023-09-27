@@ -4,7 +4,7 @@
 \alias{fix_utf8_encoding}
 \title{Fixes dependencies in the namespace file using the output of R CMD check.}
 \usage{
-fix_utf8_encoding(pkg = ".", check = qcheck(quiet = TRUE), dry_run = FALSE)
+fix_utf8_encoding(pkg = ".", check, dry_run = FALSE)
 }
 \arguments{
 \item{pkg}{the package to scan}

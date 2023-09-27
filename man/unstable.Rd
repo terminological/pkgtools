@@ -4,7 +4,14 @@
 \alias{unstable}
 \title{Reload a set of packages that are on the local machine}
 \usage{
-unstable(path = ".", ..., force = TRUE, upgrade = "never", quiet = TRUE)
+unstable(
+  path = ".",
+  ...,
+  force = TRUE,
+  upgrade = "never",
+  quiet = TRUE,
+  load_lib = TRUE
+)
 }
 \arguments{
 \item{path}{the package local development repository path. This assumes you
@@ -50,6 +57,8 @@ to "always". \code{TRUE} and \code{FALSE} are also accepted and correspond to
 "always" and "never" respectively.}
 
 \item{quiet}{If \code{TRUE}, suppress output.}
+
+\item{load_lib}{load the package using a library command}
 }
 \value{
 nothing
@@ -64,7 +73,8 @@ packages in parallel.
 This function scans the current package and first order dependencies, looking
 for local development directories for any packages imported. Looks for
 changes in files in local development directories of package and first order
-dependencies versus files currently installed in r library.
+dependencies versus files currently installed in r library. After installation
+it restarts R.
 
 Any recent file change in development directories triggers a dev version bump
 and local package installation. After a call to \code{unstable()} any dependencies

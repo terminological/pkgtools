@@ -6,9 +6,10 @@
 #'
 #' @return a list of the 
 #' @export
-fix_utf8_encoding = function(pkg = ".", check = qcheck(quiet=TRUE), dry_run = FALSE) {
+fix_utf8_encoding = function(pkg = ".", check, dry_run = FALSE) {
   
   pkg = devtools::as.package(pkg)
+  if (rlang::is_missing(check)) check = qcheck(pkg=pkg$path, quiet=TRUE)
   
   noteswarns = paste0(c(check$warnings,check$notes),collapse = "\n")
   

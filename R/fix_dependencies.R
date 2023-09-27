@@ -5,8 +5,9 @@
 #'
 #' @return a list of the 
 #' @export
-fix_dependencies = function(pkg = ".", check = qcheck(quiet=TRUE)) {
+fix_dependencies = function(pkg = ".", check) {
   pkg = devtools::as.package(pkg)
+  if (rlang::is_missing(check)) check = qcheck(pkg=pkg$path, quiet=TRUE)
   
   desc_path = fs::path(pkg$path, "DESCRIPTION")
   desc = desc::desc(file = desc_path)

@@ -1,6 +1,6 @@
 Package: pkgtools
 Title: Code generation and linting functions for R packages
-Version: 0.0.0.9025
+Version: 0.0.0.9035
 Authors@R: person(
   given = "Robert",
   family = "Challen",
@@ -30,4 +30,7 @@ Imports:
     stringi,
     stringr,
     tibble,
-    tidyr
+    tidyr,
+    rlang
+Suggests:
+    rstudioapi

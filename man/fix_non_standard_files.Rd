@@ -4,7 +4,7 @@
 \alias{fix_non_standard_files}
 \title{Adds non standard and hidden files to the .\code{Rbuildignore} file}
 \usage{
-fix_non_standard_files(pkg = ".", check = qcheck(quiet = TRUE))
+fix_non_standard_files(pkg = ".", check)
 }
 \arguments{
 \item{pkg}{the package location}

@@ -4,7 +4,7 @@
 \alias{fix_dependencies}
 \title{Fixes dependencies in the namespace file using the output of R CMD check.}
 \usage{
-fix_dependencies(pkg = ".", check = qcheck(quiet = TRUE))
+fix_dependencies(pkg = ".", check)
 }
 \arguments{
 \item{pkg}{the package to scan}

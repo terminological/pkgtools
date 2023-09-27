@@ -6,8 +6,9 @@
 #'
 #' @return nothing
 #' @export
-fix_non_standard_files = function(pkg = ".", check = qcheck(quiet=TRUE)) {
+fix_non_standard_files = function(pkg = ".", check) {
   pkg = devtools::as.package(pkg)
+  if (rlang::is_missing(check)) check = qcheck(pkg=pkg$path, quiet=TRUE)
   
   buildignore_path = fs::path(pkg$path, ".Rbuildignore")
   
@@ -28,11 +29,15 @@ fix_non_standard_files = function(pkg = ".", check = qcheck(quiet=TRUE)) {
     purrr::discard(is.na)
   
   bi = tryCatch(readr::read_lines(buildignore_path), error = function(e) character())
-  bi = unique(c(bi,
+  bi2 = unique(c(bi,
     sprintf("^%s$",.escape(hiddenFiles)),
     sprintf("^%s$",.escape(nsFiles))
   ))
   
-  .write_safe(bi, buildignore_path)
+  if (!identical(bi2, bi)) {
+    .write_safe(bi2, buildignore_path)
+  } else {
+    message("Complete: no non standard files to fix.")
+  }
   invisible(NULL)
 }

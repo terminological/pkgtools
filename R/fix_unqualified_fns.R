@@ -100,10 +100,11 @@ fix_unqualified_fns = function(
       functionNames = paste0(lapply(functions, .escape),collapse = "|")
       # match a function as the start of line or a non alphanumeric, underscore or dot
       # spaces are allowed between function name and bracket (who knew)
+      # but this creates a lot of false positives.
       # functionNames = test
       # stringr::str_detect(c("test(sdf)","test(sdf)","+test(sdf)","+test (sdf)"), functionRegex)
       # stringr::str_detect(c("no_test(sdf)","another_test(sdf)","old.test(sdf)"), functionRegex)
-      functionRegex = paste0("(^|[^:a-zA-Z0-9\\._])(",functionNames,")\\s*\\(")
+      functionRegex = paste0("(^|[^:a-zA-Z0-9\\._])(",functionNames,")\\(")
       replacement = paste0("\\1",packge,"::\\2(")
       # c = files$content.old[[1]]
       for (i in 1:nrow(files)) {
@@ -156,8 +157,8 @@ fix_unqualified_fns = function(
     
   }
   
-  
-  nsMissing = files %>% dplyr::filter(!(pkg %in% imports)) %>% dplyr::pull(pkg) %>% unique()
+  suggests = pkgload::parse_deps(pkg$suggests)$name
+  nsMissing = files %>% tidyr::unnest(matches) %>% dplyr::filter(!(pkg %in% c(imports,suggests))) %>% dplyr::pull(pkg) %>% unique()
   
   if(length(nsMissing) > 0) {
     if (!.punkmode()) {
