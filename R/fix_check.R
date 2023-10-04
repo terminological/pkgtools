@@ -10,7 +10,7 @@ fix_check = function(pkg=".") {
     }
   } 
   
-  fix_unqualified_fns(pkg,dry_run = FALSE)
+  fix_unqualified_fns_bulk(pkg,dry_run = FALSE)
   check = qcheck(pkg=pkg, quiet=TRUE)
   fix_non_standard_files(pkg, check)
   fix_global_variables(pkg, check)

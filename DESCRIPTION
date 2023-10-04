@@ -1,6 +1,6 @@
 Package: pkgtools
 Title: Code generation and linting functions for R packages
-Version: 0.0.0.9035
+Version: 0.0.0.9039
 Authors@R: person(
   given = "Robert",
   family = "Challen",
@@ -33,4 +33,5 @@ Imports:
     tidyr,
     rlang
 Suggests:
-    rstudioapi
+    rstudioapi,
+    diffobj

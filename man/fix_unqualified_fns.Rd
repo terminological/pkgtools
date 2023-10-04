@@ -2,35 +2,14 @@
 % Please edit documentation in R/fix_unqualified_fns.R
 \name{fix_unqualified_fns}
 \alias{fix_unqualified_fns}
-\title{Fix errors introduced in package creation by forgetting to qualify
-namespaces.}
+\title{Fix unqualified functions in active source pane}
 \usage{
-fix_unqualified_fns(
-  pkg = ".",
-  rDirectories = c(here::here("R"), here::here("tests/testthat")),
-  dry_run = FALSE,
-  prioritise = c("dplyr", "rlang", "stringr", "forcats", "ggplot2", "purrr", "tidyr",
-    "readr")
-)
-}
-\arguments{
-\item{pkg}{the package}
-
-\item{rDirectories}{the locations of the R code to fix (by default R scripts,
-and tests, but not vignettes)}
-
-\item{dry_run}{by default this function will not actually do anything unless
-this is set to FALSE. However the dry run output can be manually compared
-with a diff tool to interactively accept changes.}
-
-\item{prioritise}{a list of package names to pick from first}
+fix_unqualified_fns()
 }
 \value{
-nothing. called for side effects.
+nothing - called for side effects
 }
 \description{
-This is a code linting function and expected to be called at the console
-during package development. It will scan the files in the current project and
-replace unqualified references to e.g. \code{mutate} with ones to \code{dplyr::mutate}
-etc.
+Interactively find and replace unqualified, e.g. \code{mutate(...)} calls with
+fully qualified \code{dplyr::mutate(...)} calls.
 }
