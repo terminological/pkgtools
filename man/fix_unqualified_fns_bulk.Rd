@@ -10,7 +10,7 @@ fix_unqualified_fns_bulk(
   rDirectories = c(here::here("R"), here::here("tests/testthat")),
   dry_run = FALSE,
   prioritise = c("dplyr", "rlang", "stringr", "forcats", "ggplot2", "purrr", "tidyr",
-    "readr")
+    "readr", "stats", "utils")
 )
 }
 \arguments{

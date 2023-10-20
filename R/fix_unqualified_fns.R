@@ -50,7 +50,7 @@ fix_unqualified_fns_bulk = function(
     pkg = ".", 
     rDirectories = c(here::here("R"), here::here("tests/testthat")), 
     dry_run = FALSE, 
-    prioritise = c("dplyr","rlang","stringr","forcats","ggplot2","purrr","tidyr","readr")
+    prioritise = c("dplyr","rlang","stringr","forcats","ggplot2","purrr","tidyr","readr","stats","utils")
   ) {
   
   pkg = devtools::as.package(pkg)
