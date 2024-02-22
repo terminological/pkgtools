@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pkgtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.9024</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.1</span>
       </span>
     </div>
 
@@ -48,6 +48,10 @@
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
+          <p><code><a href="bump_dev_version.html">bump_dev_version()</a></code> </p>
+        </td>
+        <td><p>Update the version of a package, incrementing dev versions.</p></td>
+      </tr><tr><td>
           <p><code><a href="delete_backups.html">delete_backups()</a></code> </p>
         </td>
         <td><p>Delete backup files from the current project</p></td>
@@ -58,7 +62,7 @@
       </tr><tr><td>
           <p><code><a href="fix_global_variables.html">fix_global_variables()</a></code> </p>
         </td>
-        <td><p>Adds non standard and hidden files to the .<code>Rbuildignore</code> file</p></td>
+        <td><p>Adds global variables identified at <code>R CMD check`` to a </code>globals.R` file</p></td>
       </tr><tr><td>
           <p><code><a href="fix_non_standard_files.html">fix_non_standard_files()</a></code> </p>
         </td>
@@ -66,20 +70,40 @@
       </tr><tr><td>
           <p><code><a href="fix_unqualified_fns.html">fix_unqualified_fns()</a></code> </p>
         </td>
+        <td><p>Fix unqualified functions in active source pane</p></td>
+      </tr><tr><td>
+          <p><code><a href="fix_unqualified_fns_bulk.html">fix_unqualified_fns_bulk()</a></code> </p>
+        </td>
         <td><p>Fix errors introduced in package creation by forgetting to qualify
 namespaces.</p></td>
       </tr><tr><td>
           <p><code><a href="fix_utf8_encoding.html">fix_utf8_encoding()</a></code> </p>
         </td>
-        <td><p>Fixes dependencies in the namespace file using the output of R CMD check.</p></td>
+        <td><p>Fixes utf8 encoded characters in source files replaincg them with <code>\uXXXX</code></p></td>
+      </tr><tr><td>
+          <p><code><a href="install_local.html">install_local()</a></code> </p>
+        </td>
+        <td><p>Install package locally using <code>renv</code> if available.</p></td>
       </tr><tr><td>
           <p><code><a href="qcheck.html">qcheck()</a></code> </p>
         </td>
         <td><p>Check the package structure without running any code</p></td>
       </tr><tr><td>
+          <p><code><a href="set_renv_repos.html">set_renv_repos()</a></code> </p>
+        </td>
+        <td><p>Adds new repositories to the beginning of an <code>renv</code> lockfile</p></td>
+      </tr><tr><td>
           <p><code><a href="unstable.html">unstable()</a></code> </p>
         </td>
-        <td><p>Reload a set of packages that are on the local machine</p></td>
+        <td><p>Reload a set of packages that are in development on the local machine</p></td>
+      </tr><tr><td>
+          <p><code><a href="use_standalone.html">use_standalone()</a></code> </p>
+        </td>
+        <td><p>Extended version of <code>use_standalone</code> that works with <code>renv</code> projects</p></td>
+      </tr><tr><td>
+          <p><code><a href="what_has_changed.html">what_has_changed()</a></code> </p>
+        </td>
+        <td><p>Compare content of editor with last saved version</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

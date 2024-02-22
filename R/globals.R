@@ -20,5 +20,9 @@ utils::globalVariables(c(
 	"package",
 	"Package",
 	"path",
-	"Version"
+	"Version",
+	"imports",
+	"pkg",
+	"cmp",
+	"ver"
 ))

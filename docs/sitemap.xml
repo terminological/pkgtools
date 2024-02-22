@@ -16,6 +16,9 @@
     <loc>/index.html</loc>
   </url>
   <url>
+    <loc>/reference/bump_dev_version.html</loc>
+  </url>
+  <url>
     <loc>/reference/delete_backups.html</loc>
   </url>
   <url>
@@ -31,10 +34,16 @@
     <loc>/reference/fix_unqualified_fns.html</loc>
   </url>
   <url>
+    <loc>/reference/fix_unqualified_fns_bulk.html</loc>
+  </url>
+  <url>
     <loc>/reference/fix_utf8_encoding.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/install_local.html</loc>
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
@@ -43,6 +52,15 @@
     <loc>/reference/qcheck.html</loc>
   </url>
   <url>
+    <loc>/reference/set_renv_repos.html</loc>
+  </url>
+  <url>
     <loc>/reference/unstable.html</loc>
+  </url>
+  <url>
+    <loc>/reference/use_standalone.html</loc>
+  </url>
+  <url>
+    <loc>/reference/what_has_changed.html</loc>
   </url>
 </urlset>

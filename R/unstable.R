@@ -1,23 +1,39 @@
 
-#' Reload a set of packages that are on the local machine
+#' Reload a set of packages that are in development on the local machine
 #' 
 #' Vignette building uses a new session. Any changes in current project or
-#' dependent projects are not tested unless the packages are all installed using
-#' `devtools::install_local(...)`. This causes problems when developing multiple
-#' packages in parallel.
+#' dependent locally developed projects are not tested unless the packages are
+#' all installed using `devtools::install_local(...)`. This causes problems when
+#' developing multiple packages in parallel.
+#'
+#' This function assumes the `path` variable is a path to a package which is under
+#' version control in a Git directory. Other dependencies to this package may
+#' also be under development in sibling directories. The aim is to install the
+#' current version of the target package and all locally held dependencies that 
+#' have changed on the local disk compared to the locally installed version. 
 #' 
 #' This function scans the current package and first order dependencies, looking
 #' for local development directories for any packages imported. Looks for
 #' changes in files in local development directories of package and first order
-#' dependencies versus files currently installed in r library. After installation
-#' it restarts R.
-#' 
+#' dependencies versus files currently installed in r-library. If it finds any
+#' differences it checks if there is a version change of the package, 
+#' bumps the version number of the development package, and installs it locally, 
+#' After installation it restarts R.
+#'   
 #' Any recent file change in development directories triggers a dev version bump
 #' and local package installation. After a call to `unstable()` any dependencies
 #' in your local dev environment are up to date.
 #' 
+#' If `unstable` is called from within a non package project which is using
+#' `renv` then rather than installing locally using `devtools` the package is
+#' built and deployed locally in the `renv` local package directory (
+#' `<proj root>/renv/local`) and installed from there. The `renv` local packages are
+#' placed under version control. At the moment it is a manual job to tidy this up once the
+#' development package is finalised and deployed
+#' 
 #' @param path the package local development repository path. This assumes you 
-#'   have all your other packages code in a sibling directory
+#'   have all your other package code in a sibling directory, e.g. `~/Git/pkg1`, 
+#'   `~/Git/pkg2` 
 #' @inheritParams remotes::install_local
 #' @inheritDotParams remotes::install_local
 #' @param load_lib load the package using a library command
@@ -31,7 +47,6 @@ unstable = function(path = ".", ..., force = TRUE, upgrade = "never", quiet=TRUE
   #TODO: 3) check running context to make sure it is in globalenv before restarting.
   
   renv_mode =  (path != "." && fs::file_exists(fs::path(getwd(),"renv.lock")))
-  if (renv_mode) stop("renv setup detected. ")
   pkg = devtools::as.package(path)
   
   git_directory = fs::path_expand_r(getOption("pkgtools.git", fs::path_dir(pkg$path)))
@@ -73,12 +88,7 @@ unstable = function(path = ".", ..., force = TRUE, upgrade = "never", quiet=TRUE
         v2 = gitversion
       message("installing `",package,"` (v",v2,") from: ",gitpath)
       if (package != pkg$package) {
-        devtools::document(gitpath,quiet = TRUE)
-        # if (renv_mode) {
-        #   renv::install(gitpath, rebuild = TRUE)
-        # } else {
-        remotes::install_local(gitpath, force = force, upgrade = upgrade, quiet=TRUE)
-        # }
+        pkgtools::install_local(gitpath, force = force, upgrade = upgrade, quiet=TRUE)
         devtools::reload(pkgload::inst(package), quiet=TRUE)
       }
       return(v2)
@@ -102,29 +112,28 @@ unstable = function(path = ".", ..., force = TRUE, upgrade = "never", quiet=TRUE
   }
   
   # install the main package
-  devtools::document(pkg$path)
-  # if (renv_mode) {
-  #   renv::install(pkg$path, rebuild = TRUE)
-  # } else {
-    remotes::install_local(pkg$path, force = force, upgrade = upgrade, quiet=TRUE)
-  # }
+  pkgtools::install_local(pkg)
+  
   # if (pkg$package != "pkgutils") {
   #   devtools::reload(pkgload::inst(pkg$package), quiet=TRUE)
   # } else {
     # try to prevent documentation db corruption
   # devtools::load_all(pkg$path, quiet=TRUE)
   # }
+  
   pkgload::unregister(pkg$package)
   # restart R before loading
   # TODO: check https://henrikbengtsson.github.io/startup/reference/restart.html
   if (interactive()) {
     if (load_lib) {
-      try(
-        rstudioapi::restartSession(command = sprintf("library(\"%s\", character.only =TRUE)",pkg$package)
-      ),silent = TRUE)
+      tmp = unique(c(rev(.packages()),pkg$package))
     } else {
-      try(rstudioapi::restartSession(),silent = TRUE)
+      tmp = rev(.packages())
     }
+    tmp = paste0(lapply(tmp, sprintf, fmt="require(\"%s\", character.only=TRUE, quietly=TRUE)"),collapse="\n")
+    try({
+        rstudioapi::restartSession(command = tmp)
+      },silent = TRUE)
   }
   return(invisible(out))
 }

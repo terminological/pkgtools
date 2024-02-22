@@ -2,7 +2,7 @@
 % Please edit documentation in R/fix_utf8_encoding.R
 \name{fix_utf8_encoding}
 \alias{fix_utf8_encoding}
-\title{Fixes dependencies in the namespace file using the output of R CMD check.}
+\title{Fixes utf8 encoded characters in source files replaincg them with \verb{\\uXXXX}}
 \usage{
 fix_utf8_encoding(pkg = ".", check, dry_run = FALSE)
 }
@@ -14,8 +14,8 @@ fix_utf8_encoding(pkg = ".", check, dry_run = FALSE)
 \item{dry_run}{test changes without breaking originals.}
 }
 \value{
-a list of the
+nothing
 }
 \description{
-Fixes dependencies in the namespace file using the output of R CMD check.
+Fixes utf8 encoded characters in source files replaincg them with \verb{\\uXXXX}
 }

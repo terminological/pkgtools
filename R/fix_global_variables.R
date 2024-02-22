@@ -1,5 +1,5 @@
 
-#' Adds non standard and hidden files to the .`Rbuildignore` file
+#' Adds global variables identified at `R CMD check`` to a `globals.R` file
 #'
 #' @param pkg the package location
 #' @param check the results of a `devtools::check`

@@ -1,10 +1,10 @@
-#' Fixes dependencies in the namespace file using the output of R CMD check.
+#' Fixes utf8 encoded characters in source files replaincg them with `\uXXXX`
 #' 
 #' @param pkg the package to scan
 #' @param check output of a `devtools::check()` command ()
 #' @param dry_run test changes without breaking originals.
 #'
-#' @return a list of the 
+#' @return nothing
 #' @export
 fix_utf8_encoding = function(pkg = ".", check, dry_run = FALSE) {
   

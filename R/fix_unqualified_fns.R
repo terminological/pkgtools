@@ -6,7 +6,7 @@
 #' @return nothing - called for side effects
 #' @export
 fix_unqualified_fns = function() {
-  if (require(rstudioapi,quietly = TRUE) && require(diffobj,quietly = TRUE)) {
+  if (requireNamespace("rstudioapi",quietly = TRUE) && requireNamespace("diffobj",quietly = TRUE)) {
     context = rstudioapi::getSourceEditorContext()
     content = context$content
     path = context$path

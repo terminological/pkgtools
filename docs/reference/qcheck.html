@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pkgtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.9024</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.1</span>
       </span>
     </div>
 
@@ -50,17 +50,17 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">qcheck</span><span class="op">(</span><span class="va">...</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">qcheck</span><span class="op">(</span>pkg <span class="op">=</span> <span class="st">"."</span>, <span class="va">...</span>, args <span class="op">=</span> <span class="st">""</span>, quiet <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>...</dt>
-<dd><p>Arguments passed on to <code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check</a></code></p><dl><dt><code>pkg</code></dt>
-<dd><p>The package to use, can be a file path to the package or a
-package object.  See <code><a href="https://devtools.r-lib.org/reference/as.package.html" class="external-link">as.package()</a></code> for more information.</p></dd>
+    <dl><dt>pkg</dt>
+<dd><p>the path of the package to check</p></dd>
 
-    <dt><code>document</code></dt>
+
+<dt>...</dt>
+<dd><p>Arguments passed on to <code><a href="https://devtools.r-lib.org/reference/check.html" class="external-link">devtools::check</a></code></p><dl><dt><code>document</code></dt>
 <dd><p>By default (<code>NULL</code>) will document if your installed
 roxygen2 version matches the version declared in the <code>DESCRIPTION</code>
 file. Use <code>TRUE</code> or <code>FALSE</code> to override the default.</p></dd>
@@ -95,15 +95,6 @@ default), check will proceed even if all suggested packages aren't found.</p></d
 earlier; in R 4.0, code in <code>\donttest{}</code> is always run as part of CRAN
 submission.</p></dd>
 
-    <dt><code>args</code></dt>
-<dd><p>Character vector of arguments to pass to <code>R CMD check</code>. Pass each
-argument as a single element of this character vector (do not use spaces to
-delimit arguments like you would in the shell). For example, to skip
-running of examples and tests, use <code>args = c("--no-examples", "--no-tests")</code> and not <code>args = "--no-examples --no-tests"</code>. (Note that
-instead of the <code>--output</code> option you should use the <code>check_dir</code> argument,
-because  <code>--output</code> cannot deal with spaces and other special characters on
-Windows.)</p></dd>
-
     <dt><code>env_vars</code></dt>
 <dd><p>Environment variables set during <code>R CMD check</code></p></dd>
 
@@ -131,6 +122,10 @@ environment variable. If that is not set, then <code>"never"</code> is used.</p>
 
   
 </dl></dd>
+
+
+<dt>args</dt>
+<dd><p>additional r cmd check args</p></dd>
 
 
 <dt>quiet</dt>

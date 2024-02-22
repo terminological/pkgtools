@@ -1,13 +1,15 @@
 Package: pkgtools
 Title: Code generation and linting functions for R packages
-Version: 0.0.0.9040
+Version: 0.0.1
 Authors@R: person(
   given = "Robert",
   family = "Challen",
   role = c("aut", "cre"),
   email = "rob.challen@bristol.ac.uk",
   comment = c(ORCID = "0000-0002-5504-7768"))
-Description: What the package does (one paragraph).
+Description: Perform common tasks and fix common errors in project and
+  package development. This is a developer tool rather than an end user 
+  package.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -31,7 +33,12 @@ Imports:
     stringr,
     tibble,
     tidyr,
-    rlang
+    rlang,
+    withr,
+    rmarkdown,
+    renv,
+    jsonlite,
+    usethis
 Suggests:
     rstudioapi,
     diffobj
