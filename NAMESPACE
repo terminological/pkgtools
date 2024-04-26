@@ -3,6 +3,7 @@
 export("%>%")
 export(bump_dev_version)
 export(delete_backups)
+export(doc_formals)
 export(fix_dependencies)
 export(fix_global_variables)
 export(fix_non_standard_files)

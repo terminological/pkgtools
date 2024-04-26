@@ -275,7 +275,7 @@ fix_unqualified_fns_bulk = function(
       # functionNames = testfn
       # stringr::str_detect(c("testfn(sdf)","testfn(sdf)","+testfn(sdf)","+testfn (sdf)"), functionRegex)
       # stringr::str_detect(c("no_testfn(sdf)","another_testfn(sdf)","old.testfn(sdf)"), functionRegex)
-      functionRegex = paste0("(^|[^:a-zA-Z0-9\\._])(",functionNames,")\\(")
+      functionRegex = paste0("(^|[^:a-zA-Z0-9\\._\\\\])(",functionNames,")\\(")
       replacement = paste0("\\1",packge,"::\\2(")
       # c = files$content.old[[1]]
       content = content %>% stringr::str_replace_all(functionRegex, replacement)

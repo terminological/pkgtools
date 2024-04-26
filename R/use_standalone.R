@@ -23,8 +23,9 @@
 #' @inherit usethis::use_standalone
 #' @export
 use_standalone = function (repo_spec, file = NULL, ref = NULL, host = NULL) {
-  tmp = try(usethis::use_standalone(repo_spec, file, ref, host),silent = TRUE)
   wd = here::here()
+  fs::dir_create(fs::path(wd,"R"))
+  tmp = try(usethis::use_standalone(repo_spec, file, ref, host),silent = TRUE)
   if (inherits(tmp,"try-error")) {
     
     # This is not a package project
@@ -38,7 +39,6 @@ use_standalone = function (repo_spec, file = NULL, ref = NULL, host = NULL) {
         
         if (is.na(import$ver)) {
           # no version info in depends
-          renv::install(pkg$package,prompt = FALSE)
           pver = "*"
           ipkgver = import$pkg
           
@@ -67,13 +67,19 @@ use_standalone = function (repo_spec, file = NULL, ref = NULL, host = NULL) {
     } else {
       if (nrow(imports)>0) {
         message("No package DESCRIPTION and no renv setup detected.",appendLF = TRUE)
-        message("The following packages must be manually loaded:",appendLF = TRUE)
-        message(sprintf("%s@%s",imports$pkg, imports$ver),appendLF = TRUE)
+        message("Installation of the following packages must be verified:",appendLF = TRUE)
+        message(paste0(.print_ver(imports$pkg, imports$ver),collapse = "\n"),appendLF = TRUE)
       }
     }
     
   }
   invisible()
+}
+
+.print_ver = function(pkg, ver=NA) {
+  return(
+    ifelse(is.na(ver), pkg, sprintf("%s (>= %s)",pkg, ver))
+  )
 }
 
 # Adapted from usethis

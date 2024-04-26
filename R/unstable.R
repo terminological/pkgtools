@@ -46,7 +46,7 @@ unstable = function(path = ".", ..., force = TRUE, upgrade = "never", quiet=TRUE
   #TODO: 2) on.exit code to restart / sys.on.exit
   #TODO: 3) check running context to make sure it is in globalenv before restarting.
   
-  renv_mode =  (path != "." && fs::file_exists(fs::path(getwd(),"renv.lock")))
+  renv_mode = (path != "." && fs::file_exists(fs::path(getwd(),"renv.lock")))
   pkg = devtools::as.package(path)
   
   git_directory = fs::path_expand_r(getOption("pkgtools.git", fs::path_dir(pkg$path)))
@@ -112,7 +112,7 @@ unstable = function(path = ".", ..., force = TRUE, upgrade = "never", quiet=TRUE
   }
   
   # install the main package
-  pkgtools::install_local(pkg)
+  pkgtools::install_local(pkg$path)
   
   # if (pkg$package != "pkgutils") {
   #   devtools::reload(pkgload::inst(pkg$package), quiet=TRUE)
