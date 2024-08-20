@@ -28,6 +28,7 @@ fix_unqualified_fns = function() {
   }
 }
 
+
 #' Fix errors introduced in package creation by forgetting to qualify
 #' namespaces.
 #'
@@ -191,7 +192,7 @@ fix_unqualified_fns_bulk = function(
   # sort the packages first up being unqualified next being this package, and
   # base, then tidyverse if installed. The tidyverse package order. all of
   # tidyselect seems to be imported into dplyr
-  tmp = unique(c(prioritise,.imports("tidyverse")))
+  tmp = unique(c(prioritise, .imports("tidyverse")))
   packages = forcats::as_factor(unique(c(cur_package,"base","utils", dplyr::intersect(packages, tmp),  packages)))
   nsqualifier = ifelse(packages %in% c(cur_package,"base"), "", sprintf("%s::",packages))
   # exclude the current ones

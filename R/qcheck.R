@@ -17,5 +17,7 @@ qcheck = function(pkg = ".", ..., args = "", quiet = FALSE) {
   } else {
     check = devtools::check(pkg = pkg$path, ..., args = c("--no-examples", "--no-tests", "--ignore-vignettes", args))
   }
+  spelling::spell_check_package()
+  urlchecker::url_check()
   invisible(check)
 }

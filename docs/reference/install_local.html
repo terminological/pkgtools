@@ -22,7 +22,7 @@ deployed to CRAN or r-universe."><!-- mathjax --><script src="https://cdnjs.clou
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pkgtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.4</span>
       </span>
     </div>
 
@@ -111,7 +111,7 @@ of the project will happen when the package is released and then installed from 
 release location (e.g. github, cran, r-universe).</p>
 <p>If a locally developed package is deployed to an <code>renv</code> project once it is released onto a valid distribution
 platform e.g. CRAN, r-universe or github, we will want to use that version in
-out <code>renv</code>. This we can do using the <code>rebuild = TRUE</code> option of <code><a href="https://rstudio.github.io/renv/reference/install.html" class="external-link">renv::install</a></code>, e.g.:
+our <code>renv</code>. This we can do using the <code>rebuild = TRUE</code> option of <code><a href="https://rstudio.github.io/renv/reference/install.html" class="external-link">renv::install</a></code>, e.g.:
 <code>renv::install(...pkg name/github..., repo = ...r-universe?..., rebuild = TRUE)</code>
 followed by a <code><a href="https://rstudio.github.io/renv/reference/snapshot.html" class="external-link">renv::snapshot()</a></code> to update the lock file. The locally built
 package version will remain in the <code>&lt;projroot&gt;/renv/local</code> cellar until removed

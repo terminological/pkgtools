@@ -1,6 +1,6 @@
 Package: pkgtools
 Title: Code generation and linting functions for R packages
-Version: 0.0.2
+Version: 0.0.4
 Authors@R: person(
   given = "Robert",
   family = "Challen",
@@ -38,7 +38,11 @@ Imports:
     rmarkdown,
     renv,
     jsonlite,
-    usethis
+    usethis,
+    spelling,
+    urlchecker,
+    cli,
+    yaml
 Suggests:
     rstudioapi,
     diffobj

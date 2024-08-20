@@ -2,7 +2,7 @@
 % Please edit documentation in R/use_standalone.R
 \name{use_standalone}
 \alias{use_standalone}
-\title{Extended version of \code{use_standalone} that works with \code{renv} projects}
+\title{Extended version of \code{use_standalone} that works with analysis projects}
 \usage{
 use_standalone(repo_spec, file = NULL, ref = NULL, host = NULL)
 }
@@ -35,24 +35,33 @@ For a hypothetical GitHub Enterprise instance, either
 acceptable.}
 }
 \description{
-\code{usethis::use_standalone} is a package development tool used in \code{r-lib}
-to share useful functions between packages without creating a hard dependency
-on them. This is also useful in data analysis projects where no package
-infrastructure exists but you want to reuse common functions (e.g. plot themes)
-between analysis projects. Developing a package containing these
-shared functions and deploying to \code{CRAN} or \code{r-universe} but it is unwieldy and
-requires more infrastructure that needed.
+\code{usethis::use_standalone} is a package development tool used in \code{r-lib} to
+share useful functions between packages without creating a hard dependency on
+them. This is also useful in data analysis projects where no package
+infrastructure exists but you want to reuse common functions (e.g. plot
+themes) between analysis projects. Developing a package containing these
+shared functions and deploying to \code{CRAN} or \code{r-universe} is possible but it
+is unwieldy and requires more infrastructure that needed.
 }
 \details{
 Using a standalone file we can develop these functions in a basic git
 repository with no deployment (with or without package infrastructure), and
-import them into a project as standalone files. From a reproducibility point
-of view this is sometimes beneficial as the version is hard wired into the
-analysis project.
+import them into an analysis project as standalone files. From a
+reproducibility point of view this is sometimes beneficial if the functions
+in question are fairly dynamic as the version is hard wired into the analysis
+project.
 
-The use cases supported by \code{usethis} are predicated around R package
-development but here we extend this behaviour to analysis projects with
-dependencies managed by \code{renv}.
+The use cases supported by \code{usethis::use_standalone} are predicated around R
+package development but here we extend this behaviour to analysis projects
+with dependencies managed by \code{renv}, or not mamanged at all. If an analysis
+project is being managed by \code{renv} then using a standalone file will install
+missing \code{renv} dependencies and snapshot the project. If no \code{renv} is
+detected a check is written to the \code{.RProfile} file which will produce a
+message about missing dependencies when the project is opened.
+
+In a non package project directives to try and \code{source} all standalone files
+are added to the \code{.RProfile} file, so that standalone file functions are
+immediately available.
 }
 \section{Supported fields}{
 

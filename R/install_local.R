@@ -15,7 +15,7 @@
 #' 
 #' If a locally developed package is deployed to an `renv` project once it is released onto a valid distribution
 #' platform e.g. CRAN, r-universe or github, we will want to use that version in
-#' out `renv`. This we can do using the `rebuild = TRUE` option of `renv::install`, e.g.: 
+#' our `renv`. This we can do using the `rebuild = TRUE` option of `renv::install`, e.g.: 
 #' `renv::install(...pkg name/github..., repo = ...r-universe?..., rebuild = TRUE)`
 #' followed by a `renv::snapshot()` to update the lock file. The locally built 
 #' package version will remain in the `<projroot>/renv/local` cellar until removed

@@ -49,7 +49,7 @@ release location (e.g. github, cran, r-universe).
 
 If a locally developed package is deployed to an \code{renv} project once it is released onto a valid distribution
 platform e.g. CRAN, r-universe or github, we will want to use that version in
-out \code{renv}. This we can do using the \code{rebuild = TRUE} option of \code{renv::install}, e.g.:
+our \code{renv}. This we can do using the \code{rebuild = TRUE} option of \code{renv::install}, e.g.:
 \verb{renv::install(...pkg name/github..., repo = ...r-universe?..., rebuild = TRUE)}
 followed by a \code{renv::snapshot()} to update the lock file. The locally built
 package version will remain in the \verb{<projroot>/renv/local} cellar until removed

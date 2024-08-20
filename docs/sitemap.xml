@@ -25,6 +25,9 @@
     <loc>/reference/doc_formals.html</loc>
   </url>
   <url>
+    <loc>/reference/document.html</loc>
+  </url>
+  <url>
     <loc>/reference/fix_dependencies.html</loc>
   </url>
   <url>
@@ -58,7 +61,13 @@
     <loc>/reference/set_renv_repos.html</loc>
   </url>
   <url>
+    <loc>/reference/sync_standalone_to_master.html</loc>
+  </url>
+  <url>
     <loc>/reference/unstable.html</loc>
+  </url>
+  <url>
+    <loc>/reference/update_standalone.html</loc>
   </url>
   <url>
     <loc>/reference/use_standalone.html</loc>
