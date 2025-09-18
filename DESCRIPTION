@@ -1,6 +1,6 @@
 Package: pkgtools
 Title: Code generation and linting functions for R packages
-Version: 0.0.4
+Version: 0.0.8.9000
 Authors@R: person(
   given = "Robert",
   family = "Challen",
@@ -42,7 +42,13 @@ Imports:
     spelling,
     urlchecker,
     cli,
-    yaml
+    yaml,
+    pins,
+    gert,
+    shiny,
+    bslib
 Suggests:
     rstudioapi,
-    diffobj
+    diffobj,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
