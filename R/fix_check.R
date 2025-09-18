@@ -1,22 +1,14 @@
-fix_check = function(pkg=".") {
-  
+fix_check = function(pkg = ".") {
   path = devtools::as.package(pkg)$path
-  
-  if (nrow(gert::git_status(repo = path)) > 0 && !.punkmode()) {
-    fixns = utils::menu(c("Yes","No"), title = "Current changes are not committed. Are you sure?")
-    if (fixns != 1) {
-      message("Cancelled by user.")
-      return(invisible(NULL))
-    }
-  } 
-  
-  fix_unqualified_fns_bulk(pkg,dry_run = FALSE)
-  check = qcheck(pkg=pkg, quiet=TRUE)
+
+  .commit_if_needed(path, "pre automated fixes")
+
+  fix_unqualified_fns_bulk(pkg)
+  check = qcheck(pkg = pkg, quiet = TRUE)
   fix_non_standard_files(pkg, check)
   fix_global_variables(pkg, check)
-  fix_utf8_encoding(pkg,check)
-  fix_dependencies(pkg,check)
-  
+  fix_utf8_encoding(pkg, check)
+  fix_dependencies(pkg, check)
+
   message("Fixing package issues complete.")
-  
 }
