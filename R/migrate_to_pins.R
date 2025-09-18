@@ -68,7 +68,7 @@ migrate_to_pins = function(pkg = ".", board = "data", migrate = NULL) {
   }
 
   if (!is.null(changed)) {
-    .commit_if_needed(pkg$path)
+    .commit_if_needed(pkg$path, "migrating data to pins")
 
     usethis::with_project(
       pkg$path,

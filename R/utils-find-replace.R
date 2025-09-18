@@ -4,6 +4,7 @@
 .find_and_replace_unsafe = function(regex, replacement, pkg = ".") {
   pkg = devtools::as.package(pkg)
   rDirectories = c("data-raw", "R", "vignettes")
+  rDirectories = rDirectories[fs::dir_exists(rDirectories)]
   # locate source files in the directories
   files = dplyr::bind_rows(lapply(rDirectories, fs::dir_info)) %>%
     dplyr::filter(fs::path_ext(path) %in% c("R", "Rmd")) %>%
@@ -31,6 +32,6 @@
 
 find_and_replace = function(regex, replacement, pkg = ".") {
   pkg = devtools::as.package(pkg)
-  .commit_if_needed(pkg$path)
+  .commit_if_needed(pkg$path, "pre find and replace")
   .find_and_replace_unsafe(regex, replacement, pkg)
 }

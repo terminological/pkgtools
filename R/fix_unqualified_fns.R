@@ -174,7 +174,7 @@ fix_unqualified_fns_bulk = function(
     }
 
     if (fixme %in% c(1)) {
-      .commit_if_needed(pkg$path)
+      .commit_if_needed(pkg$path, "unqualified function replacement")
 
       tmp = files %>%
         dplyr::filter(changed) %>%
