@@ -12,7 +12,7 @@
     dplyr::mutate(content.old = purrr::map(path, ~ readr::read_lines(.x))) %>%
     dplyr::mutate(content = content.old)
 
-  file = files %>%
+  files = files %>%
     dplyr::mutate(
       content = purrr::map(
         content,
