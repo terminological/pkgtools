@@ -59,7 +59,9 @@
 
 #' Undo a bulk `pkgtools` operation
 #'
-#' Reverts to last state committed by pkgtools, and stashes any changes.
+#' Reverts to last state committed by `pkgtools`, and stashes any unstaged changes.
+#'
+#' @concept usethis
 #'
 #' @param pkg the package
 #'

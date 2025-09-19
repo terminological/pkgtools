@@ -2,8 +2,7 @@
 % Please edit documentation in R/fix_unqualified_fns.R
 \name{fix_unqualified_fns_bulk}
 \alias{fix_unqualified_fns_bulk}
-\title{Fix errors introduced in package creation by forgetting to qualify
-namespaces.}
+\title{Fix unqualified namespaced functions.}
 \usage{
 fix_unqualified_fns_bulk(
   pkg = ".",
@@ -16,7 +15,7 @@ fix_unqualified_fns_bulk(
 \item{pkg}{the package}
 
 \item{rDirectories}{the locations of the R code to fix (by default R scripts,
-and tests, but not vignettes)}
+tests, but not data-raw or vignettes)}
 
 \item{prioritise}{a list of package names to pick from first}
 }
@@ -27,5 +26,6 @@ nothing. called for side effects.
 This is a code linting function and expected to be called at the console
 during package development. It will scan the files in the current project and
 replace unqualified references to e.g. \code{mutate} with ones to \code{dplyr::mutate}
-etc.
+etc. All changes are made after a commit whcih can be reverted.
 }
+\concept{usethis}

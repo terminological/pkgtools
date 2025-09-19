@@ -105,3 +105,4 @@ built and deployed locally in the \code{renv} local package directory (
 placed under version control. At the moment it is a manual job to tidy this up once the
 development package is finalised and deployed
 }
+\concept{renv}

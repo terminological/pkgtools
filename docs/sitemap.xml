@@ -1,78 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/bump_dev_version.html</loc>
-  </url>
-  <url>
-    <loc>/reference/delete_backups.html</loc>
-  </url>
-  <url>
-    <loc>/reference/doc_formals.html</loc>
-  </url>
-  <url>
-    <loc>/reference/document.html</loc>
-  </url>
-  <url>
-    <loc>/reference/fix_dependencies.html</loc>
-  </url>
-  <url>
-    <loc>/reference/fix_global_variables.html</loc>
-  </url>
-  <url>
-    <loc>/reference/fix_non_standard_files.html</loc>
-  </url>
-  <url>
-    <loc>/reference/fix_unqualified_fns.html</loc>
-  </url>
-  <url>
-    <loc>/reference/fix_unqualified_fns_bulk.html</loc>
-  </url>
-  <url>
-    <loc>/reference/fix_utf8_encoding.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/install_local.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pipe.html</loc>
-  </url>
-  <url>
-    <loc>/reference/qcheck.html</loc>
-  </url>
-  <url>
-    <loc>/reference/set_renv_repos.html</loc>
-  </url>
-  <url>
-    <loc>/reference/sync_standalone_to_master.html</loc>
-  </url>
-  <url>
-    <loc>/reference/unstable.html</loc>
-  </url>
-  <url>
-    <loc>/reference/update_standalone.html</loc>
-  </url>
-  <url>
-    <loc>/reference/use_standalone.html</loc>
-  </url>
-  <url>
-    <loc>/reference/what_has_changed.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://terminological.github.io/pkgtools/404.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/LICENSE-text.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/LICENSE.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/authors.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/index.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/bump_dev_version.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/delete_backups.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/doc_formals.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/document.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/find_and_replace.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/fix_check.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/fix_dependencies.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/fix_global_variables.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/fix_non_standard_files.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/fix_unqualified_fns.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/fix_unqualified_fns_bulk.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/fix_utf8_encoding.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/index.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/install_local.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/merge_code.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/migrate_to_pins.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/pipe.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/qcheck.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/set_renv_repos.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/sync_standalone_to_master.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/undo.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/unstable.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/update_standalone.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/use_standalone.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/what_has_changed.html</loc></url>
 </urlset>
+

@@ -1,8 +1,10 @@
 #' Fixes utf8 encoded characters in source files replaincg them with `\uXXXX`
 #'
 #' @param pkg the package to scan
-#' @param check output of a `devtools::check()` command ()
+#' @param check output of a `devtools::check()` command
+#'   (will check automatically if not provided)
 #'
+#' @concept usethis
 #' @return nothing
 #' @export
 fix_utf8_encoding = function(pkg = ".", check) {

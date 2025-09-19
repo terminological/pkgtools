@@ -39,12 +39,17 @@ Character string of the merged content, or stops with an error if cancelled.
 This function launches a Shiny gadget to visually merge two versions of code/YAML.
 }
 \examples{
-# --- Example Usage ---
-old = paste0("line ",c(2:4,6:12))
-new = paste0("line ",c(1:50))
 
-merged_result <- merge_code(old, new)
-cat("Merged Content:\n")
-cat(paste0(merged_result, collapse = "\n"),"\n")
+if (FALSE) {
+
+  old = paste0("line ",c(2:4,6:12))
+  new = paste0("line ",c(1:50))
+
+  merged_result <- merge_code(old, new)
+  cat("Merged Content:\n")
+  cat(paste0(merged_result, collapse = "\n"),"\n")
 
 }
+
+}
+\concept{edit}

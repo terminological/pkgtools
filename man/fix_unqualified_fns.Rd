@@ -11,5 +11,8 @@ nothing - called for side effects
 }
 \description{
 Interactively find and replace unqualified, e.g. \code{mutate(...)} calls with
-fully qualified \code{dplyr::mutate(...)} calls.
+fully qualified \code{dplyr::mutate(...)} calls. This version operates on the
+currently open file in the RStudio and allows for interactive review of the
+proposed changes.
 }
+\concept{usethis}

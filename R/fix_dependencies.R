@@ -1,9 +1,12 @@
 #' Fixes dependencies in the namespace file using the output of R CMD check.
 #'
 #' @param pkg the package to scan
-#' @param check output of a `devtools::check()` command ()
+#' @param check output of a `devtools::check()` command
+#'   (will check automatically if not provided)
 #'
-#' @return a list of the
+#' @concept usethis
+#'
+#' @return nothing
 #' @export
 fix_dependencies = function(pkg = ".", check) {
   pkg = devtools::as.package(pkg)

@@ -22,6 +22,8 @@
 #' package version will remain in the `<projroot>/renv/local` cellar until
 #' removed by hand.
 #'
+#' @concept renv
+#'
 #' @param path the package (defaults to `.`)
 #' @inheritDotParams remotes::install_local
 #' @param force do the install regardless of versions

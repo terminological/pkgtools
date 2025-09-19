@@ -18,3 +18,4 @@ a local master standalone file, which is assumed to be in a Git
 directory. This allows for changes to be propagated back to the master when
 in active development. The master copy is committed before changes.
 }
+\concept{standalone}

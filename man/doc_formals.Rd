@@ -22,11 +22,11 @@ default value or allowable values of a function
 }
 \examples{
 #' A test function
-#'  
+#'
 #' @param arg a set of descriptions: `r doc_formals(test_fn, arg)`
 #' @param def a set of descriptions: `r doc_formals(test_fn, def)`
 #' @param ghi a set of descriptions: `r doc_formals(test_fn, ghi)`
-#' 
+#'
 #' @ return nothing
 test_fn = function(
     arg = c("option one","option two","option three"),
@@ -42,3 +42,5 @@ doc_formals(test_fn, arg)
 doc_formals(test_fn, def)
 doc_formals(test_fn, geh)
 }
+\concept{code}
+\keyword{internal}

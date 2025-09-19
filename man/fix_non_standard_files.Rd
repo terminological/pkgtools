@@ -9,7 +9,8 @@ fix_non_standard_files(pkg = ".", check)
 \arguments{
 \item{pkg}{the package location}
 
-\item{check}{the results of a \code{devtools::check}}
+\item{check}{the results of a \code{devtools::check} command
+(will check automatically if not provided)}
 }
 \value{
 nothing
@@ -17,3 +18,4 @@ nothing
 \description{
 Adds non standard and hidden files to the .\code{Rbuildignore} file
 }
+\concept{usethis}

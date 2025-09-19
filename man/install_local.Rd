@@ -98,3 +98,4 @@ Other package installation:
 \code{\link[remotes]{install_url}()},
 \code{\link[remotes]{install_version}()}
 }
+\concept{renv}

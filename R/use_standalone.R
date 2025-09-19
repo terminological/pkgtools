@@ -30,6 +30,8 @@
 #' If this is not working you may need to set the repository to HTTP/2:
 #' `git config --global http.version HTTP/2 && git push`
 #'
+#' @concept standalone
+#'
 #' @inherit usethis::use_standalone
 #' @export
 use_standalone = function(repo_spec, file = NULL, ref = NULL, host = NULL) {
@@ -178,7 +180,7 @@ parse_version = function(field) {
 #' in active development. The master copy is committed before changes.
 #'
 #' @param git_dir absolute or relative path to git base directory (e.g. ~/Git)
-#'
+#' @concept standalone
 #' @return nothing used for side effects
 #' @export
 sync_standalone_to_master = function(git_dir = fs::path_home("Git")) {

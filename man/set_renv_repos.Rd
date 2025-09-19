@@ -19,3 +19,4 @@ Sets custom repositories (e.g. r-universe repositories) in a \code{renv}
 lockfile to override CRAN repositories. This is a persistent change can be
 undone by manual editing of the lockfile.
 }
+\concept{renv}

@@ -9,7 +9,8 @@ fix_utf8_encoding(pkg = ".", check)
 \arguments{
 \item{pkg}{the package to scan}
 
-\item{check}{output of a \code{devtools::check()} command ()}
+\item{check}{output of a \code{devtools::check()} command
+(will check automatically if not provided)}
 }
 \value{
 nothing
@@ -17,3 +18,4 @@ nothing
 \description{
 Fixes utf8 encoded characters in source files replaincg them with \verb{\\uXXXX}
 }
+\concept{usethis}

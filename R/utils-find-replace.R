@@ -39,6 +39,19 @@
 }
 
 
+#' Regex find and replace on a codebase
+#'
+#' Find and replace within a package after committing the current contents
+#'
+#' @param regex a PCRE regex
+#' @param replacement a replacement
+#' @param pkg the package to scan
+#' @param rDirectories the subdirectories (defaults to data-raw, R, vignettes, tests)
+#'
+#' @concept edit
+#'
+#' @returns a list of changed files
+#' @export
 find_and_replace = function(
   regex,
   replacement,

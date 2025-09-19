@@ -13,5 +13,6 @@ undo(pkg = ".")
 nothing
 }
 \description{
-Reverts to last state committed by pkgtools, and stashes any changes.
+Reverts to last state committed by \code{pkgtools}, and stashes any unstaged changes.
 }
+\concept{usethis}

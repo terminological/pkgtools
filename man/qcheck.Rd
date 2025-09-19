@@ -59,3 +59,4 @@ a check result
 \description{
 Check the package structure without running any code
 }
+\concept{usethis}

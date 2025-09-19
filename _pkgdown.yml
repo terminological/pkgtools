@@ -1,0 +1,29 @@
+url: https://terminological.github.io/pkgtools/
+template:
+  bootstrap: 5
+reference:
+- title: usethis style functions
+  desc: >
+    These functions typically exist to make package development simpler by fixing 
+    common errors in bulk. They assume the project is managed in a git repository
+    and make changes that may need manual reversion
+  contents: has_concept("usethis")
+- title: Support for analysis projects
+  desc: >
+    `usethis` focusses on package projects, but similar functions are useful in 
+    analysis projects which may be maintained using `renv` rather than 
+    description files.
+  contents: has_concept("renv")
+- title: Standalone files
+  desc: >
+    Standalones make a lot of sense for utility functions that are reused in
+    many places but not exposed to the user. This set of tools help you setup 
+    and maintain them.
+  contents: has_concept("standalone")
+- title: Editing utilities
+  desc: >
+    Some additional tools to help general editing tasks.
+  contents: has_concept("edit")
+- title: Others
+  contents: lacks_concepts(c("usethis", "renv", "standalone","edit"))
+

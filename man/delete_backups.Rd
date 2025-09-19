@@ -15,3 +15,5 @@ nothing
 \description{
 Delete backup files from the current project
 }
+\concept{usethis}
+\keyword{internal}

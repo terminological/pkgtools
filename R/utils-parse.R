@@ -1,3 +1,11 @@
+# TODO:
+# 1) needs refactoring to allow this to work in parallel on all the functions in
+# all packages (i.e. integrates function discovery)
+# 2) create a stack and read parsed code sequentially looking for scope and assignment
+# operations.
+# 3) identify symbols that are references to functions (i.e. they match functions
+# and there is no symbol assignment in scope)
+
 # getParseData to handle both function calls and function references
 # content = readr::read_lines(here::here("tests/testthat/test_functions.R"))
 # functionNames <- c("filter", "mutate")

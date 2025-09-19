@@ -22,3 +22,4 @@ metadata. It operates on the code in the Rstudio active window and suggests
 changes to be made to keep the standalone file metadata up to date. It is
 intended be used interactively.
 }
+\concept{standalone}

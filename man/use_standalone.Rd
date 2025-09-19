@@ -107,3 +107,4 @@ use_standalone("r-lib/rlang", file = "types-check")
 use_standalone("r-lib/rlang", file = "types-check", ref = "standalone-dep")
 }
 }
+\concept{standalone}

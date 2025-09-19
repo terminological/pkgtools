@@ -13,10 +13,12 @@
 #'
 #' @return Character string of the merged content, or stops with an error if cancelled.
 #'
+#' @concept edit
+#'
 #' @export
 #' @examples
 #'
-#' if (interactive()) {
+#' if (FALSE) {
 #'
 #'   old = paste0("line ",c(2:4,6:12))
 #'   new = paste0("line ",c(1:50))

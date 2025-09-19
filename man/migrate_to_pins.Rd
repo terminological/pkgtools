@@ -25,3 +25,4 @@ access the data from the pinboard. It finds any references to the dataset in
 the code directories (\code{data-raw},\code{R},\code{vignettes},\code{test}) and replaces them
 with a function call of the same name.
 }
+\concept{usethis}

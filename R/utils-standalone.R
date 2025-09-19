@@ -5,6 +5,8 @@
 #' changes to be made to keep the standalone file metadata up to date. It is
 #' intended be used interactively.
 #'
+#' @concept standalone
+#'
 #' @param repo the github repository e.g. `organisation/project`
 #' @param license a license URL (defaults to `http:://unlicense/org`)
 #' @param dependencies a optional list of standalone filenames in the same repository

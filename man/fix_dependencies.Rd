@@ -9,11 +9,13 @@ fix_dependencies(pkg = ".", check)
 \arguments{
 \item{pkg}{the package to scan}
 
-\item{check}{output of a \code{devtools::check()} command ()}
+\item{check}{output of a \code{devtools::check()} command
+(will check automatically if not provided)}
 }
 \value{
-a list of the
+nothing
 }
 \description{
 Fixes dependencies in the namespace file using the output of R CMD check.
 }
+\concept{usethis}

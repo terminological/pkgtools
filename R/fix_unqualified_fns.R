@@ -1,7 +1,11 @@
 #' Fix unqualified functions in active source pane
 #'
 #' Interactively find and replace unqualified, e.g. `mutate(...)` calls with
-#' fully qualified `dplyr::mutate(...)` calls.
+#' fully qualified `dplyr::mutate(...)` calls. This version operates on the
+#' currently open file in the RStudio and allows for interactive review of the
+#' proposed changes.
+#'
+#' @concept usethis
 #'
 #' @return nothing - called for side effects
 #' @export
@@ -31,17 +35,18 @@ fix_unqualified_fns = function() {
 }
 
 
-#' Fix errors introduced in package creation by forgetting to qualify
-#' namespaces.
+#' Fix unqualified namespaced functions.
 #'
 #' This is a code linting function and expected to be called at the console
 #' during package development. It will scan the files in the current project and
 #' replace unqualified references to e.g. `mutate` with ones to `dplyr::mutate`
-#' etc.
+#' etc. All changes are made after a commit whcih can be reverted.
+#'
+#' @concept usethis
 #'
 #' @param pkg the package
 #' @param rDirectories the locations of the R code to fix (by default R scripts,
-#'   and tests, but not vignettes)
+#'   tests, but not data-raw or vignettes)
 #' @param prioritise a list of package names to pick from first
 #'
 #' @return nothing. called for side effects.

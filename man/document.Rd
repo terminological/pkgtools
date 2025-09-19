@@ -27,3 +27,4 @@ to produce \code{.Rd} files in the \code{man} directory for any functions declar
 the \code{R} subfolder. It also override the default behaviour of \verb{?} to return
 the development documentation of matching functions in the current project.
 }
+\concept{renv}

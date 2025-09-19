@@ -9,7 +9,8 @@ fix_global_variables(pkg = ".", check)
 \arguments{
 \item{pkg}{the package location}
 
-\item{check}{the results of a \code{devtools::check}}
+\item{check}{the results of a \code{devtools::check} command
+(will check automatically if not provided)}
 }
 \value{
 nothing
@@ -17,3 +18,4 @@ nothing
 \description{
 Adds global variables identified at \verb{R CMD check`` to a }globals.R` file
 }
+\concept{usethis}
