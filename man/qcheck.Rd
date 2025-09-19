@@ -10,35 +10,35 @@ qcheck(pkg = ".", ..., args = "", quiet = FALSE)
 \item{pkg}{the path of the package to check}
 
 \item{...}{
-  Arguments passed on to \code{\link[devtools:check]{devtools::check}}
-  \describe{
+  Named arguments passed on to \code{\link[devtools:check]{devtools::check}}\describe{
     \item{\code{document}}{By default (\code{NULL}) will document if your installed
 roxygen2 version matches the version declared in the \code{DESCRIPTION}
 file. Use \code{TRUE} or \code{FALSE} to override the default.}
-    \item{\code{build_args}}{Additional arguments passed to \verb{R CMD build}}
-    \item{\code{manual}}{If \code{FALSE}, don't build and check manual (\code{--no-manual}).}
-    \item{\code{cran}}{if \code{TRUE} (the default), check using the same settings as CRAN
+\item{\code{build_args}}{Additional arguments passed to \verb{R CMD build}}
+\item{\code{...}}{Additional arguments passed on to \code{\link[pkgbuild:build]{pkgbuild::build()}}.}
+\item{\code{manual}}{If \code{FALSE}, don't build and check manual (\code{--no-manual}).}
+\item{\code{cran}}{if \code{TRUE} (the default), check using the same settings as CRAN
 uses. Because this is a moving target and is not uniform across all of
 CRAN's machine, this is on a "best effort" basis. It is more complicated
 than simply setting \code{--as-cran}.}
-    \item{\code{remote}}{Sets \verb{_R_CHECK_CRAN_INCOMING_REMOTE_} env var. If \code{TRUE},
+\item{\code{remote}}{Sets \verb{_R_CHECK_CRAN_INCOMING_REMOTE_} env var. If \code{TRUE},
 performs a number of CRAN incoming checks that require remote access.}
-    \item{\code{incoming}}{Sets \verb{_R_CHECK_CRAN_INCOMING_} env var. If \code{TRUE}, performs a
+\item{\code{incoming}}{Sets \verb{_R_CHECK_CRAN_INCOMING_} env var. If \code{TRUE}, performs a
 number of CRAN incoming checks.}
-    \item{\code{force_suggests}}{Sets \verb{_R_CHECK_FORCE_SUGGESTS_}. If \code{FALSE} (the
+\item{\code{force_suggests}}{Sets \verb{_R_CHECK_FORCE_SUGGESTS_}. If \code{FALSE} (the
 default), check will proceed even if all suggested packages aren't found.}
-    \item{\code{run_dont_test}}{Sets \code{--run-donttest} so that examples surrounded in
+\item{\code{run_dont_test}}{Sets \code{--run-donttest} so that examples surrounded in
 \verb{\\donttest{}} are also run. When \code{cran = TRUE}, this only affects R 3.6 and
 earlier; in R 4.0, code in \verb{\\donttest{}} is always run as part of CRAN
 submission.}
-    \item{\code{env_vars}}{Environment variables set during \verb{R CMD check}}
-    \item{\code{check_dir}}{Path to a directory where the check is performed.
+\item{\code{env_vars}}{Environment variables set during \verb{R CMD check}}
+\item{\code{check_dir}}{Path to a directory where the check is performed.
 If this is not \code{NULL}, then the a temporary directory is used, that
 is cleaned up when the returned object is garbage collected.}
-    \item{\code{cleanup}}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} See \code{check_dir} for details.}
-    \item{\code{vignettes}}{If \code{FALSE}, do not build or check vignettes, equivalent to
+\item{\code{cleanup}}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} See \code{check_dir} for details.}
+\item{\code{vignettes}}{If \code{FALSE}, do not build or check vignettes, equivalent to
 using \verb{args = '--ignore-vignettes' and }build_args = '--no-build-vignettes'.}
-    \item{\code{error_on}}{Whether to throw an error on \verb{R CMD check} failures.
+\item{\code{error_on}}{Whether to throw an error on \verb{R CMD check} failures.
 Note that the check is always completed (unless a timeout happens),
 and the error is only thrown after completion. If \code{"never"}, then
 no errors are thrown. If \code{"error"}, then only \code{ERROR} failures
@@ -46,7 +46,8 @@ generate errors. If \code{"warning"}, then \code{WARNING} failures generate
 errors as well. If \code{"note"}, then any check failure generated an
 error. Its default can be modified with the \code{RCMDCHECK_ERROR_ON}
 environment variable. If that is not set, then \code{"never"} is used.}
-  }}
+\item{\code{path}}{Path to built package.}
+}}
 
 \item{args}{additional r cmd check args}
 

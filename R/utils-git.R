@@ -12,6 +12,8 @@
       gert::git_commit(message)
     }
   }
+  .commits$push(gert::git_commit_info()$id)
+  message(message, ": ", gert::git_commit_info()$id)
 }
 
 
@@ -51,4 +53,55 @@
   repo = gert::git_remote_info(repo = root)
   tmp = .parse_remote_url(repo$url)
   return(c(tmp, local = root))
+}
+
+.commits = fastmap::faststack()
+
+#' Undo a bulk `pkgtools` operation
+#'
+#' Reverts to last state committed by pkgtools, and stashes any changes.
+#'
+#' @param pkg the package
+#'
+#' @returns nothing
+#' @export
+undo = function(pkg = ".") {
+  pkg = devtools::as.package(pkg)
+
+  if (.commits$size() == 0) {
+    message("nothing to undo.")
+    return()
+  }
+
+  id = .commits$peek()
+  info = gert::git_commit_info(repo = pkg$path)
+
+  if (id != info$id) {
+    stop(
+      "The current HEAD does not match the last `pkgtools` undo history.
+We have aborted the undo in case there are important changes committed since the last operation.
+You will have to fix this manually."
+    )
+  }
+
+  if (
+    utils::askYesNo(
+      msg = paste0(
+        c("Roll back to: ", info$id, ": ", info$message),
+        collapse = ""
+      ),
+      default = TRUE
+    )
+  ) {
+    gert::git_stash_save(include_untracked = TRUE)
+    gert::git_reset_hard(id, repo = pkg$path)
+  }
+
+  message(
+    "rolled back to state prior to last pkgtools operation.\n
+To redo operation use `gert::git_stash_pop()` or 
+"
+  )
+
+  # git reset --hard 31e42aa760d52a03dab243db346716d137cf8882 && git clean -df
 }

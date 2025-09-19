@@ -4,14 +4,12 @@
 \alias{fix_utf8_encoding}
 \title{Fixes utf8 encoded characters in source files replaincg them with \verb{\\uXXXX}}
 \usage{
-fix_utf8_encoding(pkg = ".", check, dry_run = FALSE)
+fix_utf8_encoding(pkg = ".", check)
 }
 \arguments{
 \item{pkg}{the package to scan}
 
 \item{check}{output of a \code{devtools::check()} command ()}
-
-\item{dry_run}{test changes without breaking originals.}
 }
 \value{
 nothing

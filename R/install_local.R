@@ -23,7 +23,7 @@
 #' removed by hand.
 #'
 #' @param path the package (defaults to `.`)
-#' @param ...
+#' @inheritDotParams remotes::install_local
 #' @param force do the install regardless of versions
 #' @param upgrade upgrade out of data CRAN packages
 #' @param quiet do it quietly

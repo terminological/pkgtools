@@ -4,14 +4,17 @@
 \alias{sync_standalone_to_master}
 \title{Synchronise master version of standalone file with editor contents}
 \usage{
-sync_standalone_to_master()
+sync_standalone_to_master(git_dir = fs::path_home("Git"))
+}
+\arguments{
+\item{git_dir}{absolute or relative path to git base directory (e.g. ~/Git)}
 }
 \value{
 nothing used for side effects
 }
 \description{
 This file syncs the current content of the rstudio editor window with
-a local master standalone file, which is assumed to be in a sibling project
+a local master standalone file, which is assumed to be in a Git
 directory. This allows for changes to be propagated back to the master when
-in active development.
+in active development. The master copy is committed before changes.
 }

@@ -7,20 +7,25 @@
 #' @param value the content for the central panel.
 #' @param lhs the title of the LHS
 #' @param rhs the title of the RHS
-#' @param lhs_accept the button text for the LHS
+#' @param accept the button text for the LHS
 #' @param rhs_accept the button text for the RHS
-#' @param mode
+#' @param mode the language mode
 #'
 #' @return Character string of the merged content, or stops with an error if cancelled.
 #'
+#' @export
 #' @examples
-#' # --- Example Usage ---
-#' old = paste0("line ",c(2:4,6:12))
-#' new = paste0("line ",c(1:50))
 #'
-#' merged_result <- merge_code(old, new)
-#' cat("Merged Content:\n")
-#' cat(paste0(merged_result, collapse = "\n"),"\n")
+#' if (interactive()) {
+#'
+#'   old = paste0("line ",c(2:4,6:12))
+#'   new = paste0("line ",c(1:50))
+#'
+#'   merged_result <- merge_code(old, new)
+#'   cat("Merged Content:\n")
+#'   cat(paste0(merged_result, collapse = "\n"),"\n")
+#'
+#' }
 #'
 merge_code <- function(
   value,

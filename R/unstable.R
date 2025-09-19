@@ -56,11 +56,11 @@ unstable = function(path = ".", ..., force = TRUE, upgrade = "never", quiet=TRUE
   
   alldeps = c(pkg$package,imports)
   
-  installed = tibble::as_tibble(utils::installed.packages()) %>%
+  installed = dplyr::as_tibble(utils::installed.packages()) %>%
     dplyr::transmute(
       package = Package, ondiskversion = Version, ondiskpath = fs::path(LibPath,Package))
   
-  toload = tibble::tibble(
+  toload = dplyr::tibble(
     package = alldeps[alldeps %in% fs::path_file(localpkgs)]
   ) %>% dplyr::mutate(
     gitpath = fs::path(git_directory, package),
@@ -137,4 +137,3 @@ unstable = function(path = ".", ..., force = TRUE, upgrade = "never", quiet=TRUE
   }
   return(invisible(out))
 }
-

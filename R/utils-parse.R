@@ -18,7 +18,7 @@
   tryCatch(
     {
       parsed <- parse(text = code_text, keep.source = TRUE)
-      parse_data <- getParseData(parsed)
+      parse_data <- utils::getParseData(parsed)
     },
     error = function(e) {
       stop("Failed to parse R code: ", e$message)

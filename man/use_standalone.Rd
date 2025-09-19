@@ -53,7 +53,7 @@ project.
 
 The use cases supported by \code{usethis::use_standalone} are predicated around R
 package development but here we extend this behaviour to analysis projects
-with dependencies managed by \code{renv}, or not mamanged at all. If an analysis
+with dependencies managed by \code{renv}, or not managed at all. If an analysis
 project is being managed by \code{renv} then using a standalone file will install
 missing \code{renv} dependencies and snapshot the project. If no \code{renv} is
 detected a check is written to the \code{.RProfile} file which will produce a
@@ -62,6 +62,9 @@ message about missing dependencies when the project is opened.
 In a non package project directives to try and \code{source} all standalone files
 are added to the \code{.RProfile} file, so that standalone file functions are
 immediately available.
+
+If this is not working you may need to set the repository to HTTP/2:
+\verb{git config --global http.version HTTP/2 && git push}
 }
 \section{Supported fields}{
 
@@ -79,26 +82,22 @@ license: https://unlicense.org
 dependencies: standalone-obj-type.R
 imports: rlang (>= 1.1.0)
 ---
+}\if{html}{\out{</div>}}
 
-Two of these fields are consulted by `use_standalone()`:
-
-- `dependencies`: A file or a list of files in the same repo that
-  the standalone file depends on. These files are retrieved
-  automatically by `use_standalone()`.
-
-- `imports`: A package or list of packages that the standalone file
-   depends on. A minimal version may be specified in parentheses,
-   e.g. `rlang (>= 1.0.0)`. These dependencies are passed to
-   [use_package()] to ensure they are included in the `Imports:`
-   field of the `DESCRIPTION` file.
+Two of these fields are consulted by \code{use_standalone()}:
+\itemize{
+\item \code{dependencies}: A file or a list of files in the same repo that
+the standalone file depends on. These files are retrieved
+automatically by \code{use_standalone()}.
+\item \code{imports}: A package or list of packages that the standalone file
+depends on. A minimal version may be specified in parentheses,
+e.g. \verb{rlang (>= 1.0.0)}. These dependencies are passed to
+\code{\link[usethis:use_package]{use_package()}} to ensure they are included in the \verb{Imports:}
+field of the \code{DESCRIPTION} file.
+}
 
 Note that lists are specified with standard YAML syntax, using
-square brackets, for example: `imports: [rlang (>= 1.0.0), purrr]`.
-
-
-[use_package()]: R:use_package()
-[rlang (>= 1.0.0), purrr]: R:rlang\%20(\%3E=\%201.0.0),\%20purrr
-}\if{html}{\out{</div>}}
+square brackets, for example: \verb{imports: [rlang (>= 1.0.0), purrr]}.
 
 }
 

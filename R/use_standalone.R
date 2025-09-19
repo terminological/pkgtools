@@ -122,7 +122,7 @@ use_standalone = function(repo_spec, file = NULL, ref = NULL, host = NULL) {
 
 # Adapted from usethis
 standalone_imports = function(wd) {
-  out = tibble::tibble(pkg = character(), cmp = character(), ver = character())
+  out = dplyr::tibble(pkg = character(), cmp = character(), ver = character())
 
   for (file in fs::dir_ls(
     fs::path(wd, "R"),
@@ -153,7 +153,7 @@ parse_version = function(field) {
   version_regex <- "(.*) \\((.*)\\)$"
   has_ver <- grepl(version_regex, field)
   if (!has_ver) {
-    return(tibble::tibble(pkg = field, cmp = NA, ver = NA))
+    return(dplyr::tibble(pkg = field, cmp = NA, ver = NA))
   }
   pkg <- sub(version_regex, "\\1", field)
   ver <- sub(version_regex, "\\2", field)
@@ -166,7 +166,7 @@ parse_version = function(field) {
       i = "Example of expected version format: `rlang (>= 1.0.0)`."
     ))
   }
-  return(tibble::tibble(pkg = pkg, cmp = ver[[1]], ver = ver[[2]]))
+  return(dplyr::tibble(pkg = pkg, cmp = ver[[1]], ver = ver[[2]]))
 }
 
 

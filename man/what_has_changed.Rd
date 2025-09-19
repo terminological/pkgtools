@@ -10,5 +10,7 @@ what_has_changed()
 nothing
 }
 \description{
-Compare content of editor with last saved version
+I frequently end up getting an unsaved change in RStudio conflicitng with
+an update on disk. Often as a result of a global find and replace. This helps
+determine which version to keep.
 }

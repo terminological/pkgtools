@@ -8,7 +8,6 @@ namespaces.}
 fix_unqualified_fns_bulk(
   pkg = ".",
   rDirectories = c(here::here("R"), here::here("tests/testthat")),
-  dry_run = FALSE,
   prioritise = c("dplyr", "rlang", "stringr", "forcats", "ggplot2", "purrr", "tidyr",
     "readr", "stats", "utils")
 )
@@ -18,10 +17,6 @@ fix_unqualified_fns_bulk(
 
 \item{rDirectories}{the locations of the R code to fix (by default R scripts,
 and tests, but not vignettes)}
-
-\item{dry_run}{by default this function will not actually do anything unless
-this is set to FALSE. However the dry run output can be manually compared
-with a diff tool to interactively accept changes.}
 
 \item{prioritise}{a list of package names to pick from first}
 }

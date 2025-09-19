@@ -14,46 +14,68 @@ install_local(
 )
 }
 \arguments{
-\item{path}{path to local directory, or compressed file (tar, zip, tar.gz
-tar.bz2, tgz2 or tbz)}
+\item{path}{the package (defaults to \code{.})}
 
-\item{...}{Other arguments passed on to \code{\link[utils:install.packages]{utils::install.packages()}}.}
+\item{...}{
+  Named arguments passed on to \code{\link[remotes:install_local]{remotes::install_local}}\describe{
+    \item{\code{subdir}}{subdirectory within url bundle that contains the R package.}
+\item{\code{dependencies}}{Which dependencies do you want to check?
+Can be a character vector (selecting from "Depends", "Imports",
+"LinkingTo", "Suggests", or "Enhances"), or a logical vector.
 
-\item{force}{Force installation, even if the remote state has not changed
-since the previous install.}
+\code{TRUE} is shorthand for "Depends", "Imports", "LinkingTo" and
+"Suggests". \code{NA} is shorthand for "Depends", "Imports" and "LinkingTo"
+and is the default. \code{FALSE} is shorthand for no dependencies (i.e.
+just check this package, not its dependencies).
 
-\item{upgrade}{Should package dependencies be upgraded? One of "default", "ask", "always", or "never". "default"
-respects the value of the \code{R_REMOTES_UPGRADE} environment variable if set,
-and falls back to "ask" if unset. "ask" prompts the user for which out of
-date packages to upgrade. For non-interactive sessions "ask" is equivalent
-to "always". \code{TRUE} and \code{FALSE} are also accepted and correspond to
-"always" and "never" respectively.}
+The value "soft" means the same as \code{TRUE}, "hard" means the same as \code{NA}.
 
-\item{quiet}{If \code{TRUE}, suppress output.}
+You can also specify dependencies from one or more additional fields,
+common ones include:
+\itemize{
+\item Config/Needs/website - for dependencies used in building the pkgdown site.
+\item Config/Needs/coverage for dependencies used in calculating test coverage.
+}}
+\item{\code{build}}{If \code{TRUE} build the package before installing.}
+\item{\code{build_opts}}{Options to pass to \verb{R CMD build}, only used when \code{build} is \code{TRUE}.}
+\item{\code{build_manual}}{If \code{FALSE}, don't build PDF manual ('--no-manual').}
+\item{\code{build_vignettes}}{If \code{FALSE}, don't build package vignettes ('--no-build-vignettes').}
+\item{\code{repos}}{A character vector giving repositories to use.}
+\item{\code{type}}{Type of package to \code{update}.}
+\item{\code{...}}{Other arguments passed on to \code{\link[utils:install.packages]{utils::install.packages()}}.}
+}}
+
+\item{force}{do the install regardless of versions}
+
+\item{upgrade}{upgrade out of data CRAN packages}
+
+\item{quiet}{do it quietly}
 
 \item{wd}{the project root directory of the current project (defaults to \code{here::here()})}
 }
 \description{
-\code{devtools::install_local} does not play well with \code{renv} in this version
-of \code{install_local} we intercept installation of locally developed packages
-when we are in a \code{renv} managed project and installing a local dependency, it builds a source project into
-\code{renv} cellar and installs it from there. This allows a copy of a locally developed package to
-be deployed with the \code{renv} managed analysis project without specifically being
-deployed to \code{CRAN} or \code{r-universe}.
+\code{devtools::install_local} does not play well with \code{renv} in this version of
+\code{install_local} we intercept installation of locally developed packages when
+we are in a \code{renv} managed project and installing a local dependency, it
+builds a source project into \code{renv} cellar and installs it from there. This
+allows a copy of a locally developed package to be deployed with the \code{renv}
+managed analysis project without specifically being deployed to \code{CRAN} or
+\code{r-universe}.
 }
 \details{
 If installed locally for a non-\code{renv} project (e.g. a package development)
-the usual behaviour applies to version management. Installation of new versions
-of the project will happen when the package is released and then installed from the
-release location (e.g. github, cran, r-universe).
+the usual behaviour applies to version management. Installation of new
+versions of the project will happen when the package is released and then
+installed from the release location (e.g. github, cran, r-universe).
 
-If a locally developed package is deployed to an \code{renv} project once it is released onto a valid distribution
-platform e.g. CRAN, r-universe or github, we will want to use that version in
-our \code{renv}. This we can do using the \code{rebuild = TRUE} option of \code{renv::install}, e.g.:
-\verb{renv::install(...pkg name/github..., repo = ...r-universe?..., rebuild = TRUE)}
+If a locally developed package is deployed to an \code{renv} project once it is
+released onto a valid distribution platform e.g. CRAN, r-universe or github,
+we will want to use that version in our \code{renv}. This we can do using the
+\code{rebuild = TRUE} option of \code{renv::install}, e.g.:
+\code{renv::install(...pkgname/github..., repo = ...r-universe?..., rebuild = TRUE)}
 followed by a \code{renv::snapshot()} to update the lock file. The locally built
-package version will remain in the \verb{<projroot>/renv/local} cellar until removed
-by hand.
+package version will remain in the \verb{<projroot>/renv/local} cellar until
+removed by hand.
 }
 \examples{
 \dontrun{

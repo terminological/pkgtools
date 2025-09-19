@@ -6,53 +6,27 @@
 #' @return nothing - called for side effects
 #' @export
 fix_unqualified_fns = function() {
-  if (
-    requireNamespace("rstudioapi", quietly = TRUE) &&
-      requireNamespace("diffobj", quietly = TRUE)
-  ) {
-    context = rstudioapi::getSourceEditorContext()
-    content = context$content
-    path = context$path
-    package_map = .package_map(path)
-    tmp = .process_content(content, package_map)
-    if (tmp$changed) {
-      if (!.punkmode()) {
-        merged = merge_code(content, tmp$new_content)
+  context = rstudioapi::getSourceEditorContext()
+  content = context$content
+  path = context$path
+  package_map = .package_map(path)
+  tmp = .process_content(content, package_map)
+  if (tmp$changed) {
+    if (!.punkmode()) {
+      merged = merge_code(content, tmp$new_content)
 
-        rstudioapi::setDocumentContents(
-          text = paste0(unlist(merged), collapse = "\n"),
-          context$id
-        )
-
-        # print(diffobj::diffChr(
-        #   content,
-        #   tmp$new_content,
-        #   interactive = FALSE,
-        #   mode = "sidebyside"
-        # ))
-        # proceed = utils::askYesNo(
-        #   "Update editor with suggested changes?",
-        #   default = TRUE
-        # )
-        # if (proceed) {
-        #   rstudioapi::setDocumentContents(
-        #     text = paste0(tmp$new_content, collapse = "\n"),
-        #     context$id
-        #   )
-        # }
-      } else {
-        rstudioapi::setDocumentContents(
-          text = paste0(tmp$new_content, collapse = "\n"),
-          context$id
-        )
-      }
+      rstudioapi::setDocumentContents(
+        text = paste0(unlist(merged), collapse = "\n"),
+        context$id
+      )
     } else {
-      message("No unqualified functions found.")
+      rstudioapi::setDocumentContents(
+        text = paste0(tmp$new_content, collapse = "\n"),
+        context$id
+      )
     }
   } else {
-    message(
-      "Please install 'rstudioapi' and 'diffobj' packages for interactive use in Rstudio"
-    )
+    message("No unqualified functions found.")
   }
 }
 
@@ -99,7 +73,7 @@ fix_unqualified_fns_bulk = function(
     dplyr::filter(fs::path_ext(path) %in% c("R", "Rmd")) %>%
     # load all the content as a list column, make a copy
     dplyr::mutate(content.old = purrr::map(path, ~ readr::read_lines(.x))) %>%
-    dplyr::mutate(content = content.old, matches = list(tibble::tibble()))
+    dplyr::mutate(content = content.old, matches = list(dplyr::tibble()))
 
   #TODO: use .process_content instead
   for (packge in packages) {
@@ -133,7 +107,7 @@ fix_unqualified_fns_bulk = function(
           tmp = character()
         }
         # count the number of matched in a file
-        tmp = tibble::tibble(name = tmp) %>%
+        tmp = dplyr::tibble(name = tmp) %>%
           dplyr::group_by(name) %>%
           dplyr::summarise(value = dplyr::n()) %>%
           dplyr::mutate(pkg = packge)
@@ -151,29 +125,20 @@ fix_unqualified_fns_bulk = function(
   tmp = files %>% dplyr::select(path, matches) %>% tidyr::unnest(matches)
 
   if (any(files$changed)) {
-    if (!.punkmode()) {
-      message(
-        sum(tmp$value),
-        " function calls missing namespaces found: ",
-        paste0(unique(tmp$pkg), collapse = "; ")
-      )
-      files %>%
-        dplyr::filter(changed) %>%
-        purrr::pwalk(function(path, content.old, ...) message(path))
-    }
+    message(
+      sum(tmp$value),
+      " function calls missing namespaces found: ",
+      paste0(unique(tmp$pkg), collapse = "; ")
+    )
+    files %>%
+      dplyr::filter(changed) %>%
+      purrr::pwalk(function(path, content.old, ...) message(path))
 
-    if (.punkmode()) {
-      fixme = 1
-    } else if (dry_run) {
-      fixme = 3
-    } else {
-      fixme = utils::menu(
-        c("Yes", "No"),
-        "Would you like me to fix these?"
-      )
-    }
+    fixme = utils::askYesNo(
+      "Would you like me to fix these?"
+    )
 
-    if (fixme %in% c(1)) {
+    if (fixme) {
       .commit_if_needed(pkg$path, "unqualified function replacement")
 
       tmp = files %>%
@@ -204,9 +169,6 @@ fix_unqualified_fns_bulk = function(
       }
     }
   }
-
-  # TODO: format a diff output
-  # tmp = diffobj::diffChr(files$content[[6]],files$content.old[[6]])
 
   message(
     "Done. Previous versions are in your commit history."
@@ -268,7 +230,7 @@ fix_unqualified_fns_bulk = function(
   # exclude the current ones
   # packages = packages[!packages %in% c(cur_package,"base")]
 
-  packageMap = tibble::tibble(
+  packageMap = dplyr::tibble(
     package = packages,
     nsqualifier = nsqualifier
   ) %>%
@@ -340,7 +302,7 @@ fix_unqualified_fns_bulk = function(
 .process_content = function(content, package_map) {
   packages = levels(package_map$package)
 
-  matches = tibble::tibble()
+  matches = dplyr::tibble()
   old_content = content
   for (packge in packages) {
     functions = package_map %>%
@@ -373,7 +335,7 @@ fix_unqualified_fns_bulk = function(
       # if (is.null(tmp)) tmp = character()
       #
       # # count the number of matched in a file
-      # tmp = tibble::tibble(name=tmp) %>% dplyr::group_by(name) %>%
+      # tmp = dplyr::tibble(name=tmp) %>% dplyr::group_by(name) %>%
       #   dplyr::summarise(value = dplyr::n()) %>% dplyr::mutate(pkg = packge)
 
       tmp = .qualify_with_parse_data(
