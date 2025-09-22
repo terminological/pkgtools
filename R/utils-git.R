@@ -16,7 +16,8 @@
   message(message, ": ", gert::git_commit_info()$id)
 }
 
-
+# find a local git repository given a remote specified as "organisation/project"
+# given a Git directory.
 .find_local_repo = function(remote, git_dir = fs::path_home("Git")) {
   dirs = fs::dir_ls(git_dir, type = "directory")
   for (dir in dirs) {
@@ -28,9 +29,11 @@
       silent = TRUE
     )
   }
-  stop("local repository not found for: ", remote)
+  stop("local repository not found for: ", remote, " in ", git_dir)
 }
 
+# Given a URL split it into the various pieces.
+# the result will contain remote
 .parse_remote_url = function(url) {
   tmp = stringr::str_match_all(
     url,
@@ -48,6 +51,8 @@
   ))
 }
 
+# Given a path of a file under Git version control find
+# the details of the associated remote as a list.
 .find_remote_repo = function(path = getwd()) {
   root = gert::git_find(path)
   repo = gert::git_remote_info(repo = root)

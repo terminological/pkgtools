@@ -4,7 +4,13 @@
 \alias{use_standalone}
 \title{Extended version of \code{use_standalone} that works with analysis projects}
 \usage{
-use_standalone(repo_spec, file = NULL, ref = NULL, host = NULL)
+use_standalone(
+  repo_spec,
+  file = NULL,
+  ref = NULL,
+  host = NULL,
+  git_dir = fs::path_home("Git")
+)
 }
 \arguments{
 \item{repo_spec}{A string identifying the GitHub repo in one of these forms:

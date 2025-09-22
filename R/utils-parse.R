@@ -103,7 +103,7 @@
 
   # Roxygen examples blocks:
   ex_start = which(stringr::str_detect(modified_content, "^#'\\s*@examples$"))
-  ex_lines = which(stringr::str_detect(modified_content, "^#'"))
+  ex_lines = which(stringr::str_detect(modified_content, "^#'(?!\\s*@)"))
   ex_end = ex_lines[
     ex_lines != dplyr::lead(ex_lines, default = .Machine$integer.max) - 1
   ]
@@ -113,7 +113,7 @@
     tmp_start = ex_start[i] + 1
     tmp_end = ex_end[ex_end >= tmp_start][1]
     ex_block = modified_content[tmp_start:tmp_end] %>%
-      stringr::str_remove("^#'")
+      stringr::str_remove("^#'(?!\\s*@)")
     mod_block = .qualify_with_parse_data(
       ex_block,
       functionNames,
@@ -121,7 +121,11 @@
       references
     )
     summary = dplyr::bind_rows(summary, mod_block$summary)
-    mod_block = paste0("#'", mod_block$modified_content)
+    mod_block = stringr::str_replace(
+      mod_block$modified_content,
+      "^(?!#')",
+      "#'"
+    )
     modified_content[tmp_start:tmp_end] = mod_block
   }
 

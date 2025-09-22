@@ -22,7 +22,6 @@ Imports:
     dplyr,
     forcats,
     fs,
-    gert,
     here,
     magrittr,
     pkgload,
@@ -44,10 +43,11 @@ Imports:
     yaml,
     pins,
     gert,
+    gh,
     shiny,
-    bslib
+    bslib,
+    testthat
 Suggests:
     rstudioapi,
-    diffobj,
-    testthat (>= 3.0.0)
+    diffobj
 Config/testthat/edition: 3

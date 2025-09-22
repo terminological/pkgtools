@@ -43,9 +43,12 @@ merge_code <- function(
   content_b = if (!is.null(new)) paste0(new, collapse = "\n") else NULL
   content_value = paste0(value, collapse = "\n")
 
-  if (content_value == content_b) {
+  if (
+    (is.null(content_b) || content_value == content_b) &&
+      (is.null(content_a) || content_value == content_a)
+  ) {
     message("No difference to compare.")
-    return(strsplit(content_value, "\n"))
+    return(unlist(strsplit(content_value, "\n")))
   }
 
   inclJs = function(script) {
