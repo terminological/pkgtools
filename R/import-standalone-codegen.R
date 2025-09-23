@@ -118,7 +118,7 @@
 .update_fenced_block = function(
   .input,
   .template,
-  name,
+  name = "block",
   ...,
   .start_glue = "# {name} start ----",
   .end_glue = "# {name} end ----",
@@ -254,7 +254,7 @@
 #' )
 .delete_fenced_block = function(
   .input,
-  name,
+  name = "block",
   ...,
   .start_glue = "# {name} start ----",
   .end_glue = "# {name} end ----"
