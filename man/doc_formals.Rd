@@ -4,14 +4,12 @@
 \alias{doc_formals}
 \title{Document default formal parameters in a function}
 \usage{
-doc_formals(fn, param, one_of = TRUE)
+doc_formals(fn, param = NULL, dname = deparse(substitute(param)))
 }
 \arguments{
 \item{fn}{a function in the current package}
 
 \item{param}{a parameter (usually the same as the param block)}
-
-\item{one_of}{decorate the string with a "default"/"one of" depending on type}
 }
 \value{
 a formatted string for inclusion in a Roxygen block

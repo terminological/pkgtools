@@ -24,14 +24,14 @@
 #'
 #' @unit
 #'
-#' iris_list = .df_to_list_of_lists(iris)
+#' iris_list = .df_to_list_of_lists(datasets::iris)
 #'
 #' testthat::expect_equal(
 #'   iris_list[[1]]$Species,
 #'   iris$Species[[1]]
 #' )
 #'
-#' mtcars_nest = mtcars %>%
+#' mtcars_nest = datasets::mtcars %>%
 #'   dplyr::mutate(name = rownames(.)) %>%
 #'   tidyr::nest(details = -c(cyl,gear))
 #'
@@ -78,9 +78,9 @@
 #' iris_list = .df_to_list_of_lists(iris)
 #' iris2 = .list_of_lists_to_df(iris_list)
 #'
-#' testthat::expect_equal(iris, as.data.frame(iris2))
+#' testthat::expect_equal(datasets::iris, as.data.frame(iris2))
 #'
-#' mtcars_nest = mtcars %>%
+#' mtcars_nest = datasets::mtcars %>%
 #'   dplyr::mutate(name = rownames(.)) %>%
 #'   tidyr::nest(details = -c(cyl,gear))
 #'

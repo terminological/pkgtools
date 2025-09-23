@@ -21,4 +21,4 @@ testthat file.
 # This provides support to `roxygen2` and only gets executed in the context
 # of `devtools::document()`. There is no interactive use of this function.
 }
-\concept{document}
+\concept{roxy}

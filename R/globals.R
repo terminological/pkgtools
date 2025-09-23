@@ -29,5 +29,9 @@ utils::globalVariables(c(
   "line1",
   "text",
   "token",
-  "value"
+  "value",
+  ".id"
 ))
+
+#' @importFrom testthat expect_equal
+NULL

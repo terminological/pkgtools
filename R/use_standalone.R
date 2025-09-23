@@ -33,6 +33,7 @@
 #' @concept standalone
 #'
 #' @inherit usethis::use_standalone
+#' @param git_dir The directory to the users collection of Git projects
 #' @export
 use_standalone = function(
   repo_spec,
@@ -588,6 +589,7 @@ parse_version = function(field) {
 #'
 #' @param names list of potential standalones from local or remote
 #' @param error_call where to raise errors
+#' @noRd
 #'
 #' @returns a single filename which will match standalone-*.R
 standalone_choose = function(
@@ -642,7 +644,9 @@ read_github_file = function(repo_spec, path, ref = NULL, host = NULL) {
     .destfile = tf,
     .accept = "application/vnd.github.v3.raw"
   )
-  readr::read_utf8(tf)
+  withr::with_options(list(encoding = "native.enc"), {
+    readLines(tf, encoding = "UTF-8", warn = FALSE)
+  })
 }
 
 # copy of usethis:::standalone_header

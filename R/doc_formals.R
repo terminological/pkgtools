@@ -5,7 +5,6 @@
 #'
 #' @param fn a function in the current package
 #' @param param a parameter (usually the same as the param block)
-#' @param one_of decorate the string with a "default"/"one of" depending on type
 #'
 #' @return a formatted string for inclusion in a Roxygen block
 #' @concept code
@@ -34,26 +33,38 @@
 #' doc_formals(test_fn, arg)
 #' doc_formals(test_fn, def)
 #' doc_formals(test_fn, geh)
-doc_formals = function(fn, param, one_of = TRUE) {
-  # TODO: implement this as a Roxygen tag?
-  param = rlang::as_label(rlang::ensym(param))
-  x = formals(fn)
-  x = x[[param]]
-  if (is.call(x)) {
-    x = tryCatch(eval(x), error = function(e) format(x))
+doc_formals = function(
+  fn,
+  param = NULL,
+  dname = deparse(substitute(param))
+) {
+  # param = rlang::as_label(rlang::ensym(param))
+
+  one_of = as.character(body(fn)) %>%
+    stringr::str_detect(stringr::fixed(sprintf("match.arg(%s)", dname))) %>%
+    any()
+
+  .call_x = formals(fn)
+  .call_x = .call_x[[dname]]
+  if (missing(.call_x)) {
+    return("")
   }
-  x = sprintf("`%s`", as.character(x))
-  if (one_of) {
-    if (length(x) > 1) {
-      return(sprintf(
-        "one of: %s; default %s",
-        paste0(x, collapse = ", "),
-        x[[1]]
-      ))
-    } else {
-      return(sprintf("default %s", x))
-    }
+  src = format(.call_x)
+  x = try(eval(.call_x, rlang::fn_env(fn)), silent = TRUE)
+  if (inherits(x, "try-error")) {
+    # couldnt evaluate x - just return the formatted call
+    return(sprintf("(default \\code{`%s`})", src))
+  } else if (is.atomic(x) && one_of) {
+    # We are expecting a vector.
+    x = paste0("`", format(x), "`")
+    return(sprintf(
+      "(default \\code{%s}; allowed: \\code{%s})",
+      x[[1]],
+      paste0(x, collapse = ",")
+    ))
   } else {
-    return(paste0(x, collapse = ", "))
+    # maybe a single atomic maybe something else
+    # we can't risk returning the value, but we do know the type.
+    return(sprintf("(default \\code{`%s`} [%s])", src, class(x)[[1]]))
   }
 }

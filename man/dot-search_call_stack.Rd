@@ -22,8 +22,7 @@ dataframe parameters in tidy calls
 \keyword{internal}
 
 \section{Unit tests}{
-\code{
-\preformatted{
+\if{html}{\out{<div class="sourceCode">}}\preformatted{
 
 h = function() {
  df = .search_call_stack(.class = "data.frame")
@@ -34,9 +33,8 @@ g = function() {h()}
 
 f = function(x) {g()}
 
-testthat::expect_equal( f(iris), nrow(iris))
+testthat::expect_equal( f(datasets::iris), nrow(datasets::iris))
 
-}
-}
+}\if{html}{\out{</div>}}
 }
 

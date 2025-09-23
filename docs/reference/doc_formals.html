@@ -9,7 +9,7 @@ default value or allowable values of a function"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">pkgtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +41,7 @@ default value or allowable values of a function</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">doc_formals</span><span class="op">(</span><span class="va">fn</span>, <span class="va">param</span>, one_of <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">doc_formals</span><span class="op">(</span><span class="va">fn</span>, param <span class="op">=</span> <span class="cn">NULL</span>, dname <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/deparse.html" class="external-link">deparse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html" class="external-link">substitute</a></span><span class="op">(</span><span class="va">param</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -54,10 +54,6 @@ default value or allowable values of a function</p>
 
 <dt id="arg-param">param<a class="anchor" aria-label="anchor" href="#arg-param"></a></dt>
 <dd><p>a parameter (usually the same as the param block)</p></dd>
-
-
-<dt id="arg-one-of">one_of<a class="anchor" aria-label="anchor" href="#arg-one-of"></a></dt>
-<dd><p>decorate the string with a "default"/"one of" depending on type</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -85,11 +81,11 @@ default value or allowable values of a function</p>
 <span class="r-in"><span><span class="co"># @param arg a set of descriptions: `r doc_formals(test_fn, arg)`</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">doc_formals</span><span class="op">(</span><span class="va">test_fn</span>, <span class="va">arg</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "one of: `option one`, `option two`, `option three`; default `option one`"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "(default \\code{`option one  `}; allowed: \\code{`option one  `,`option two  `,`option three`})"</span>
 <span class="r-in"><span><span class="fu">doc_formals</span><span class="op">(</span><span class="va">test_fn</span>, <span class="va">def</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "default `123`"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "(default \\code{`123`} [numeric])"</span>
 <span class="r-in"><span><span class="fu">doc_formals</span><span class="op">(</span><span class="va">test_fn</span>, <span class="va">geh</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> character(0)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "(default \\code{`NULL`} [NULL])"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

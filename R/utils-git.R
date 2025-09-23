@@ -8,12 +8,12 @@
     rows = nrow(gert::git_status(repo = path))
     if (rows > 0) {
       .pkgtools_message("creating commit before changing files.")
-      gert::git_add(files = ".")
-      gert::git_commit(message)
+      gert::git_add(files = ".", repo = path)
+      gert::git_commit(message, repo = path)
     }
   }
-  .commits$push(gert::git_commit_info()$id)
-  message(message, ": ", gert::git_commit_info()$id)
+  .commits$push(gert::git_commit_info(repo = path)$id)
+  message(message, ": ", gert::git_commit_info(repo = path)$id)
 }
 
 # find a local git repository given a remote specified as "organisation/project"

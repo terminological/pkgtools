@@ -1,5 +1,7 @@
 #' Delete backup files from the current project
 #'
+#' This is largely deprecated by the move to git commits for backup
+#'
 #' @param pkg the package to delete files from.
 #'
 #' @return nothing

@@ -1,6 +1,6 @@
 Package: pkgtools
 Title: Code generation and linting functions for R packages
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: person(
   given = "Robert",
   family = "Challen",
@@ -37,8 +37,6 @@ Imports:
     renv,
     jsonlite,
     usethis,
-    spelling,
-    urlchecker,
     cli,
     yaml,
     pins,
@@ -46,8 +44,13 @@ Imports:
     gh,
     shiny,
     bslib,
+    glue,
+    utils,
+    whisker,
+    roxygen2,
+    rstudioapi,
     testthat
 Suggests:
-    rstudioapi,
-    diffobj
+    spelling,
+    urlchecker
 Config/testthat/edition: 3

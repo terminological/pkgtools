@@ -7,6 +7,8 @@
   pkg = ".",
   rDirectories = c("data-raw", "R", "vignettes", "tests")
 ) {
+  path = content.old = content = NULL
+
   pkg = devtools::as.package(pkg)
   rDirectories = rDirectories[fs::dir_exists(rDirectories)]
   # locate source files in the directories

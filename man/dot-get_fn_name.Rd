@@ -18,8 +18,7 @@ Get the defined name of a function
 \keyword{internal}
 
 \section{Unit tests}{
-\code{
-\preformatted{
+\if{html}{\out{<div class="sourceCode">}}\preformatted{
 
 f = tolower
 
@@ -38,7 +37,6 @@ testthat::expect_equal(
   "<unknown>"
 )
 
-}
-}
+}\if{html}{\out{</div>}}
 }
 

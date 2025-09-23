@@ -13,7 +13,7 @@ delete_backups(pkg = ".")
 nothing
 }
 \description{
-Delete backup files from the current project
+This is largely deprecated by the move to git commits for backup
 }
 \concept{usethis}
 \keyword{internal}

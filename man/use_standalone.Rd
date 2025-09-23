@@ -39,6 +39,8 @@ variable.
 For a hypothetical GitHub Enterprise instance, either
 "https://github.acme.com/api/v3" or "https://github.acme.com" is
 acceptable.}
+
+\item{git_dir}{The directory to the users collection of Git projects}
 }
 \description{
 \code{usethis::use_standalone} is a package development tool used in \code{r-lib} to

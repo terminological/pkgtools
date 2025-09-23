@@ -27,7 +27,11 @@ qcheck = function(pkg = ".", ..., args = "", quiet = FALSE) {
       args = c("--no-examples", "--no-tests", "--ignore-vignettes", args)
     )
   }
-  spelling::spell_check_package()
-  urlchecker::url_check()
+  if (requireNamespace("spelling", quietly = TRUE)) {
+    spelling::spell_check_package()
+  }
+  if (requireNamespace("urlchecker", quietly = TRUE)) {
+    urlchecker::url_check()
+  }
   invisible(check)
 }

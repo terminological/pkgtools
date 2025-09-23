@@ -24,6 +24,10 @@ reference:
   desc: >
     Some additional tools to help general editing tasks.
   contents: has_concept("edit")
+- title: Roxygen tags
+  desc: >
+    Custom roxygen tags for adding unit tests and documenting formal paramters
+  contents: has_concept("roxy")
 - title: Others
-  contents: lacks_concepts(c("usethis", "renv", "standalone","edit"))
+  contents: lacks_concepts(c("usethis", "renv", "standalone","edit","roxy"))
 

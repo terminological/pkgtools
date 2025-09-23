@@ -19,8 +19,7 @@ and ignores primitives and characters.
 \keyword{internal}
 
 \section{Unit tests}{
-\code{
-\preformatted{
+\if{html}{\out{<div class="sourceCode">}}\preformatted{
 
 f1 = .lax_as_function(tolower)
 f2 = .lax_as_function(~ tolower(.x))
@@ -30,7 +29,6 @@ testthat::expect_equal(f1, tolower)
 testthat::expect_equal(f2("HELLO WORLD"), f1("HELLO WORLD"))
 testthat::expect_equal(f3, f1("HELLO WORLD"))
 
-}
-}
+}\if{html}{\out{</div>}}
 }
 

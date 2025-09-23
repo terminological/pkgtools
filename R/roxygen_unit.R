@@ -5,7 +5,7 @@
 #' testthat file.
 #'
 #' @inheritParams roxygen2::roxy_tag_parse
-#' @concept document
+#' @concept roxy
 #'
 #' @importFrom roxygen2 roxy_tag_parse
 #' @return a `roxy_tag` object with the `val` field set to the parsed value
@@ -26,7 +26,7 @@ roxy_tag_parse.roxy_tag_unit = function(x) {
 #' @inheritParams roxygen2::roxy_tag_rd
 #'
 #' @importFrom roxygen2 roxy_tag_rd
-#' @concept document
+#' @concept roxy
 #' @return an `roxygen2::rd_section` (see `roxygen2` documentation)
 #' @export
 #'
@@ -67,16 +67,21 @@ roxy_tag_rd.roxy_tag_unit = function(x, base_path, env) {
   pkg = unname(getNamespaceName(env))
   relpath = stringr::str_extract(block$file, "^(.*?/)(R/.*)$", 2)
 
+  start_glue = "# unit test start: {name} ----"
+  end_glue = "# unit test end: {name} ----"
+  insert_before = "# end of unit tests ----"
+
   # Check to see if the test file exists. If not create and empty skeleton:
   if (!fs::file_exists(test_path)) {
     readr::write_lines(
-      .create_skeleton(unit_test_skeleton, pkg = pkg),
+      .create_skeleton(
+        unit_test_skeleton,
+        pkg = pkg,
+        .insert_before = insert_before
+      ),
       test_path
     )
   }
-
-  start_glue = "# {name} start ----"
-  end_glue = "# {name} end ----"
 
   test_lines = readr::read_lines(test_path)
 
@@ -90,18 +95,28 @@ roxy_tag_rd.roxy_tag_unit = function(x, base_path, env) {
     dplyr::filter(!name %in% ls(env, all.names = TRUE))
   # delete unmatched tests
   for (name in test_block_data$name) {
-    test_lines = .delete_fenced_block(test_lines, x)
+    test_lines = .delete_fenced_block(
+      test_lines,
+      name = name,
+      .start_glue = start_glue,
+      .end_glue = end_glue
+    )
   }
 
   # modify the existing block or add a new one at the end
   test_lines = .update_fenced_block(
     test_lines,
     .template = unit_test_call,
+    # whisker data:
     name = topic,
     path = relpath,
     line = x$line,
     # double space indent. Code could be vector I guess.
-    code = paste0("  ", gsub("\n", "\n  ", raw_code))
+    code = paste0("  ", gsub("\n", "\n  ", raw_code)),
+    # fences:
+    .start_glue = start_glue,
+    .end_glue = end_glue,
+    .insert_before = insert_before
   )
 
   # write the new block out to the test file
@@ -121,11 +136,9 @@ format.rd_section_unit = function(x, ...) {
 unit_test_section = "
 {{#code}}
 \\section{Unit tests}{
-\\code{
-\\preformatted{
+\\if{html}{\\out{<div class=\"sourceCode\">}}\\preformatted{
 {{{.}}}
-}
-}
+}\\if{html}{\\out{</div>}}
 }
 {{/code}}
 "
