@@ -14,23 +14,7 @@ RStudio does this for examples but nothing else this allows singly commented
 code or code in other tags e.g. \verb{@unit} to be executed
 }
 \details{
-To enable keyboard shortcuts we need the \code{shrtcts} package and \verb{~/.shrtcts.R}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#' Execute commented code
-#'
-#' Run multi line code stripping off leading comments
-#'
-#' @shortcut Ctrl+Shift+P
-pkgtools::run_commented_code
-}\if{html}{\out{</div>}}
-
-and:
-
-in \verb{~/.Rprofile}
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{if (interactive() && requireNamespace("shrtcts", quietly = TRUE)) \{
-  shrtcts::add_rstudio_shortcuts(set_keyboard_shortcuts = TRUE)
-\}
-}\if{html}{\out{</div>}}
+This is installed as an RStudio add in and can be given a keyboard shortcut
+through \code{Tools} > \verb{Modify Keyboard Shortcuts...}
 }
 \concept{edit}

@@ -1,0 +1,4 @@
+Name: Execute commented code
+Description: Run multi line code stripping off leading comments
+Binding: run_commented_code
+Interactive: false
