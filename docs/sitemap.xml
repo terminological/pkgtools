@@ -33,6 +33,7 @@
 <url><loc>https://terminological.github.io/pkgtools/reference/merge_code.html</loc></url>
 <url><loc>https://terminological.github.io/pkgtools/reference/migrate_to_pins.html</loc></url>
 <url><loc>https://terminological.github.io/pkgtools/reference/pipe.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/pkgtools_style_transformer.html</loc></url>
 <url><loc>https://terminological.github.io/pkgtools/reference/qcheck.html</loc></url>
 <url><loc>https://terminological.github.io/pkgtools/reference/roxy_tag_parse.roxy_tag_dparam.html</loc></url>
 <url><loc>https://terminological.github.io/pkgtools/reference/roxy_tag_parse.roxy_tag_unit.html</loc></url>
@@ -41,6 +42,10 @@
 <url><loc>https://terminological.github.io/pkgtools/reference/run_commented_code.html</loc></url>
 <url><loc>https://terminological.github.io/pkgtools/reference/set_renv_repos.html</loc></url>
 <url><loc>https://terminological.github.io/pkgtools/reference/standalone_choose.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/standalone_snapshot.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/style_text.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/switch_expect_equals.html</loc></url>
+<url><loc>https://terminological.github.io/pkgtools/reference/switch_standalone_snapshot.html</loc></url>
 <url><loc>https://terminological.github.io/pkgtools/reference/sync_standalone_to_master.html</loc></url>
 <url><loc>https://terminological.github.io/pkgtools/reference/undo.html</loc></url>
 <url><loc>https://terminological.github.io/pkgtools/reference/unstable.html</loc></url>

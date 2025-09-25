@@ -4,7 +4,13 @@ Binding: run_commented_code
 Interactive: false
 
 
-Name: Switch variable for test
-Description: Generate a hash based test case for the currently selected variable
+Name: Hash based test case
+Description: Generate a hash based test case for the currently selected expression
 Binding: switch_standalone_snapshot
+Interactive: false
+
+
+Name: Equals based test case
+Description: Generate an equality based test case for the currently selected expression
+Binding: switch_expect_equals
 Interactive: false

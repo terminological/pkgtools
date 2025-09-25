@@ -30,14 +30,18 @@ run_commented_code = function() {
 
 #' Switch global variable for hash based test case.
 #'
+#' @concept edit
 #' @returns nothing
 #' @export
 switch_standalone_snapshot = function() {
   context = rstudioapi::getSourceEditorContext()
   selection = rstudioapi::selectionGet(id = context$id)
-  var = try(get(selection$value, envir = globalenv()), silent = TRUE)
+  var = try(
+    eval(parse(text = selection$value), envir = globalenv()),
+    silent = TRUE
+  )
   if (inherits(var, "try-error")) {
-    rstudioapi::showDialog("Undefined global", selection$value)
+    rstudioapi::showDialog("Error evaluating selection: ", var$message)
   } else {
     text = standalone_snapshot(var, FALSE, .as = selection$value)
     rstudioapi::selectionSet(value = text, id = context$id)
@@ -51,8 +55,10 @@ switch_standalone_snapshot = function() {
 #' projects independently of the test directory. This function lets you quickly
 #' create a check based on a gold standard
 #'
+#' @concept edit
 #' @param obj the gold standard to test
 #' @param .clip copy the result to the clipboard (needs `clipr`)
+#' @param .as what name to use for the comparison
 #'
 #' @returns a code snippet that can be pasted into the unit test case
 #' @export
@@ -81,6 +87,7 @@ standalone_snapshot = function(
 
 #' Switch expression for equality based test case.
 #'
+#' @concept edit
 #' @returns nothing
 #' @export
 switch_expect_equals = function() {
@@ -108,12 +115,16 @@ switch_expect_equals = function() {
 
     code = sprintf("testthat::expect_equal(%s, %s)", selection, var_code)
     code = style_text(code)
-    code = paste0(lead, code)
+    code = paste0(lead, as.character(code))
 
-    if (length(code) > 10) {
+    if (length(code) > 20) {
       ok = rstudioapi::showQuestion(
         "Long result",
-        "The selection you are evaluating results in a lot of code. Are you sure?"
+        paste0(c(
+          "The selection you are evaluating results ",
+          length(code),
+          " lines of code. Are you sure?"
+        ))
       )
       if (!ok) stop("Cancelled test creation.")
     }
@@ -129,38 +140,4 @@ switch_expect_equals = function() {
       context$id
     )
   }
-}
-
-#' testthat::expect_equal(iris[1, ], structure(list(Sepal.Length = 5.1, Sepal.Width = 3.5, Petal.Length = 1.4, Petal.Width = 0.2, Species = structure(1L, levels = c("setosa", "versicolor", "virginica"), class = "factor")), row.names = 1L, class = "data.frame"))
-
-#' Generate a hash based expectation for a standalone object
-#'
-#' `testthat` does not use hash based checking anymore, in favour of snapshots.
-#' These don't work well in tests of standalones because the file will move
-#' projects independently of the test directory. This function lets you quickly
-#' create a check based on a gold standard
-#'
-#' @param obj the gold standard to test
-#' @param .clip copy the result to the clipboard (needs `clipr`)
-#'
-#' @returns a code snippet that can be pasted into the unit test case
-#' @export
-standalone_snapshot = function(
-  obj,
-  .clip = interactive(),
-  .as = deparse(substitute(obj))
-) {
-  out = sprintf(
-    "testthat::expect_equal(rlang::hash(%s), \"%s\")",
-    .as,
-    rlang::hash(obj)
-  )
-  if (.clip) {
-    if (requireNamespace("clipr", quietly = TRUE)) {
-      message("clipboard updated: ", out)
-      clipr::write_clip(out)
-      return(invisible(out))
-    }
-  }
-  return(out)
 }

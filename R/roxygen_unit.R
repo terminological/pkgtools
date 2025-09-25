@@ -55,7 +55,9 @@ roxy_tag_parse.roxy_tag_unit = function(x) {
 #' fn_definition = gsub("@@","@",fn_definition)
 #' tmp = roxygen2::parse_text(fn_definition)
 #' print(tmp[[1]])
-#'
+#' @unit
+#' # for testing
+#' warning("should be suppressed")
 roxy_tag_rd.roxy_tag_unit = function(x, base_path, env) {
   name = NULL
 
@@ -105,15 +107,16 @@ roxy_tag_rd.roxy_tag_unit = function(x, base_path, env) {
     )
   }
 
-  # If no tests create an expect no failure.
+  # If no tests create an expect no failure, with warnings muffled.
   if (!stringr::str_detect(raw_code, "expect_.*?\\(")) {
     raw_code = sprintf(
-      "  testthat::expect_no_error(tryCatch({\n%s\n  }, warning = function(e) message(\"Warning downgraded: \",e$message)))",
+      "testthat::expect_no_error(withCallingHandlers({\n%s\n  }, warning = function(e) {message(\"Warning issued: \",e$message); invokeRestart(\"muffleWarning\")}))",
       raw_code
     )
   }
 
-  raw_code = style_text(raw_code, base_indention = 2)
+  # browser()
+  raw_code = paste0("  ", as.character(style_text(raw_code)), collapse = "\n")
 
   # modify the existing block or add a new one at the end
   test_lines = .update_fenced_block(

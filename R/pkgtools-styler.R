@@ -5,7 +5,7 @@
 #' line breaks to try and fit them into a set width. It does not unbreak lines.
 #'
 #' @inheritParams styler::style_text
-#' @inheritDotParams styler::style_text
+#' @inheritDotParams styler::style_text -text -transformers
 #' @inheritDotParams pkgtools_style_transformer
 #'
 #' @returns the formatted code
@@ -13,13 +13,11 @@
 style_text = function(
   text,
   ...,
-  strict = TRUE,
   transformers = pkgtools_style_transformer(...)
 ) {
   return(styler::style_text(
     text,
     ...,
-    strict = strict,
     transformers = transformers
   ))
 }
@@ -35,8 +33,8 @@ style_text = function(
 #' @keywords internal
 #'
 #' @unit
-#' style_text('testthat::expect_equal(iris[1, ], structure(list(Sepal.Length = 5.1, Sepal.Width = 3.5, Petal.Length = 1.4, Petal.Width = 0.2, Species = structure(1L, levels = c("setosa", "versicolor", "virginica"), class = "factor")), row.names = 1L, class = "data.frame"))')
-#' style_text('testthat::expect_equal(iris[1, ], structure(list(Sepal.Length = 5.1, Sepal.Width = 3.5, Petal.Length = 1.4, Petal.Width = 0.2, Species = structure(1L, levels = c("setosa", "versicolor", "virginica"), class = "factor")), row.names = 1L, class = "data.frame"))', width=80)
+#' # style_text('testthat::expect_equal(iris[1, ], structure(list(Sepal.Length = 5.1, Sepal.Width = 3.5, Petal.Length = 1.4, Petal.Width = 0.2, Species = structure(1L, levels = c("setosa", "versicolor", "virginica"), class = "factor")), row.names = 1L, class = "data.frame"))')
+#' # style_text('testthat::expect_equal(iris[1, ], structure(list(Sepal.Length = 5.1, Sepal.Width = 3.5, Petal.Length = 1.4, Petal.Width = 0.2, Species = structure(1L, levels = c("setosa", "versicolor", "virginica"), class = "factor")), row.names = 1L, class = "data.frame"))', width=80)
 pkgtools_style_transformer <- function(
   ...,
   width = 70

@@ -46,6 +46,13 @@ f <- function() {
 fn_definition = gsub("@","@",fn_definition)
 tmp = roxygen2::parse_text(fn_definition)
 print(tmp[[1]])
-
 }
 \concept{roxy}
+
+\section{Unit tests}{
+\if{html}{\out{<div class="sourceCode">}}\preformatted{
+# for testing
+warning("should be suppressed")
+}\if{html}{\out{</div>}}
+}
+
