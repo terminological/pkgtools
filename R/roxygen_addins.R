@@ -104,10 +104,10 @@ switch_expect_equals = function() {
     rstudioapi::showDialog("Not able to evaluate expression", selection$value)
     stop("Failed to evaluate test expression.")
   } else {
-    var_code = deparse(var)
+    var_code = paste0(deparse(var), collapse = "")
 
-    code = sprintf("testthat::expect_equal(%s, %s)", selection, deparse(var))
-    code = styler::style_text(code)
+    code = sprintf("testthat::expect_equal(%s, %s)", selection, var_code)
+    code = style_text(code)
     code = paste0(lead, code)
 
     if (length(code) > 10) {
@@ -124,11 +124,14 @@ switch_expect_equals = function() {
       context$contents[-seq_len(rng$end[1])]
     )
 
-    rstudioapi::setDocumentContents(new_doc, context$id)
+    rstudioapi::setDocumentContents(
+      paste0(new_doc, collapse = "\n"),
+      context$id
+    )
   }
 }
 
-#' iris[1,]
+#' testthat::expect_equal(iris[1, ], structure(list(Sepal.Length = 5.1, Sepal.Width = 3.5, Petal.Length = 1.4, Petal.Width = 0.2, Species = structure(1L, levels = c("setosa", "versicolor", "virginica"), class = "factor")), row.names = 1L, class = "data.frame"))
 
 #' Generate a hash based expectation for a standalone object
 #'

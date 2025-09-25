@@ -113,7 +113,7 @@ roxy_tag_rd.roxy_tag_unit = function(x, base_path, env) {
     )
   }
 
-  raw_code = styler::style_text(raw_code, base_indention = 2)
+  raw_code = style_text(raw_code, base_indention = 2)
 
   # modify the existing block or add a new one at the end
   test_lines = .update_fenced_block(
