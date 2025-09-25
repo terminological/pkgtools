@@ -2,3 +2,9 @@ Name: Execute commented code
 Description: Run multi line code stripping off leading comments
 Binding: run_commented_code
 Interactive: false
+
+
+Name: Switch variable for test
+Description: Generate a hash based test case for the currently selected variable
+Binding: switch_standalone_snapshot
+Interactive: false

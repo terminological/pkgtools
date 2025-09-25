@@ -344,8 +344,7 @@ sync_standalone_to_master = function(git_dir = fs::path_home("Git")) {
   }
 }
 
-
-## Utilties ----
+## Utilities ----
 
 .print_ver = function(pkg, ver = NA) {
   return(

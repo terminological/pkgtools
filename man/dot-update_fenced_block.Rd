@@ -7,7 +7,7 @@
 .update_fenced_block(
   .input,
   .template,
-  name,
+  name = "block",
   ...,
   .start_glue = "# {name} start ----",
   .end_glue = "# {name} end ----",

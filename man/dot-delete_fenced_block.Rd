@@ -6,7 +6,7 @@
 \usage{
 .delete_fenced_block(
   .input,
-  name,
+  name = "block",
   ...,
   .start_glue = "# {name} start ----",
   .end_glue = "# {name} end ----"

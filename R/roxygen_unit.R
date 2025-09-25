@@ -57,6 +57,8 @@ roxy_tag_parse.roxy_tag_unit = function(x) {
 #' print(tmp[[1]])
 #'
 roxy_tag_rd.roxy_tag_unit = function(x, base_path, env) {
+  name = NULL
+
   raw_code = x$raw
   code = x$val
   block = .search_call_stack(.class = "roxy_block")
@@ -103,6 +105,16 @@ roxy_tag_rd.roxy_tag_unit = function(x, base_path, env) {
     )
   }
 
+  # If no tests create an expect no failure.
+  if (!stringr::str_detect(raw_code, "expect_.*?\\(")) {
+    raw_code = sprintf(
+      "  testthat::expect_no_error(tryCatch({\n%s\n  }, warning = function(e) message(\"Warning downgraded: \",e$message)))",
+      raw_code
+    )
+  }
+
+  raw_code = styler::style_text(raw_code, base_indention = 2)
+
   # modify the existing block or add a new one at the end
   test_lines = .update_fenced_block(
     test_lines,
@@ -111,8 +123,8 @@ roxy_tag_rd.roxy_tag_unit = function(x, base_path, env) {
     name = topic,
     path = relpath,
     line = x$line,
-    # double space indent. Code could be vector I guess.
-    code = paste0("  ", gsub("\n", "\n  ", raw_code)),
+
+    code = raw_code,
     # fences:
     .start_glue = start_glue,
     .end_glue = end_glue,

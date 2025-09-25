@@ -49,8 +49,10 @@ Imports:
     whisker,
     roxygen2,
     rstudioapi,
-    testthat
+    testthat,
+    styler
 Suggests:
     spelling,
-    urlchecker
+    urlchecker,
+    clipr
 Config/testthat/edition: 3
