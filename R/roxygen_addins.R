@@ -22,13 +22,13 @@ run_commented_code = function() {
   rng = rstudioapi::primary_selection(context)$range
   # rows = rng[["start"]][["row"]]:rng[["end"]][["row"]]
   # expand multi row selections to include while lines
-  # if (length(rows) == 1 && rng[["start"]][["col"]] > 1) {
+  # if (length(rows) == 1 && rng[["start"]][["column"]] > 1) {
   selection = rstudioapi::selectionGet(id = context$id)
   # } else {
   # selection = context$contents[rows]
   # }
 
-  if (length(selection) > 1 || rng[["start"]][["col"]] == 1) {
+  if (length(selection) > 1 || rng[["start"]][["column"]] == 1) {
     # Selction is multiline or includes start of this line.
     test = selection
     # ignore first line for multi-line selections:
