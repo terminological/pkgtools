@@ -24,6 +24,7 @@ run_commented_code = function() {
   # expand multi row selections to include while lines
   # if (length(rows) == 1 && rng[["start"]][["column"]] > 1) {
   selection = rstudioapi::selectionGet(id = context$id)
+  selection = unlist(strsplit(selection$value, "\n"))
   # } else {
   # selection = context$contents[rows]
   # }
@@ -35,6 +36,7 @@ run_commented_code = function() {
     if (length(test) > 1) {
       test = test[-1]
     }
+    browser()
     # Uncomment if all but the first line matches
     if (all(grepl("^\\s*#'", test))) {
       # strip off roxygen comments
@@ -49,7 +51,7 @@ run_commented_code = function() {
   if (inherits(tmp, "try-error")) {
     message("Selection does not parse: ", format(tmp))
   } else {
-    rstudioapi::sendToConsole(selection, focus = FALSE)
+    rstudioapi::sendToConsole(code = selection, focus = FALSE)
   }
   invisible()
 }
