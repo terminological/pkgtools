@@ -36,7 +36,7 @@ run_commented_code = function() {
     if (length(test) > 1) {
       test = test[-1]
     }
-    browser()
+
     # Uncomment if all but the first line matches
     if (all(grepl("^\\s*#'", test))) {
       # strip off roxygen comments
