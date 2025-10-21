@@ -51,6 +51,7 @@ print(tmp[[1]])
 
 \section{Unit tests}{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{
+
 # for testing
 warning("should be suppressed")
 }\if{html}{\out{</div>}}

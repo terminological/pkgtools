@@ -18,6 +18,7 @@ line breaks to try and fit them into a set width. It does not unbreak lines.
 
 \section{Unit tests}{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{
+
 # style_text('testthat::expect_equal(iris[1, ], structure(list(Sepal.Length = 5.1, Sepal.Width = 3.5, Petal.Length = 1.4, Petal.Width = 0.2, Species = structure(1L, levels = c("setosa", "versicolor", "virginica"), class = "factor")), row.names = 1L, class = "data.frame"))')
 # style_text('testthat::expect_equal(iris[1, ], structure(list(Sepal.Length = 5.1, Sepal.Width = 3.5, Petal.Length = 1.4, Petal.Width = 0.2, Species = structure(1L, levels = c("setosa", "versicolor", "virginica"), class = "factor")), row.names = 1L, class = "data.frame"))', width=80)
 }\if{html}{\out{</div>}}

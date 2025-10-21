@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">pkgtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,17 +101,15 @@ is cleaned up when the returned object is garbage collected.</p></dd>
 
 <dt><code>vignettes</code></dt>
 <dd><p>If <code>FALSE</code>, do not build or check vignettes, equivalent to
-using <code>args = '--ignore-vignettes' and </code>build_args = '–no-build-vignettes'.</p></dd>
+using <code>args = '--ignore-vignettes'</code> and <code>build_args = '--no-build-vignettes'</code>.</p></dd>
 
 <dt><code>error_on</code></dt>
-<dd><p>Whether to throw an error on <code>R CMD check</code> failures.
-Note that the check is always completed (unless a timeout happens),
-and the error is only thrown after completion. If <code>"never"</code>, then
-no errors are thrown. If <code>"error"</code>, then only <code>ERROR</code> failures
-generate errors. If <code>"warning"</code>, then <code>WARNING</code> failures generate
-errors as well. If <code>"note"</code>, then any check failure generated an
-error. Its default can be modified with the <code>RCMDCHECK_ERROR_ON</code>
-environment variable. If that is not set, then <code>"never"</code> is used.</p></dd>
+<dd><p>Whether to throw an error on <code>R CMD check</code> failures. Note
+that the check is always completed (unless a timeout happens), and the
+error is only thrown after completion.</p>
+<p><code>error_on</code> is passed through to <code><a href="http://r-lib.github.io/rcmdcheck/reference/rcmdcheck.html" class="external-link">rcmdcheck::rcmdcheck()</a></code>, which is the
+definitive source for what the different values mean. If not specified by
+the user, both <code>check()</code> and <code>check_built()</code> default to <code>error_on = "never"</code> in interactive use and <code>"warning"</code> in a non-interactive setting.</p></dd>
 
 <dt><code>path</code></dt>
 <dd><p>Path to built package.</p></dd>

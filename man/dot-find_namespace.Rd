@@ -23,6 +23,7 @@ environment.
 \section{Unit tests}{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{
 
+
 env = .find_namespace(rlang::abort)
 testthat::expect_equal(unname(getNamespaceName(env)), "rlang")
 

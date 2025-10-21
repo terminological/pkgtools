@@ -13,7 +13,7 @@ matched .insert_before marker (or at the end if that is not found)"></head><body
 
     <a class="navbar-brand me-2" href="../index.html">pkgtools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -110,44 +110,45 @@ write the file</p>
     <div class="section level2">
     <h2 id="unit-tests">Unit tests<a class="anchor" aria-label="anchor" href="#unit-tests"></a></h2>
     <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co"># double braces in mustache files, single braces in glue specs.</span></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>template <span class="ot">=</span> <span class="st">"# {{name}} {{status}}"</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>input <span class="ot">=</span> <span class="fu">c</span>(</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>  <span class="st">"before"</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="st">"#TEST test start ----"</span>,</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="st">"# test original"</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  <span class="st">"#TEST test end ----"</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  <span class="st">"#TEST insert before ----"</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="st">"end"</span></span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>)</span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>input <span class="ot">=</span> <span class="fu">.update_fenced_block</span>(</span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>  input, template, <span class="at">name =</span> <span class="st">"test"</span>, <span class="at">status =</span> <span class="st">"update"</span>,</span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>  <span class="at">.start_glue =</span> <span class="st">"#TEST {name} start ----"</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>  <span class="at">.end_glue =</span> <span class="st">"#TEST {name} end ----"</span>,</span>
-<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>  <span class="at">.insert_before =</span> <span class="st">"#TEST insert before ----"</span>,</span>
-<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>)</span>
-<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>testthat<span class="sc">::</span><span class="fu">expect_equal</span>(input[<span class="dv">3</span>], <span class="st">"# test update"</span>)</span>
-<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>input <span class="ot">=</span> <span class="fu">.update_fenced_block</span>(</span>
-<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a>  input, template, <span class="at">name =</span> <span class="st">"test2"</span>, <span class="at">status =</span> <span class="st">"update"</span>,</span>
-<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a>  <span class="at">.start_glue =</span> <span class="st">"#TEST {name} start ----"</span>,</span>
-<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a>  <span class="at">.end_glue =</span> <span class="st">"#TEST {name} end ----"</span>,</span>
-<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a>  <span class="at">.insert_before =</span> <span class="st">"#TEST insert before ----"</span>,</span>
-<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a>)</span>
-<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a>testthat<span class="sc">::</span><span class="fu">expect_equal</span>(input[<span class="dv">6</span>], <span class="st">"# test2 update"</span>)</span>
-<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a><span class="fu">.update_fenced_block</span>(</span>
-<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a>  input, template, <span class="at">name =</span> <span class="st">"test"</span>, <span class="at">status =</span> <span class="st">"update"</span>,</span>
-<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a>  <span class="at">.start_glue =</span> <span class="dv">2</span>,</span>
-<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a>  <span class="at">.end_glue =</span> <span class="st">"#TEST {name} end ----"</span>,</span>
-<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a>)</span>
-<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co"># double braces in mustache files, single braces in glue specs.</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>template <span class="ot">=</span> <span class="st">"# {{name}} {{status}}"</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>input <span class="ot">=</span> <span class="fu">c</span>(</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>  <span class="st">"before"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>  <span class="st">"#TEST test start ----"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>  <span class="st">"# test original"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>  <span class="st">"#TEST test end ----"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="st">"#TEST insert before ----"</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>  <span class="st">"end"</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>)</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>input <span class="ot">=</span> <span class="fu">.update_fenced_block</span>(</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>  input, template, <span class="at">name =</span> <span class="st">"test"</span>, <span class="at">status =</span> <span class="st">"update"</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>  <span class="at">.start_glue =</span> <span class="st">"#TEST {name} start ----"</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>  <span class="at">.end_glue =</span> <span class="st">"#TEST {name} end ----"</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>  <span class="at">.insert_before =</span> <span class="st">"#TEST insert before ----"</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a>)</span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>testthat<span class="sc">::</span><span class="fu">expect_equal</span>(input[<span class="dv">3</span>], <span class="st">"# test update"</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a>input <span class="ot">=</span> <span class="fu">.update_fenced_block</span>(</span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a>  input, template, <span class="at">name =</span> <span class="st">"test2"</span>, <span class="at">status =</span> <span class="st">"update"</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a>  <span class="at">.start_glue =</span> <span class="st">"#TEST {name} start ----"</span>,</span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a>  <span class="at">.end_glue =</span> <span class="st">"#TEST {name} end ----"</span>,</span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a>  <span class="at">.insert_before =</span> <span class="st">"#TEST insert before ----"</span>,</span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a>)</span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a>testthat<span class="sc">::</span><span class="fu">expect_equal</span>(input[<span class="dv">6</span>], <span class="st">"# test2 update"</span>)</span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a><span class="fu">.update_fenced_block</span>(</span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a>  input, template, <span class="at">name =</span> <span class="st">"test"</span>, <span class="at">status =</span> <span class="st">"update"</span>,</span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a>  <span class="at">.start_glue =</span> <span class="dv">2</span>,</span>
+<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a>  <span class="at">.end_glue =</span> <span class="st">"#TEST {name} end ----"</span>,</span>
+<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a>)</span>
 <span id="cb1-38"><a href="#cb1-38" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" tabindex="-1"></a></span></code></pre><p></p></div>
+<span id="cb1-39"><a href="#cb1-39" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" tabindex="-1"></a></span></code></pre><p></p></div>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

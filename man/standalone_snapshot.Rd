@@ -23,3 +23,4 @@ projects independently of the test directory. This function lets you quickly
 create a check based on a gold standard
 }
 \concept{edit}
+\keyword{internal}

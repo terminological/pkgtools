@@ -142,7 +142,10 @@
     start = input_lines[start_loc]
     if (all(start_loc < 0)) start_loc = start_loc + length(.input)
   } else {
-    start = glue::glue_data(tmpl_list, .start_glue)
+    start = suppressWarnings(stringr::fixed(glue::glue_data(
+      tmpl_list,
+      .start_glue
+    )))
     start_loc = which(stringr::str_detect(input_lines, start))
   }
 
@@ -158,7 +161,10 @@
       end = input_lines[end_loc]
       if (all(end_loc < 0)) end_loc = end_loc + length(.input) + 1
     } else {
-      end = glue::glue_data(tmpl_list, .end_glue)
+      end = suppressWarnings(stringr::fixed(glue::glue_data(
+        tmpl_list,
+        .end_glue
+      )))
       end_loc = which(stringr::str_detect(input_lines, end))
     }
   }
@@ -272,7 +278,10 @@
     start_loc = .start_glue
     if (all(start_loc < 0)) start_loc = start_loc + length(.input)
   } else {
-    start = glue::glue_data(tmpl_list, .start_glue)
+    start = suppressWarnings(stringr::fixed(glue::glue_data(
+      tmpl_list,
+      .start_glue
+    )))
     start_loc = which(stringr::str_detect(input_lines, start))
   }
 
@@ -287,7 +296,10 @@
       end_loc = .end_glue
       if (all(end_loc < 0)) end_loc = end_loc + length(.input) + 1
     } else {
-      end = glue::glue_data(tmpl_list, .end_glue)
+      end = suppressWarnings(stringr::fixed(glue::glue_data(
+        tmpl_list,
+        .end_glue
+      )))
       end_loc = which(stringr::str_detect(input_lines, end))
     }
   }
@@ -340,6 +352,7 @@
 #' testthat::expect_equal(trimws(output), glue::glue_data(tmp,glue_spec))
 #'
 .glue_recover_pieces = function(glue_spec, output) {
+  output = output[.glue_detect_output(glue_spec, output)]
   names = unlist(stringr::str_extract_all(glue_spec, "(?<=\\{)[^\\}]*(?=\\})"))
   matcher = stringr::str_replace_all(glue_spec, "\\{[^\\}]*\\}", "(.*?)")
   matcher = paste0(c("^", matcher, "$"), collapse = "")

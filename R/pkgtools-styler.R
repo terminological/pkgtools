@@ -9,6 +9,7 @@
 #' @inheritDotParams pkgtools_style_transformer
 #'
 #' @returns the formatted code
+#' @concept edit
 #' @export
 style_text = function(
   text,
@@ -46,7 +47,9 @@ pkgtools_style_transformer <- function(
   )
   tidy_style$indent_character <- use_tabs$indent_character
   tidy_style$style_guide_name <- "pkgtools::pkgtools_style_transformer@https://github.com/terminological"
-  tidy_style$style_guide_version <- pkgload::pkg_version()
+  tidy_style$style_guide_version <- pkgload::pkg_version(system.file(
+    package = "pkgtools"
+  ))
 
   # line breaks between *all* arguments if line breaks between *any*
   tidy_style$line_break$set_linebreak_each_argument_if_multi_line <- function(

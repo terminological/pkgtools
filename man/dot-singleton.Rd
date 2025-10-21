@@ -31,6 +31,7 @@ expression is evaluated in the environment it is first called in.
 
 \section{Unit tests}{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{
+
 fixed_rnorm = .singleton(rnorm(10))
 a = fixed_rnorm()
 b = fixed_rnorm()

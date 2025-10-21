@@ -53,6 +53,7 @@ matched \code{.insert_before} marker (or at the end if that is not found)
 
 \section{Unit tests}{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{
+
 # double braces in mustache files, single braces in glue specs.
 template = "# {{name}} {{status}}"
 

@@ -84,7 +84,12 @@ migrate_to_pins = function(pkg = ".", board = "data", migrate = NULL) {
 
     if (fs::dir_exists(fs::path(pkg$path, "docs"))) {
       fs::file_create(fs::path(pkg$path, "docs", ".nojekyll"))
-      fs::dir_copy(assets_dir, fs::path(pkg$path, "docs", board))
+      fs::dir_delete(fs::path(pkg$path, "docs", board))
+      fs::dir_copy(
+        assets_dir,
+        fs::path(pkg$path, "docs", board),
+        overwrite = TRUE
+      )
     }
 
     .write_unsafe(desc, desc_path)

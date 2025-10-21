@@ -20,6 +20,7 @@ Get the defined name of a function
 \section{Unit tests}{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{
 
+
 f = tolower
 
 testthat::expect_equal(

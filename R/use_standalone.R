@@ -219,6 +219,16 @@ if (!requireNamespace(\"{{{pkg}}}\")) {
 }
 {{/imports}}
 
+# Deal with stats/dplyr issues:
+if (!requireNamespace(\"conflicted\")) {
+  message(\"Package `conflicted` must be installed.\")
+} else {
+  conflicted::conflicts_prefer(
+    dplyr::filter(),
+    dplyr::lag()
+  )
+}
+
 # Load standalones:
 {{#standalones}}
 try(source(\"{{{.}}}\"))
@@ -396,7 +406,7 @@ standalone_imports = function(wd) {
 
   out = out %>%
     dplyr::group_by(pkg, cmp) %>%
-    dplyr::summarise(ver = max(ver), .groups = "drop") %>%
+    dplyr::summarise(ver = suppressWarnings(max(ver)), .groups = "drop") %>%
     dplyr::mutate(pver = .print_ver(pkg, ver))
   return(out)
 }
@@ -528,6 +538,8 @@ parse_version = function(field) {
 #' @return a character vector of imports (which may include version info)
 .local_imports = function(content, path = ".") {
   package_map = .package_map(path)
+  # TODO:: update this to use logic from fix_unqualified_fns
+  # differentiate between code in functions and code in comments.
   pkgs = stringr::str_match_all(content, "([a-zA-Z0-9]+)::([a-zA-Z0-9]+)") %>%
     lapply(function(x) x[, 2]) %>%
     unlist() %>%

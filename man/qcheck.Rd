@@ -37,15 +37,14 @@ If this is not \code{NULL}, then the a temporary directory is used, that
 is cleaned up when the returned object is garbage collected.}
 \item{\code{cleanup}}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} See \code{check_dir} for details.}
 \item{\code{vignettes}}{If \code{FALSE}, do not build or check vignettes, equivalent to
-using \verb{args = '--ignore-vignettes' and }build_args = '--no-build-vignettes'.}
-\item{\code{error_on}}{Whether to throw an error on \verb{R CMD check} failures.
-Note that the check is always completed (unless a timeout happens),
-and the error is only thrown after completion. If \code{"never"}, then
-no errors are thrown. If \code{"error"}, then only \code{ERROR} failures
-generate errors. If \code{"warning"}, then \code{WARNING} failures generate
-errors as well. If \code{"note"}, then any check failure generated an
-error. Its default can be modified with the \code{RCMDCHECK_ERROR_ON}
-environment variable. If that is not set, then \code{"never"} is used.}
+using \code{args = '--ignore-vignettes'} and \code{build_args = '--no-build-vignettes'}.}
+\item{\code{error_on}}{Whether to throw an error on \verb{R CMD check} failures. Note
+that the check is always completed (unless a timeout happens), and the
+error is only thrown after completion.
+
+\code{error_on} is passed through to \code{\link[rcmdcheck:rcmdcheck]{rcmdcheck::rcmdcheck()}}, which is the
+definitive source for what the different values mean. If not specified by
+the user, both \code{check()} and \code{check_built()} default to \code{error_on = "never"} in interactive use and \code{"warning"} in a non-interactive setting.}
 \item{\code{path}}{Path to built package.}
 }}
 

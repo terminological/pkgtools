@@ -24,6 +24,7 @@ dataframe parameters in tidy calls
 \section{Unit tests}{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{
 
+
 h = function() {
  df = .search_call_stack(.class = "data.frame")
  return(nrow(df))

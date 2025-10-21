@@ -21,6 +21,7 @@ and ignores primitives and characters.
 \section{Unit tests}{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{
 
+
 f1 = .lax_as_function(tolower)
 f2 = .lax_as_function(~ tolower(.x))
 f3 = .lax_as_function("hello world")

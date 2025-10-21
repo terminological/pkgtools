@@ -19,18 +19,19 @@ Convert a multilevel list to a nested dataframe
 
 \section{Unit tests}{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{
+
 iris_list = .df_to_list_of_lists(iris)
 iris2 = .list_of_lists_to_df(iris_list)
 
 testthat::expect_equal(datasets::iris, as.data.frame(iris2))
 
-mtcars_nest = datasets::mtcars \%>\%
-  dplyr::mutate(name = rownames(.)) \%>\%
+mtcars_nest = datasets::mtcars %>%
+  dplyr::mutate(name = rownames(.)) %>%
   tidyr::nest(details = -c(cyl,gear))
 
-mtcars_list = mtcars_nest \%>\% .df_to_list_of_lists()
+mtcars_list = mtcars_nest %>% .df_to_list_of_lists()
 
-mtcars_nest2 = mtcars_list \%>\% .list_of_lists_to_df()
+mtcars_nest2 = mtcars_list %>% .list_of_lists_to_df()
 
 testthat::expect_equal(
   mtcars_nest2$details[[2]],

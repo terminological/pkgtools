@@ -20,6 +20,7 @@ Convert a nested dataframe to a multilevel list
 \section{Unit tests}{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{
 
+
 iris_list = .df_to_list_of_lists(datasets::iris)
 
 testthat::expect_equal(
@@ -27,11 +28,11 @@ testthat::expect_equal(
   iris$Species[[1]]
 )
 
-mtcars_nest = datasets::mtcars \%>\%
-  dplyr::mutate(name = rownames(.)) \%>\%
+mtcars_nest = datasets::mtcars %>%
+  dplyr::mutate(name = rownames(.)) %>%
   tidyr::nest(details = -c(cyl,gear))
 
-mtcars_list = mtcars_nest \%>\% .df_to_list_of_lists()
+mtcars_list = mtcars_nest %>% .df_to_list_of_lists()
 
 testthat::expect_equal(
   mtcars_list[[1]]$details[[1]]$name,

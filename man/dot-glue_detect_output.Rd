@@ -23,6 +23,7 @@ generated with a given glue spec
 
 \section{Unit tests}{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{
+
 content = c("sdlfksl","  # X, Y and Z ----","sdfskjfsdlk asdlkfjsdlkj")
 testthat::expect_equal(
   .glue_detect_output("# {name}, {value1} and {value2} ----", content),

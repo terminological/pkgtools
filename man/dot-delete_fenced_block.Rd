@@ -41,8 +41,9 @@ and paired
 \section{Unit tests}{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{
 
+
 tmp = .delete_fenced_block(letters,.start_glue = letters[4], .end_glue = letters[10])
-testthat::expect_true(!any(letters[4:10] \%in\% tmp))
+testthat::expect_true(!any(letters[4:10] %in% tmp))
 
 # multiple copies of fenced block are removed
 # fenced block to end of file is removed

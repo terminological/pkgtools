@@ -1,6 +1,6 @@
 Package: pkgtools
 Title: Code generation and linting functions for R packages
-Version: 0.2.1
+Version: 0.2.4
 Authors@R: person(
   given = "Robert",
   family = "Challen",

@@ -24,6 +24,7 @@ specifications and will only return strings.
 
 \section{Unit tests}{
 \if{html}{\out{<div class="sourceCode">}}\preformatted{
+
 glue_spec = "# {name}, {value1} and {value2} ----"
 output = rep("  # one, two and three ----",5)
 tmp = .glue_recover_pieces(glue_spec,output)
