@@ -202,7 +202,6 @@ fix_unqualified_fns_bulk = function(
 ) {
   pkg = .find_package(pkg)
   if (!is.null(pkg)) {
-    pkg = devtools::as.package(pkg)
     # get the dev version
     suppressWarnings(devtools::load_all(path = pkg$path, quiet = TRUE))
     # the stated imports of the current project
@@ -280,14 +279,18 @@ fix_unqualified_fns_bulk = function(
 # .find_package(getwd())
 # .find_package(".")
 # .find_package(rstudioapi::getSourceEditorContext()$path)
+# .find_package(.find_package("."))
 .find_package = function(path) {
+  if (inherits(path, "package")) {
+    return(path)
+  }
   path = fs::path_abs(fs::path_expand(path))
   if (path == fs::path_home()) {
     warning("No desription file found. Are you in a project?", call. = FALSE)
     return(NULL)
   }
   if (fs::file_exists(fs::path(path, "DESCRIPTION"))) {
-    return(path)
+    return(devtools::as.package(path))
   }
   .find_package(fs::path_dir(path))
 }

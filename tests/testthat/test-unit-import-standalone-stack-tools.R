@@ -3,13 +3,44 @@
 # ----------------------------------------------------------------------
 library(pkgtools)
 
+# unit test start: .find_namespace ----
+
+test_that(".find_namespace unit test", {
+
+  # Automatically generated test case from roxygen @unit tag
+  # Do not edit here - follow the link to the source file.
+  # or navigate to topic with <F2>
+  F2 = .find_namespace
+  
+
+  env <- .find_namespace(rlang::abort)
+  testthat::expect_equal(unname(getNamespaceName(env)), "rlang")
+  
+  # TODO: this test fails when running in testthat environment but not otherwise
+  # env = new.env(parent=emptyenv())
+  # assign("f", function() {"test"}, envir = env)
+  # env2 = .find_namespace(env$f)
+  # testthat::expect_null(.find_namespace(env$f))
+
+  # generates a failure if the overall test is failing with a link to the 
+  # source of the unit test:
+  testthat::expect(rlang::caller_env(n = 2)$ok,
+    failure_message = "Source link for failing @unit test.",
+    srcref = srcref(srcfile("../../R/import-standalone-stack-tools.R"), c(140, 1, 140+1, 1))
+  )
+})
+
+# unit test end: .find_namespace ----
 # unit test start: .lax_as_function ----
 
 test_that(".lax_as_function unit test", {
 
   # Automatically generated test case from roxygen @unit tag
   # Do not edit here - follow the link to the source file.
+  # or navigate to topic with <F2>
+  F2 = .lax_as_function
   
+
   f1 <- .lax_as_function(tolower)
   f2 <- .lax_as_function(~ tolower(.x))
   f3 <- .lax_as_function("hello world")
@@ -33,7 +64,10 @@ test_that(".get_fn_name unit test", {
 
   # Automatically generated test case from roxygen @unit tag
   # Do not edit here - follow the link to the source file.
+  # or navigate to topic with <F2>
+  F2 = .get_fn_name
   
+
   f <- tolower
   
   testthat::expect_equal(
@@ -66,7 +100,10 @@ test_that(".search_call_stack unit test", {
 
   # Automatically generated test case from roxygen @unit tag
   # Do not edit here - follow the link to the source file.
+  # or navigate to topic with <F2>
+  F2 = .search_call_stack
   
+
   h <- function() {
     df <- .search_call_stack(.class = "data.frame")
     return(nrow(df))
@@ -91,29 +128,4 @@ test_that(".search_call_stack unit test", {
 })
 
 # unit test end: .search_call_stack ----
-# unit test start: .find_namespace ----
-
-test_that(".find_namespace unit test", {
-
-  # Automatically generated test case from roxygen @unit tag
-  # Do not edit here - follow the link to the source file.
-  
-  env <- .find_namespace(rlang::abort)
-  testthat::expect_equal(unname(getNamespaceName(env)), "rlang")
-  
-  # TODO: this test fails when running in testthat environment but not otherwise
-  # env = new.env(parent=emptyenv())
-  # assign("f", function() {"test"}, envir = env)
-  # env2 = .find_namespace(env$f)
-  # testthat::expect_null(.find_namespace(env$f))
-
-  # generates a failure if the overall test is failing with a link to the 
-  # source of the unit test:
-  testthat::expect(rlang::caller_env(n = 2)$ok,
-    failure_message = "Source link for failing @unit test.",
-    srcref = srcref(srcfile("../../R/import-standalone-stack-tools.R"), c(140, 1, 140+1, 1))
-  )
-})
-
-# unit test end: .find_namespace ----
 # end of unit tests ----

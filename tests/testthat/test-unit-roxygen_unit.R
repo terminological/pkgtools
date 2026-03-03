@@ -9,7 +9,10 @@ test_that("roxy_tag_rd.roxy_tag_unit unit test", {
 
   # Automatically generated test case from roxygen @unit tag
   # Do not edit here - follow the link to the source file.
+  # or navigate to topic with <F2>
+  F2 = roxy_tag_rd.roxy_tag_unit
   
+
   testthat::expect_no_error(withCallingHandlers(
     {
       # for testing

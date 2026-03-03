@@ -188,6 +188,7 @@ use_standalone = function(
     )
     # get local path from package root.
     standalones = standalones %>% stringr::str_extract("^.*/(R/.*$)", 1)
+    standalones = unname(standalones)
 
     pkg = ver = NULL
 
@@ -214,18 +215,19 @@ use_standalone = function(
 rprof_import_template = "
 # Check dependencies:
 {{#imports}}
-if (!requireNamespace(\"{{{pkg}}}\")) {
+if (!requireNamespace(\"{{{pkg}}}\", quietly=TRUE)) {
   message(\"Package `{{{pver}}}` must be installed.\")
 }
 {{/imports}}
 
 # Deal with stats/dplyr issues:
-if (!requireNamespace(\"conflicted\")) {
+if (!requireNamespace(\"conflicted\", quietly=TRUE)) {
   message(\"Package `conflicted` must be installed.\")
 } else {
   conflicted::conflicts_prefer(
     dplyr::filter(),
-    dplyr::lag()
+    dplyr::lag(), 
+    .quiet=TRUE
   )
 }
 

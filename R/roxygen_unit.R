@@ -87,14 +87,27 @@ roxy_tag_rd.roxy_tag_unit = function(x, base_path, env) {
   }
   if (inherits(topic, "try-error")) {
     roxygen2::warn_roxy_tag(
-      x$tag,
+      x,
       "Could not determine topic for unit tests use an `@name` tag to set."
     )
     return(NULL)
   }
 
+  test_meta = fs::path(base_path, "tests/testthat/unit-test-metadata.csv")
   test_path = gsub("/R/", "/tests/testthat/test-unit-", block$file)
   fs::dir_create(fs::path_dir(test_path))
+
+  # read in the metadata for the tests (or create empty one)
+  if (fs::file_exists(test_meta)) {
+    metadata = readr::read_csv(test_meta, show_col_types = FALSE)
+  } else {
+    metadata = dplyr::tibble(
+      file = character(),
+      topic = character(),
+      updated = as.POSIXct(NULL)
+    )
+  }
+
   pkg = unname(getNamespaceName(env))
   relpath = stringr::str_extract(block$file, "^(.*?/)(R/.*)$", 2)
 
@@ -103,6 +116,14 @@ roxy_tag_rd.roxy_tag_unit = function(x, base_path, env) {
   insert_before = "# end of unit tests ----"
 
   # Check to see if the test file exists. If not create and empty skeleton:
+  write = TRUE
+
+  last_updated = suppressWarnings(max(
+    metadata %>%
+      dplyr::filter(topic == .env$topic & file == test_path) %>%
+      dplyr::pull(updated)
+  ))
+
   if (!fs::file_exists(test_path)) {
     readr::write_lines(
       .create_skeleton(
@@ -112,70 +133,97 @@ roxy_tag_rd.roxy_tag_unit = function(x, base_path, env) {
       ),
       test_path
     )
-  }
+  } else {
+    # Lets just check that the file we are looking at has been modified
+    # after the tests were built. If not there is nothing to do here
 
-  file_lines = readr::read_lines(block$file)
-  at_names = .glue_recover_pieces("#' @name {name}", file_lines)
-
-  test_lines = readr::read_lines(test_path)
-
-  # Get rid of tests for functions that have been removed:
-  # check for blocks that match the fence format
-  test_block_lines = test_lines[.glue_detect_output(start_glue, test_lines)]
-  # extract names of functions under test from the fence
-  test_block_data = .glue_recover_pieces(start_glue, test_block_lines)
-
-  unit_test_names = setdiff(test_block_data$name, at_names$name)
-
-  # delete unmatched tests
-  for (name in unit_test_names) {
-    # make sure function still exists in the namespace being documented
-    tmp = try(eval(parse(text = name), env), silent = TRUE)
-    if (inherits(tmp, "try-error") || !is.function(tmp)) {
-      # TODO: This condition allows for unit testing of functions inside
-      # nested environments but these will not get documentation
-
-      test_lines = .delete_fenced_block(
-        test_lines,
-        name = name,
-        .start_glue = start_glue,
-        .end_glue = end_glue
-      )
+    # this topic last updated after last change to this file
+    # means we do not need to update
+    if (length(last_updated) == 0) {
+      write = TRUE
+    } else if (last_updated > fs::file_info(block$file)$modification_time) {
+      write = FALSE
     }
   }
 
-  # If no tests create an expect no failure, with warnings muffled.
-  if (!stringr::str_detect(raw_code, "expect_.*?\\(")) {
-    raw_code = whisker::whisker.render(
-      no_test_code_wrapper,
-      data = list(code = raw_code)
+  if (write) {
+    file_lines = readr::read_lines(block$file)
+    at_names = .glue_recover_pieces("#' @name {name}", file_lines)
+
+    test_lines = readr::read_lines(test_path)
+
+    # Get rid of tests for functions that have been removed:
+    # check for blocks that match the fence format
+    test_block_lines = test_lines[.glue_detect_output(start_glue, test_lines)]
+    # extract names of functions under test from the fence
+    test_block_data = .glue_recover_pieces(start_glue, test_block_lines)
+
+    unit_test_names = setdiff(test_block_data$name, at_names$name)
+    # delete unmatched tests
+    for (name in unit_test_names) {
+      # make sure function still exists in the namespace being documented
+      tmp = try(eval(parse(text = name), env), silent = TRUE)
+      if (inherits(tmp, "try-error") || !is.function(tmp)) {
+        # TODO: This condition allows for unit testing of functions inside
+        # nested environments but these will not get documentation
+
+        test_lines = .delete_fenced_block(
+          test_lines,
+          name = name,
+          .start_glue = start_glue,
+          .end_glue = end_glue
+        )
+      }
+    }
+
+    # If no tests create an expect no failure, with warnings muffled.
+    if (!stringr::str_detect(raw_code, "expect_.*?\\(")) {
+      raw_code = whisker::whisker.render(
+        no_test_code_wrapper,
+        data = list(code = raw_code)
+      )
+    }
+
+    # browser()
+    raw_code = paste0("  ", as.character(style_text(raw_code)), collapse = "\n")
+
+    # modify the existing block or add a new one at the end
+    test_lines = .update_fenced_block(
+      test_lines,
+      .template = unit_test_call,
+      # whisker data:
+      name = topic,
+      is_fn = is_fn,
+      path = relpath,
+      fullpath = block$file,
+      pkg = pkg,
+      line = x$line,
+
+      code = raw_code,
+      # fences:
+      .start_glue = start_glue,
+      .end_glue = end_glue,
+      .insert_before = insert_before
     )
+
+    # write the new block out to the test file
+    readr::write_lines(test_lines, test_path)
+    metadata = dplyr::bind_rows(
+      metadata,
+      dplyr::tibble(
+        file = test_path,
+        topic = topic,
+        updated = Sys.time()
+      )
+    ) %>%
+      dplyr::group_by(file, topic) %>%
+      dplyr::filter(updated == max(updated)) %>%
+      dplyr::ungroup()
+
+    readr::write_csv(metadata, file = test_meta)
+    # This happens once per @unit block in a file so informing the user not straightforward
+    cli::cli_inform(sprintf("Updated unit tests for `%s`.", topic))
   }
-
-  # browser()
-  raw_code = paste0("  ", as.character(style_text(raw_code)), collapse = "\n")
-
-  # modify the existing block or add a new one at the end
-  test_lines = .update_fenced_block(
-    test_lines,
-    .template = unit_test_call,
-    # whisker data:
-    name = topic,
-    is_fn = is_fn,
-    path = relpath,
-    fullpath = block$file,
-    pkg = pkg,
-    line = x$line,
-
-    code = raw_code,
-    # fences:
-    .start_glue = start_glue,
-    .end_glue = end_glue,
-    .insert_before = insert_before
-  )
-
-  # write the new block out to the test file
-  readr::write_lines(test_lines, test_path)
 
   # write the code into the Rd as a "Unit tests" section
   roxygen2::rd_section("unit", list(code = format(code)))
@@ -224,12 +272,34 @@ library({{{pkg}}})
 # })
 # "
 
+# unit_test_call = "
+# test_that(\"{{{name}}} unit test\", {
+#
+#   # Automatically generated test case from roxygen @unit tag
+#   # Do not edit here - follow the link to the source file.
+#
+# {{{code}}}
+#
+#   # generates a failure if the overall test is failing with a link to the
+#   # source of the unit test:
+#   testthat::expect(rlang::caller_env(n = 2)$ok,
+#     failure_message = \"Source link for failing @unit test.\",
+#     srcref = srcref(srcfile(\"../../{{{path}}}\"), c({{{line}}}, 1, {{{line}}}+1, 1))
+#   )
+# })
+# "
+
 unit_test_call = "
 test_that(\"{{{name}}} unit test\", {
 
   # Automatically generated test case from roxygen @unit tag
   # Do not edit here - follow the link to the source file.
+{{#is_fn}}
+  # or navigate to topic with <F2>
+  F2 = {{{name}}}
+{{/is_fn}}
   
+
 {{{code}}}
 
   # generates a failure if the overall test is failing with a link to the 

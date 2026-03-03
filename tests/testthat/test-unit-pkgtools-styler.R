@@ -9,7 +9,10 @@ test_that("pkgtools_style_transformer unit test", {
 
   # Automatically generated test case from roxygen @unit tag
   # Do not edit here - follow the link to the source file.
+  # or navigate to topic with <F2>
+  F2 = pkgtools_style_transformer
   
+
   # style_text('testthat::expect_equal(iris[1, ], structure(list(Sepal.Length = 5.1, Sepal.Width = 3.5, Petal.Length = 1.4, Petal.Width = 0.2, Species = structure(1L, levels = c("setosa", "versicolor", "virginica"), class = "factor")), row.names = 1L, class = "data.frame"))')
   # style_text('testthat::expect_equal(iris[1, ], structure(list(Sepal.Length = 5.1, Sepal.Width = 3.5, Petal.Length = 1.4, Petal.Width = 0.2, Species = structure(1L, levels = c("setosa", "versicolor", "virginica"), class = "factor")), row.names = 1L, class = "data.frame"))', width=80)
 

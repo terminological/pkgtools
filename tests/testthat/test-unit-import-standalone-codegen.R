@@ -9,7 +9,10 @@ test_that(".update_fenced_block unit test", {
 
   # Automatically generated test case from roxygen @unit tag
   # Do not edit here - follow the link to the source file.
+  # or navigate to topic with <F2>
+  F2 = .update_fenced_block
   
+
   # double braces in mustache files, single braces in glue specs.
   template <- "# {{name}} {{status}}"
   
@@ -70,7 +73,10 @@ test_that(".delete_fenced_block unit test", {
 
   # Automatically generated test case from roxygen @unit tag
   # Do not edit here - follow the link to the source file.
+  # or navigate to topic with <F2>
+  F2 = .delete_fenced_block
   
+
   tmp <- .delete_fenced_block(
     letters,
     .start_glue = letters[4],
@@ -121,7 +127,10 @@ test_that(".glue_recover_pieces unit test", {
 
   # Automatically generated test case from roxygen @unit tag
   # Do not edit here - follow the link to the source file.
+  # or navigate to topic with <F2>
+  F2 = .glue_recover_pieces
   
+
   glue_spec <- "# {name}, {value1} and {value2} ----"
   output <- rep("  # one, two and three ----", 5)
   tmp <- .glue_recover_pieces(glue_spec, output)
@@ -144,7 +153,10 @@ test_that(".glue_detect_output unit test", {
 
   # Automatically generated test case from roxygen @unit tag
   # Do not edit here - follow the link to the source file.
+  # or navigate to topic with <F2>
+  F2 = .glue_detect_output
   
+
   content <- c("sdlfksl", "  # X, Y and Z ----", "sdfskjfsdlk asdlkfjsdlkj")
   testthat::expect_equal(
     .glue_detect_output("# {name}, {value1} and {value2} ----", content),
