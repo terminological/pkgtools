@@ -11,7 +11,7 @@
 #' @returns the formatted code
 #' @concept edit
 #' @export
-style_text = function(
+style_text <- function(
   text,
   ...,
   transformers = pkgtools_style_transformer(...)
@@ -36,42 +36,56 @@ style_text = function(
 #' @unit
 #' # style_text('testthat::expect_equal(iris[1, ], structure(list(Sepal.Length = 5.1, Sepal.Width = 3.5, Petal.Length = 1.4, Petal.Width = 0.2, Species = structure(1L, levels = c("setosa", "versicolor", "virginica"), class = "factor")), row.names = 1L, class = "data.frame"))')
 #' # style_text('testthat::expect_equal(iris[1, ], structure(list(Sepal.Length = 5.1, Sepal.Width = 3.5, Petal.Length = 1.4, Petal.Width = 0.2, Species = structure(1L, levels = c("setosa", "versicolor", "virginica"), class = "factor")), row.names = 1L, class = "data.frame"))', width=80)
-pkgtools_style_transformer <- function(
+pkgtools_style_transformer = function(
   ...,
   width = 70
 ) {
-  use_tabs <- use_tabs()
+  use_tabs = use_tabs()
 
-  tidy_style <- styler::tidyverse_style(
+  tidy_style = styler::tidyverse_style(
     indent_by = use_tabs$indent_by
   )
-  tidy_style$indent_character <- use_tabs$indent_character
-  tidy_style$style_guide_name <- "pkgtools::pkgtools_style_transformer@https://github.com/terminological"
-  tidy_style$style_guide_version <- pkgload::pkg_version(system.file(
+  tidy_style$indent_character = use_tabs$indent_character
+  tidy_style$style_guide_name = "pkgtools::pkgtools_style_transformer@https://github.com/terminological"
+  tidy_style$style_guide_version = pkgload::pkg_version(system.file(
     package = "pkgtools"
   ))
 
-  # line breaks between *all* arguments if line breaks between *any*
-  tidy_style$line_break$set_linebreak_each_argument_if_multi_line <- function(
+  tidy_style$token$force_assignment_op = function(pd) {
+    to_replace = pd$token == "LEFT_ASSIGN"
+    # pretect against changing globalAssign operator, which does not have a unique defined token.
+    if (any(to_replace)) {
+      to_replace = to_replace & pd$text != "<<-"
+    }
+
+    pd$token[to_replace] = "EQ_ASSIGN"
+    pd$text[to_replace] = "="
     pd
+  }
+
+  tidy_style$transformers_drop$token$force_assignment_op = "LEFT_ASSIGN"
+
+  # line breaks between *all* arguments if line breaks between *any*
+  tidy_style$line_break$set_linebreak_each_argument_if_multi_line = function(
+  pd
   ) {
     if (!(any(pd$token == "','"))) {
       return(pd)
     }
     # does this expression contain expressions with linebreaks?
-    has_children <- purrr::some(pd$child, purrr::negate(is.null))
-    has_internal_linebreak <- FALSE
-    is_function_definition <- pd$token[1] == "FUNCTION"
+    has_children = purrr::some(pd$child, purrr::negate(is.null))
+    has_internal_linebreak = FALSE
+    is_function_definition = pd$token[1] == "FUNCTION"
     if (has_children && !is_function_definition) {
-      children <- pd$child
+      children = pd$child
 
       # don't count anything inside {} as internal linebreaks
-      idx_pre_open_brace <- which(pd$token_after == "'{'")
+      idx_pre_open_brace = which(pd$token_after == "'{'")
       if (length(idx_pre_open_brace)) {
-        children[idx_pre_open_brace + 1] <- NULL
+        children[idx_pre_open_brace + 1] = NULL
       }
 
-      has_internal_linebreak <- children %>%
+      has_internal_linebreak = children %>%
         purrr::discard(is.null) %>%
         purrr::map_lgl(function(x) {
           sum(x$newlines, x$lag_newlines) > 0
@@ -131,35 +145,35 @@ pkgtools_style_transformer <- function(
       return(pd)
     }
 
-    idx_comma <- which(pd$token == "','")
-    idx_open_paren <- grep("'[[(]'", pd$token)
-    idx_close_paren <- grep("'(]|\\))'", pd$token)
-    idx_comma_has_comment <- which(pd$token[idx_comma + 1] == "COMMENT")
-    idx_comma[idx_comma_has_comment] <- idx_comma[idx_comma_has_comment] + 1
-    pd[idx_comma + 1L, "lag_newlines"] <- 1L
+    idx_comma = which(pd$token == "','")
+    idx_open_paren = grep("'[[(]'", pd$token)
+    idx_close_paren = grep("'(]|\\))'", pd$token)
+    idx_comma_has_comment = which(pd$token[idx_comma + 1] == "COMMENT")
+    idx_comma[idx_comma_has_comment] = idx_comma[idx_comma_has_comment] + 1
+    pd[idx_comma + 1L, "lag_newlines"] = 1L
     if (length(idx_open_paren)) {
-      pd[idx_open_paren[1] + 1L, "lag_newlines"] <- 1L
+      pd[idx_open_paren[1] + 1L, "lag_newlines"] = 1L
     }
     if (length(idx_close_paren)) {
-      pd[idx_close_paren[length(idx_close_paren)], "lag_newlines"] <- 1L
+      pd[idx_close_paren[length(idx_close_paren)], "lag_newlines"] = 1L
     }
     pd
   }
 
   # Function arguments on new lines, indented with 2 spaces
-  tidy_style$indention$update_indention_ref_fun_dec <- function(pd_nested) {
+  tidy_style$indention$update_indention_ref_fun_dec = function(pd_nested) {
     if (pd_nested$token[1] == "FUNCTION" && nrow(pd_nested) > 4) {
-      seq <- seq.int(3L, nrow(pd_nested) - 2L)
-      pd_nested$indention_ref_pos_id[seq] <- 0L
-      pd_nested$indent[seq] <- use_tabs$indent_by
+      seq = seq.int(3L, nrow(pd_nested) - 2L)
+      pd_nested$indention_ref_pos_id[seq] = 0L
+      pd_nested$indent[seq] = use_tabs$indent_by
     }
     pd_nested
   }
 
   # Disable styler's extra indentation of closing `) {` in function declarations
   # https://github.com/gadenbuie/grkstyle/issues/10
-  styler_unindent_fun_dec <- tidy_style$indention$unindent_function_declaration
-  tidy_style$indention$unindent_function_declaration <- function(pd) {
+  styler_unindent_fun_dec = tidy_style$indention$unindent_function_declaration
+  tidy_style$indention$unindent_function_declaration = function(pd) {
     styler_unindent_fun_dec(pd, indent_by = 0)
   }
 

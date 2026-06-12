@@ -9,11 +9,11 @@
 #'
 #' @return a check result
 #' @export
-qcheck = function(pkg = ".", ..., args = "", quiet = FALSE) {
-  pkg = devtools::as.package(pkg)
+qcheck <- function(pkg = ".", ..., args = "", quiet = FALSE) {
+  pkg <- devtools::as.package(pkg)
   if (quiet) {
     message("running R CMD check...", appendLF = FALSE)
-    check = suppressMessages(devtools::check(
+    check <- suppressMessages(devtools::check(
       pkg = pkg$path,
       ...,
       args = c("--no-examples", "--no-tests", "--ignore-vignettes", args),
@@ -21,7 +21,7 @@ qcheck = function(pkg = ".", ..., args = "", quiet = FALSE) {
     ))
     message("COMPLETE")
   } else {
-    check = devtools::check(
+    check <- devtools::check(
       pkg = pkg$path,
       ...,
       args = c("--no-examples", "--no-tests", "--ignore-vignettes", args)
