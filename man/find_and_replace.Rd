@@ -26,4 +26,10 @@ a list of changed files
 \description{
 Find and replace within a package after committing the current contents
 }
+\examples{
+if (FALSE) {
+  # Replace all instances of an old function name:
+  find_and_replace("old_fn", "new_fn")
+}
+}
 \concept{edit}

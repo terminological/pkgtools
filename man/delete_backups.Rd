@@ -10,10 +10,16 @@ delete_backups(pkg = ".")
 \item{pkg}{the package to delete files from.}
 }
 \value{
-nothing
+nothing - called for side effects
 }
 \description{
-This is largely deprecated by the move to git commits for backup
+This is largely deprecated by the move to git commits for backup. Deletes
+all \code{.old} files recursively.
+}
+\examples{
+if (FALSE) {
+  delete_backups()
+}
 }
 \concept{usethis}
 \keyword{internal}

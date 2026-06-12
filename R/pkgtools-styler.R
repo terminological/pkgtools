@@ -1,8 +1,8 @@
 #' Style code in `pkgtools` style
 #'
-#' This is adapted from `https://github.com/gadenbuie/grkstyle`
-#' It differs in that it will break apart long lines regardless of their initial
-#' line breaks to try and fit them into a set width. It does not unbreak lines.
+#' This is adapted from `https://github.com/gadenbuie/grkstyle`. It differs in
+#' that it will break apart long lines regardless of their initial line breaks
+#' to try and fit them into a set width. It does not unbreak lines.
 #'
 #' @inheritParams styler::style_text
 #' @inheritDotParams styler::style_text -text -transformers
@@ -11,6 +11,10 @@
 #' @returns the formatted code
 #' @concept edit
 #' @export
+#' @examples
+#' if (FALSE) {
+#'   style_text("my_function(very_long_argument_name = some_value)")
+#' }
 style_text <- function(
   text,
   ...,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/fix_utf8_encoding.R
 \name{fix_utf8_encoding}
 \alias{fix_utf8_encoding}
-\title{Fixes utf8 encoded characters in source files replaincg them with \verb{\\uXXXX}}
+\title{Fix non-ASCII (UTF-8) characters in source files}
 \usage{
 fix_utf8_encoding(pkg = ".", check)
 }
@@ -16,6 +16,9 @@ fix_utf8_encoding(pkg = ".", check)
 nothing
 }
 \description{
-Fixes utf8 encoded characters in source files replaincg them with \verb{\\uXXXX}
+Identifies source files flagged by \verb{R CMD check} as containing
+non-ASCII characters, then replaces them with escaped \verb{\\uXXXX} sequences.
+All changes are committed before making modifications, so they can be
+reverted with \code{\link[=undo]{undo()}}.
 }
 \concept{usethis}

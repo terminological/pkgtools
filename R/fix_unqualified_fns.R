@@ -9,6 +9,11 @@
 #'
 #' @return nothing - called for side effects
 #' @export
+#' @examples
+#' if (FALSE) {
+#'   # From within RStudio with a file open:
+#'   fix_unqualified_fns()
+#' }
 fix_unqualified_fns = function() {
   context = rstudioapi::getSourceEditorContext()
   content = context$content
@@ -40,7 +45,7 @@ fix_unqualified_fns = function() {
 #' This is a code linting function and expected to be called at the console
 #' during package development. It will scan the files in the current project and
 #' replace unqualified references to e.g. `mutate` with ones to `dplyr::mutate`
-#' etc. All changes are made after a commit whcih can be reverted.
+#' etc. All changes are made after a commit which can be reverted.
 #'
 #' @concept usethis
 #'
@@ -49,8 +54,18 @@ fix_unqualified_fns = function() {
 #'   tests, but not data-raw or vignettes)
 #' @param prioritise a list of package names to pick from first
 #'
-#' @return nothing. called for side effects.
+#' @return a tibble with columns `path`, `pkg`, `name`, and `value` summarising
+#'   which unqualified function calls were found in which files, or `NULL` if
+#'   no fixes were needed.
 #' @export
+#' @examples
+#' if (FALSE) {
+#'   # Fix all unqualified function calls in a package:
+#'   fix_unqualified_fns_bulk()
+#'
+#'   # Restrict to specific directories:
+#'   fix_unqualified_fns_bulk(rDirectories = here::here("R"))
+#' }
 fix_unqualified_fns_bulk = function(
   pkg = ".",
   rDirectories = c(here::here("R"), here::here("tests/testthat")),
@@ -80,7 +95,7 @@ fix_unqualified_fns_bulk = function(
     dplyr::mutate(content.old = purrr::map(path, ~ readr::read_lines(.x))) %>%
     dplyr::mutate(content = content.old, matches = list(dplyr::tibble()))
 
-  #TODO: use .process_content instead
+  # TODO: refactor to use .process_content consistently
   for (packge in packages) {
     functions = packageMap2 %>%
       dplyr::filter(package == packge) %>%
@@ -239,37 +254,22 @@ fix_unqualified_fns_bulk = function(
     nsqualifier = nsqualifier
   ) %>%
     dplyr::rowwise() %>%
-    # dplyr::mutate(function_name = list(ls(envir = asNamespace(package)))) %>%
-    # dplyr::mutate(function_name = list(as.character(utils::ls.str(envir = asNamespace(as.character(package)),mode = "function")))) %>%
     dplyr::mutate(
       function_name = list(getNamespaceExports(as.character(package)))
     ) %>%
-    tidyr::unnest(function_name) # %>%
-  # dplyr::mutate( f = purrr::map2(function_name, package, function(f,p) {
-  #   tryCatch(utils::getFromNamespace(f,p), error = function(e) {function(){}})
-  # })) %>%
-  # dplyr::mutate( generic = .isGeneric(f)) %>%
-  # dplyr::select(-f)
+    tidyr::unnest(function_name)
 
-  # functions from base or this package
-  # these don;t need to be qualified
-  ## theseFunctions = c(ls(envir = asNamespace(cur_package)),ls(asNamespace("base")))
-
+  # functions from base or this package - these don't need qualification
   packageMap2 = packageMap %>%
     dplyr::group_by(function_name) %>%
-    # this selected a generic version of a function in one package over non
-    # generic in another package. This is not important now we can prioritise.
-    ## dplyr::arrange(dplyr::desc(generic),package) %>%
-    # we are reverse sorting by function name to make sure generics are last.
-    # this will always match current package or base first.
+    # Previously: tried to prefer generics over non-generics. Now handled
+    # by the prioritise parameter, so this was removed.
     dplyr::arrange(package) %>%
     dplyr::filter(dplyr::row_number() == 1) %>%
     dplyr::ungroup() %>%
-    # this restricts functions to be matched by excluding base or current package
+    # restrict functions to be matched by excluding base or current package
     dplyr::filter(!package %in% c(cur_package, "base")) %>%
-    ## dplyr::filter(!function_name %in% theseFunctions) %>%
-    # there are a few functions (like the magittr pipe) that need different
-    # treatment outside of the scope of this library
+    # functions like the magrittr pipe need different treatment
     dplyr::filter(stringr::str_starts(function_name, "[a-zA-Z]")) %>%
     dplyr::filter(!is.na(function_name))
 

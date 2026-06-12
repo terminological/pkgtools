@@ -1,10 +1,11 @@
 #' Update the version of a package, incrementing dev versions.
 #'
-#' This makes no checks and accepts no responsibility. No backups are made.
+#' Increments the dev component (`.8999` → `.9000`) of a package `DESCRIPTION`
+#' version number. This is used by [unstable()] to trigger local reinstall.
 #'
 #' @param pkg the path to the package
 #'
-#' @return the new version
+#' @return the new version as a string (e.g. `"1.0.0.9000"`)
 #' @export
 #' @concept usethis
 bump_dev_version = function(pkg = ".") {

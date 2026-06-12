@@ -10,9 +10,10 @@ bump_dev_version(pkg = ".")
 \item{pkg}{the path to the package}
 }
 \value{
-the new version
+the new version as a string (e.g. \code{"1.0.0.9000"})
 }
 \description{
-This makes no checks and accepts no responsibility. No backups are made.
+Increments the dev component (\code{.8999} → \code{.9000}) of a package \code{DESCRIPTION}
+version number. This is used by \code{\link[=unstable]{unstable()}} to trigger local reinstall.
 }
 \concept{usethis}

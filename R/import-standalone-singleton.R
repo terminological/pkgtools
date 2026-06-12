@@ -32,6 +32,10 @@
 #' a = fixed_rnorm()
 #' b = fixed_rnorm()
 #' testthat::expect_equal(a,b)
+#' A once-only evaluation function generator
+#'
+#' Creates a package-local cached value, evaluated once on first use.
+#' @noRd
 .singleton = function(
   expr,
   on_error = function(e) {

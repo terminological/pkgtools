@@ -15,4 +15,10 @@ fully qualified \code{dplyr::mutate(...)} calls. This version operates on the
 currently open file in the RStudio and allows for interactive review of the
 proposed changes.
 }
+\examples{
+if (FALSE) {
+  # From within RStudio with a file open:
+  fix_unqualified_fns()
+}
+}
 \concept{usethis}

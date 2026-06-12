@@ -16,7 +16,7 @@ which defaults to \code{c("collate", "namespace", "rd")}.}
 \item{quiet}{if \code{TRUE} suppresses output from this function.}
 }
 \value{
-nothing
+nothing - called for side effects
 }
 \description{
 \code{devtools::document()} requires a DESCRIPTION file, which in general we don't
@@ -27,4 +27,13 @@ to produce \code{.Rd} files in the \code{man} directory for any functions declar
 the \code{R} subfolder. It also override the default behaviour of \verb{?} to return
 the development documentation of matching functions in the current project.
 }
-\concept{renv}
+\examples{
+if (FALSE) {
+  # Document a package:
+  document()
+
+  # Document a non-package project:
+  document("/path/to/analysis/project")
+}
+}
+\concept{usethis}

@@ -1,5 +1,6 @@
 utils::globalVariables(c(
   ".",
+  ".env",
   "changed",
   "content",
   "content.old",
@@ -25,6 +26,7 @@ utils::globalVariables(c(
   "pkg",
   "cmp",
   "ver",
+  "updated",
   "col1",
   "line1",
   "text",

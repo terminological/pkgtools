@@ -1,0 +1,214 @@
+# RStudio Addins and Keyboard Shortcuts
+
+## Overview
+
+`pkgtools` provides three RStudio addins that integrate directly into
+your editing workflow. These addins let you execute commented code,
+generate test cases from selected expressions, and create hash-based
+snapshots — all without leaving the editor.
+
+The addins are listed in `inst/rstudio/addins.dcf` and will appear under
+the **Addins** menu in RStudio once the package is installed. However,
+the recommended workflow is to bind them to keyboard shortcuts for quick
+access.
+
+## Addins
+
+### Execute Commented Code (`run_commented_code`)
+
+Strips leading comments from a selection and sends the uncommented code
+to the console. Handles both `#` comments and `#'` roxygen-style
+comments.
+
+``` r
+# x <- 1:10
+# sum(x)
+# mean(x)
+```
+
+Select the three lines above and run the addin — the `#` prefixes are
+stripped and the code is sent to the console as three separate
+expressions.
+
+This is particularly useful for prototyping: write commented code as
+documentation, then uncomment and execute in one step when you’re ready
+to test.
+
+### Hash-Based Snapshot Test Case (`switch_standalone_snapshot`)
+
+Generates a
+[`testthat::expect_equal()`](https://testthat.r-lib.org/reference/equality-expectations.html)
+with an [`rlang::hash()`](https://rlang.r-lib.org/reference/hash.html)
+comparison from a selected expression. Hash-based comparison is ideal
+for standalone testing because the hash remains stable even when the
+file is moved between projects.
+
+``` r
+# my_data <- data.frame(x = 1:5, y = c("a","b","a","c","b"))
+```
+
+Select the expression and run the addin — the result is a hash-based
+`expect_equal()` call inserted below the selection. A dialog warns if
+the generated code is unusually long.
+
+### Equality-Based Test Case (`switch_expect_equals`)
+
+Generates a
+[`testthat::expect_equal()`](https://testthat.r-lib.org/reference/equality-expectations.html)
+with the actual evaluated value of a selected expression. If the
+expression errors, the addin produces an `expect_error()` instead.
+
+``` r
+# mean(c(1, 2, 3, 4, 5))
+```
+
+Select the expression and run the addin — the result is inserted below
+with the literal value:
+
+``` r
+testthat::expect_equal(mean(c(1, 2, 3, 4, 5)), 3)
+```
+
+## Keyboard Shortcut Configuration
+
+While the addins are available from the **Addins** menu, the recommended
+workflow is to assign keyboard shortcuts.
+
+### RStudio (Classic / Desktop)
+
+1.  Open **Tools** → **Modify Keyboard Shortcuts…**
+2.  Click the **Add New** button
+3.  Fill in the dialog:
+
+| Field       | Value for `run_commented_code` | Value for `switch_standalone_snapshot` | Value for `switch_expect_equals` |
+|-------------|--------------------------------|----------------------------------------|----------------------------------|
+| **Name**    | Execute commented code         | Hash-based test case                   | Equals-based test case           |
+| **Command** | `run_commented_code`           | `switch_standalone_snapshot`           | `switch_expect_equals`           |
+| **Binding** | Ctrl + Enter                   | Ctrl + P                               | Ctrl + O                         |
+| **Where**   | Editor                         | Editor                                 | Editor                           |
+
+4.  Click **Apply** then **OK**
+
+**Why these bindings?**
+
+- **Ctrl+Enter** is the natural choice for executing code. While RStudio
+  already uses this for running a line or chunk, `pkgtools`’s version
+  strips comments first — giving you a lighter-weight “run this
+  expression” that doesn’t affect the source file.
+- **Ctrl+P** stands for “print” — evaluating an expression and producing
+  a snapshot.
+- **Ctrl+O** stands for “observe” — evaluating and showing the actual
+  value.
+
+The bindings are not exclusive: each addin operates only when you have a
+selection (or the cursor is on a single-line expression). If you have a
+multi-line selection with comments, `Ctrl+Enter` will strip and execute;
+if you have a single expression, `Ctrl+P` or `Ctrl+O` will generate a
+test case below it.
+
+### RStudio Desktop — Alternative Shortcuts
+
+If you prefer to avoid key conflicts with RStudio’s built-in commands,
+you can use:
+
+| Addin                  | Alternative Binding  |
+|------------------------|----------------------|
+| Execute commented code | Ctrl + Shift + Enter |
+| Hash-based test case   | Ctrl + Shift + P     |
+| Equals-based test case | Ctrl + Shift + O     |
+
+### VS Code
+
+VS Code does not natively support RStudio addins. However, you can
+achieve similar functionality with the `R-CodeSnippet` or `code-r`
+extensions, or by writing your own keybindings in `keybindings.json`:
+
+``` json
+[
+  {
+    "key": "ctrl+enter",
+    "command": "R.runCommentedCode"
+  },
+  {
+    "key": "ctrl+p",
+    "command": "R.switchStandaloneSnapshot"
+  },
+  {
+    "key": "ctrl+o",
+    "command": "R.switchExpectEquals"
+  }
+]
+```
+
+## Usage Examples
+
+### Prototyping with Commented Code
+
+When designing a function, you can write your logic as commented lines
+and execute them in context:
+
+``` r
+my_function <- function(x) {
+  # x <- as.numeric(x)
+  # y <- log(x + 1)
+  # z <- scale(y)
+  # return(as.vector(z))
+}
+```
+
+Select the four commented lines, press `Ctrl+Enter`, and they execute in
+the console with their comment prefixes stripped. The source file stays
+clean.
+
+### Generating Test Cases
+
+When writing tests, select the expression you want to test:
+
+``` r
+# mean(iris$Sepal.Length)
+```
+
+Press `Ctrl+P` to generate a hash-based snapshot (good for standalone
+testing):
+
+``` r
+testthat::expect_equal(rlang::hash(mean(iris$Sepal.Length)), "abcd1234")
+```
+
+Or `Ctrl+O` to generate an equality check with the actual value:
+
+``` r
+testthat::expect_equal(mean(iris$Sepal.Length), 5.84333333333333)
+```
+
+### Working with Errors
+
+The equality-based test case addin (`Ctrl+O`) detects errors and
+generates `expect_error()` calls:
+
+``` r
+# stop("this always fails")
+```
+
+Produces:
+
+``` r
+testthat::expect_error({stop("this always fails")}, "this always fails", fixed=TRUE)
+```
+
+## Tips
+
+- **Always select your code first.** The addins operate on the primary
+  selection in the editor. If nothing is selected, they operate on the
+  current line.
+- **Long results are guarded.** If an addin generates more than 20 lines
+  of code, a confirmation dialog appears to prevent accidental large
+  insertions.
+- **The hash function is stable.**
+  [`rlang::hash()`](https://rlang.r-lib.org/reference/hash.html)
+  produces the same result for the same object regardless of the R
+  session or machine, making hash-based comparisons ideal for standalone
+  testing where files may move between projects.
+- **Test cases are styled.** All generated test code goes through
+  [`styler::style_text()`](https://styler.r-lib.org/reference/style_text.html)
+  so it matches the style of your project automatically.

@@ -16,6 +16,14 @@
 #'
 #' @returns nothing
 #' @export
+#' @examples
+#' if (FALSE) {
+#'   # Migrate all package data to a pins board:
+#'   migrate_to_pins()
+#'
+#'   # Migrate specific datasets:
+#'   migrate_to_pins(migrate = c("mtcars", "iris"))
+#' }
 migrate_to_pins = function(pkg = ".", board = "data", migrate = NULL) {
   pkg = devtools::as.package(pkg)
   devtools::load_all(pkg$path)

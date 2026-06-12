@@ -7,12 +7,18 @@
 what_has_changed()
 }
 \value{
-nothing
+nothing - called for side effects
 }
 \description{
 I frequently end up getting an unsaved change in RStudio conflicting with
 an update on disk. Often as a result of a global find and replace. This helps
 determine which version to keep, by bringing up a 2 way diff of editor content
 and disk content. The result of the merge is placed back in the editor.
+}
+\examples{
+if (FALSE) {
+  # From within RStudio, open a file with unsaved changes:
+  what_has_changed()
+}
 }
 \concept{edit}

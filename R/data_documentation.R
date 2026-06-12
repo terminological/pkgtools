@@ -1,28 +1,46 @@
 #' Auto generate data documentation
 #'
+#' Generates a full roxygen2 documentation block (title, description, columns,
+#' usage tag, etc.) for an R object. Intended to be written to a `.Rd` file
+#' or pasted into a roxygen block. Works with data frames, named lists, and
+#' other R objects.
+#'
 #' @param data an arbitrary R object
+#' @param title the dataset title
+#' @param description one or more paragraphs of description (blank lines
+#'   separate paragraphs)
+#' @param url optional source URL
+#' @param name the dataset name (defaults to the expression used for `data`)
 #'
 #' @returns the data description block formatted in markdown
+#' @concept datasets
 #' @export
 #'
 #' @examples
+#' # Generate docs for a simple data frame:
 #' generate_data_description(
 #'   iris,
 #'   title = "The myiris dataset",
-#'   description = c("line 1 & test","line 2","","para 2", paste(rep("asda ",50),collapse="")),
+#'   description = c("line 1 & test", "line 2", "", "para 2",
+#'                   paste(rep("asda ", 50), collapse = "")),
 #'   url = "http://example.com",
 #'   name = "myiris"
 #' )
 #'
-#' nested = ggplot2::diamonds %>% tidyr::nest(details = -c(cut,color,clarity))
+#' # Nest a larger dataset (requires ggplot2):
+#' if (requireNamespace("ggplot2", quietly = TRUE)) {
+#'   nested <- ggplot2::diamonds %>% tidyr::nest(details = -c(cut, color, clarity))
 #'
-#' generate_data_description(
-#'   nested,
-#'   title = "The nested diamonds dataset",
-#'   description = "The ggplot2 diamonds data set nested",
-#'   url = "http://example.com",
-#'   name = "mydiamonds"
-#' )
+#'   generate_data_description(
+#'     nested,
+#'     title = "The nested diamonds dataset",
+#'     description = "The ggplot2 diamonds data set nested",
+#'     url = "http://example.com",
+#'     name = "mydiamonds"
+#'   )
+#' }
+
+
 generate_data_description = function(
   data,
   title = sprintf("The `%s` dataset", name),
@@ -50,7 +68,7 @@ generate_data_description = function(
   }
 
   out = whisker::whisker.render(
-    .data_description,
+    .data_description_template,
     list(
       name = name,
       title = title,
@@ -148,34 +166,6 @@ generate_data_description = function(
 
   return(strsplit(out, "\n")[[1]])
 }
-
-## Templates ----
-
-.data_description = "
-## documentation block for `{{name}}` ----
-
-#' {{title}}
-#' 
-{{#description}}
-#' {{&.}}
-{{/description}}
-#'
-{{#details}}
-#' {{&.}}
-{{/details}}
-#'
-#' @usage data(\"{{name}}\")
-#'
-#' @docType data
-#' @keywords datasets
-#' @concept datasets
-{{#url}}
-#' @source <{{.}}>
-{{/url}}
-\"{{name}}\"
-
-## end of documentation block for `{{name}}`
-"
 
 .df_description = function(item_label) {
   tmp = "

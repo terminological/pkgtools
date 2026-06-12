@@ -54,6 +54,11 @@
 #'
 #' @returns a list of changed files
 #' @export
+#' @examples
+#' if (FALSE) {
+#'   # Replace all instances of an old function name:
+#'   find_and_replace("old_fn", "new_fn")
+#' }
 find_and_replace = function(
   regex,
   replacement,

@@ -1,15 +1,19 @@
 #' Delete backup files from the current project
 #'
-#' This is largely deprecated by the move to git commits for backup
+#' This is largely deprecated by the move to git commits for backup. Deletes
+#' all `.old` files recursively.
 #'
 #' @param pkg the package to delete files from.
 #'
-#' @return nothing
+#' @return nothing - called for side effects
 #' @concept usethis
 #'
 #' @keywords internal
 #' @export
-#'
+#' @examples
+#' if (FALSE) {
+#'   delete_backups()
+#' }
 delete_backups = function(pkg = ".") {
   pkg = devtools::as.package(pkg)
   backups = fs::dir_ls(pkg$path, recurse = TRUE, all = TRUE, glob = "*.old")

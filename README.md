@@ -1,6 +1,8 @@
 pkgtools
 ================
 
+![pkgtools hex sticker](inst/hexsticker/hex-sticker.png)
+
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/terminological/pkgtools/workflows/R-CMD-check/badge.svg)](https://github.com/terminological/pkgtools/actions)
 [![pkgtools status badge](https://terminological.r-universe.dev/badges/pkgtools)](https://terminological.r-universe.dev)

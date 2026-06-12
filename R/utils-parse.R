@@ -1,10 +1,8 @@
-# TODO:
-# 1) needs refactoring to allow this to work in parallel on all the functions in
-# all packages (i.e. integrates function discovery)
-# 2) create a stack and read parsed code sequentially looking for scope and assignment
-# operations.
-# 3) identify symbols that are references to functions (i.e. they match functions
-# and there is no symbol assignment in scope)
+# Future work:
+# 1) Parallel processing: process all packages' functions simultaneously
+# 2) Stack-based parser: track scope and assignments by reading parsed code sequentially
+# 3) Function reference detection: distinguish function calls from symbol assignments
+#    in scope using parse_data
 
 # getParseData to handle both function calls and function references
 # content = readr::read_lines(here::here("tests/testthat/test_functions.R"))
@@ -40,9 +38,8 @@
     c("SYMBOL_FUNCTION_CALL")
   }
 
-  # TODO: work out some heuristics for determining scope of variables using parse_data
-  # and exclude SYMBOL tokens that have a SYMBOL or SYMBOL_FORMALS assigned in the
-  # same function. This is the logic though that check uses
+  # TODO: implement scope heuristics to exclude SYMBOL tokens that have a
+  # SYMBOL or SYMBOL_FORMALS assigned in the same function scope.
   # locals = parse_data %>%
   #   dplyr::filter(terminal != FALSE) %>%
   #   dplyr::filter(
@@ -190,5 +187,5 @@
 # }
 # #
 
-# TODO: interactive diff viewer?
-# https://github.com/muschellij2/diffr/blob/master/R/diffr.R
+# TODO: add interactive diff viewer
+# See: https://github.com/muschellij2/diffr/blob/master/R/diffr.R

@@ -1,6 +1,11 @@
-#' Install pkgtools cli into `.local/bin`
+#' Install pkgtools CLI tools
+#'
+#' Creates symlinks from `system.file("pkgtools", "*.R")` into
+#' `~/.local/bin/`, allowing each exported function to be run as a command-line
+#' script.
 #'
 #' @returns nothing
+#' @concept edit
 #' @export
 install_cli = function() {
   tmp = fs::dir_ls(system.file(package = "pkgtools"), glob = "*.R")

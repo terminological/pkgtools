@@ -6,8 +6,13 @@
 #' and disk content. The result of the merge is placed back in the editor.
 #'
 #' @concept edit
-#' @return nothing
+#' @return nothing - called for side effects
 #' @export
+#' @examples
+#' if (FALSE) {
+#'   # From within RStudio, open a file with unsaved changes:
+#'   what_has_changed()
+#' }
 what_has_changed = function() {
   context = rstudioapi::getSourceEditorContext()
   editor_content = context$content

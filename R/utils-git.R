@@ -1,3 +1,6 @@
+#' Commit pending changes if the working tree is dirty
+#'
+#' @noRd
 .commit_if_needed = function(path, message) {
   path = try(gert::git_find(path), silent = TRUE)
   if (inherits(path, "try-error")) {
@@ -16,8 +19,9 @@
   message(message, ": ", gert::git_commit_info(repo = path)$id)
 }
 
-# find a local git repository given a remote specified as "organisation/project"
-# given a Git directory.
+#' Find a local git repository by its remote specification
+#'
+#' @noRd
 .find_local_repo = function(remote, git_dir = fs::path_home("Git")) {
   dirs = fs::dir_ls(git_dir, type = "directory")
   for (dir in dirs) {
@@ -32,8 +36,9 @@
   stop("local repository not found for: ", remote, " in ", git_dir)
 }
 
-# Given a URL split it into the various pieces.
-# the result will contain remote
+#' Parse a git remote URL into organisation, repository, and host components
+#'
+#' @noRd
 .parse_remote_url = function(url) {
   tmp = stringr::str_match_all(
     url,
@@ -51,8 +56,9 @@
   ))
 }
 
-# Given a path of a file under Git version control find
-# the details of the associated remote as a list.
+#' Find the remote repo details for a path under Git version control
+#'
+#' @noRd
 .find_remote_repo = function(path = getwd()) {
   root = gert::git_find(path)
   repo = gert::git_remote_info(repo = root)
@@ -65,13 +71,21 @@
 #' Undo a bulk `pkgtools` operation
 #'
 #' Reverts to last state committed by `pkgtools`, and stashes any unstaged changes.
+#' All `pkgtools` functions that modify files commit before making changes and
+#' record the commit hash. This function rolls back to that commit.
 #'
 #' @concept usethis
 #'
 #' @param pkg the package
 #'
-#' @returns nothing
+#' @returns nothing - called for side effects
 #' @export
+#' @examples
+#' if (FALSE) {
+#'   # After making changes with fix_unqualified_fns_bulk():
+#'   undo()
+#'   # To redo the changes: gert::git_stash_pop()
+#' }
 undo = function(pkg = ".") {
   pkg = devtools::as.package(pkg)
 

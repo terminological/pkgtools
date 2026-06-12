@@ -25,4 +25,13 @@ access the data from the pinboard. It finds any references to the dataset in
 the code directories (\code{data-raw},\code{R},\code{vignettes},\code{test}) and replaces them
 with a function call of the same name.
 }
+\examples{
+if (FALSE) {
+  # Migrate all package data to a pins board:
+  migrate_to_pins()
+
+  # Migrate specific datasets:
+  migrate_to_pins(migrate = c("mtcars", "iris"))
+}
+}
 \concept{usethis}

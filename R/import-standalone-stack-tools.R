@@ -33,6 +33,8 @@
 #' testthat::expect_equal(f2("HELLO WORLD"), f1("HELLO WORLD"))
 #' testthat::expect_equal(f3, f1("HELLO WORLD"))
 #'
+#' Permissive as_function replacement - only interprets functions or formulae
+#' @noRd
 .lax_as_function = function(fn) {
   try(if (is.function(fn)) return(fn), silent = TRUE)
   try(if (rlang::is_formula(fn)) return(rlang::as_function(fn)), silent = TRUE)
@@ -65,6 +67,8 @@
 #'   "<unknown>"
 #' )
 #'
+#' Get the defined name of a function
+#' @noRd
 .get_fn_name = function(fn) {
   if (is.null(fn)) {
     return("<unknown>")
@@ -104,6 +108,8 @@
 #'
 #' testthat::expect_equal( f(datasets::iris), nrow(datasets::iris))
 #'
+#' Search the call stack for a first parameter matching a specified class
+#' @noRd
 .search_call_stack = function(
   .class,
   nframe = sys.nframe() - 1
@@ -148,6 +154,8 @@
 #' # env2 = .find_namespace(env$f)
 #' # testthat::expect_null(.find_namespace(env$f))
 #'
+#' Find the package environment for a given environment or function
+#' @noRd
 .find_namespace = function(env = rlang::caller_env()) {
   if (rlang::is_function(env)) {
     env = rlang::fn_env(env)

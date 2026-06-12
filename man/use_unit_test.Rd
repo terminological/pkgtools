@@ -2,7 +2,7 @@
 % Please edit documentation in R/use_unit.R
 \name{use_unit_test}
 \alias{use_unit_test}
-\title{Use '@unit' unit tests in your package}
+\title{Set up a package for pkgtools \verb{@unit} tag usage}
 \usage{
 use_unit_test(path = ".")
 }
@@ -13,7 +13,14 @@ use_unit_test(path = ".")
 Nothing: called for file system side effects.
 }
 \description{
-This functions amends DESCRIPTION to set up pkgtools usage.
-Call it once when you're setting a new package.
+This function amends \code{DESCRIPTION} to register pkgtools as a build-time
+dependency and adds \code{pkgtools} to the Roxygen \code{packages} field. Call it
+once when setting up a new package that will use \verb{@unit} and \verb{@dparam}
+custom roxygen tags.
+}
+\examples{
+if (FALSE) {
+  use_unit_test("/path/to/my/package")
+}
 }
 \concept{usethis}

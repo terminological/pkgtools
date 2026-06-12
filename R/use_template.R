@@ -1,5 +1,10 @@
 #' Use a template file
 #'
+#' Expands a whisker-based template file by substituting named placeholders.
+#' Templates are stored in `inst/templates/` and selected from via a menu
+#' if `.template_name` is not specified. The resulting file is written to
+#' `R/generated-*.R`.
+#'
 #' @param .template_name if not given a dialog will be presented with the
 #'   options
 #' @param ... supplied as parameters to the template. template placeholders such
@@ -12,6 +17,12 @@
 #'
 #' @returns the written file name
 #' @export
+#' @examples
+#' # List available templates:
+#' # list.files(system.file("templates", package = "pkgtools"))
+#'
+#' # Use a template by name:
+#' # use_template("some_template", name = "mything", .destfile = "R/generated-mything.R")
 use_template = function(
   .template_name = NULL,
   ...,
@@ -99,7 +110,7 @@ use_template = function(
     readr::write_lines(lines, file = dest_path)
   }
 
-  #TODO: deal with imports from the template.
+  # TODO: handle package imports referenced in template metadata.
 
   return(dest_path)
 }

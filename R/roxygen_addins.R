@@ -128,14 +128,15 @@ switch_standalone_snapshot = function() {
 #' `testthat` does not use hash based checking anymore, in favour of snapshots.
 #' These don't work well in tests of standalones because the file will move
 #' projects independently of the test directory. This function lets you quickly
-#' create a check based on a gold standard
+#' create a check based on a gold standard.
 #'
 #' @concept edit
 #' @param obj the gold standard to test
 #' @param .clip copy the result to the clipboard (needs `clipr`)
 #' @param .as what name to use for the comparison
 #'
-#' @returns a code snippet that can be pasted into the unit test case
+#' @return a character string with an `expect_equal()` expression, or
+#'   `invisible(out)` if `.clip = TRUE` and `clipr` is available
 #' @keywords internal
 #' @export
 standalone_snapshot = function(

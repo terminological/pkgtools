@@ -18,4 +18,10 @@ a local master standalone file, which is assumed to be in a Git
 directory. This allows for changes to be propagated back to the master when
 in active development. The master copy is committed before changes.
 }
+\examples{
+if (FALSE) {
+  # Sync the current editor's standalone file to its master copy:
+  sync_standalone_to_master()
+}
+}
 \concept{standalone}

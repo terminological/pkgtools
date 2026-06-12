@@ -14,13 +14,14 @@ standalone_snapshot(obj, .clip = interactive(), .as = deparse(substitute(obj)))
 \item{.as}{what name to use for the comparison}
 }
 \value{
-a code snippet that can be pasted into the unit test case
+a character string with an \code{expect_equal()} expression, or
+\code{invisible(out)} if \code{.clip = TRUE} and \code{clipr} is available
 }
 \description{
 \code{testthat} does not use hash based checking anymore, in favour of snapshots.
 These don't work well in tests of standalones because the file will move
 projects independently of the test directory. This function lets you quickly
-create a check based on a gold standard
+create a check based on a gold standard.
 }
 \concept{edit}
 \keyword{internal}

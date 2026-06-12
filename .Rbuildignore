@@ -5,3 +5,8 @@
 ^docs$
 ^_pkgdown\.yml$
 ^pkgdown$
+man/dot-data_description_template.Rd
+^\.agentreadonly$
+^@design$
+^AGENTS\.md$
+^\.Rprofile$

@@ -1,0 +1,211 @@
+---
+title: "Getting Started with pkgtools"
+author: "Robert Challen"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started with pkgtools}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+`pkgtools` is a collection of developer tools for R package and analysis project
+maintenance. It fills gaps left by `usethis` and `devtools` by providing:
+
+- **Bulk linting and fixes** for common package development errors
+- **Standalone file management** for sharing code between projects without
+  creating packages
+- **Custom roxygen tags** for auto-generating unit tests and parameter
+  documentation
+- **Interactive editing utilities** with Shiny-based diff viewers
+- **renv integration** for managing locally developed packages in analysis
+  projects
+
+This vignette gives you an overview of when and how to use each feature area.
+For detailed feature documentation, see the other vignettes linked below.
+
+## Prerequisites
+
+`pkgtools` assumes:
+
+- Your project is under **Git version control** (required for backup and undo)
+- You use **RStudio** for interactive editing (many functions integrate with
+  the editor)
+- You have `devtools`, `roxygen2`, and `testthat` available for documentation
+  and testing
+
+## Setup
+
+For packages using the `@unit` custom tag, run once:
+
+```r
+pkgtools::use_unit_test()
+```
+
+This adds `pkgtools` to the `Roxygen` packages field and the
+`Config/Needs/build` field of your `DESCRIPTION`.
+
+## When to Use Each Feature
+
+The functions in pkgtools fall into five categories. Use this guide to choose
+the right tool.
+
+### 1. Fixing Common Package Errors
+
+**Use when:** `R CMD check` or `devtools::check()` reports issues.
+
+```r
+# Run a full automated fix (fixes all common issues):
+pkgtools::fix_check()
+
+# Or fix individual issues:
+pkgtools::fix_unqualified_fns_bulk()  # add namespace prefixes
+pkgtools::fix_dependencies()          # fix Imports/Suggests
+pkgtools::fix_global_variables()      # add globals.R entries
+pkgtools::fix_utf8_encoding()         # escape non-ASCII
+pkgtools::fix_non_standard_files()    # update .Rbuildignore
+```
+
+All bulk fix functions:
+
+- **Commit before modifying** files, so changes can be reverted
+- **Ask for confirmation** before making changes (unless in non-interactive mode)
+- **Track undo history** — use `pkgtools::undo()` to revert the last bulk fix
+
+**See also:** Vignette on [Bulk Fixes](bulk-fixes.html)
+
+### 2. Parallel Package Development
+
+**Use when:** You develop multiple packages locally and need to keep them
+in sync during vignette building or testing.
+
+```r
+# Update the current package and all local dependencies:
+pkgtools::unstable()
+
+# Or specify a path:
+pkgtools::unstable("/home/user/Git/other-package")
+```
+
+This scans for local development packages, detects changes since last
+installation, bumps dev versions, and installs them. After calling
+`unstable()`, your local development environment is up to date.
+
+**See also:** Vignette on [Custom Roxygen Tags](custom-roxygen-tags.html)
+
+### 3. Sharing Code Between Projects
+
+**Use when:** You have utility functions you want to share across multiple
+projects without creating a full package.
+
+```r
+# Import a standalone from a GitHub repository:
+pkgtools::use_standalone("org/repo", "my-standalone")
+
+# Update metadata in the current editor file:
+pkgtools::update_standalone()
+
+# Sync local edits back to master:
+pkgtools::sync_standalone_to_master()
+```
+
+Standalone files are lightweight `.R` files with YAML metadata that can
+be shared via Git without package infrastructure.
+
+**See also:** Vignette on [Standalone Files](standalone-files.html)
+
+### 4. Auto-Generating Tests
+
+**Use when:** You want to keep unit tests close to the function documentation.
+
+```r
+#' My function
+#'
+#' @param x a number
+#' @unit
+#' testthat::expect_equal(my_func(2), 4)
+#' testthat::expect_equal(my_func(0), 0)
+my_func <- function(x) x^2
+```
+
+Run `devtools::document()` and the tests are extracted to
+`tests/testthat/test-unit-your-file.R`.
+
+**See also:** Vignette on [Custom Roxygen Tags](custom-roxygen-tags.html)
+
+### 5. Interactive Code Editing
+
+**Use when:** You need to visually merge code changes or format code in a
+consistent style.
+
+```r
+# Merge two code versions interactively:
+merged <- pkgtools::merge_code(old_code, new_code)
+
+# Format code in pkgtools style:
+styled <- pkgtools::style_text(code)
+
+# Compare editor content with saved file:
+pkgtools::what_has_changed()
+
+# Find and replace across the package:
+pkgtools::find_and_replace("old_pattern", "new_pattern")
+```
+
+The `merge_code()` function launches a Shiny gadget with a three-panel
+diff viewer for visual merging.
+
+## The Undo System
+
+All functions that modify files make a Git commit before proceeding. The
+commit hash is recorded in an internal stack. To roll back:
+
+```r
+pkgtools::undo()
+```
+
+This resets the working tree to the commit before the last pkgtools
+operation and stashes any unstaged changes. To redo:
+
+```r
+gert::git_stash_pop()
+```
+
+## Installation
+
+pkgtools is available from [r-universe](https://terminological.r-universe.dev):
+
+```r
+# Enable repository from terminological
+options(repos = c(
+  terminological = "https://terminological.r-universe.dev",
+  CRAN = "https://cloud.r-project.org"
+))
+
+install.packages("pkgtools")
+```
+
+Or install the development version:
+
+```r
+remotes::install_github("terminological/pkgtools")
+```
+
+## Next Steps
+
+- **[Custom Roxygen Tags](custom-roxygen-tags.html)** — Learn about `@unit` and `@dparam`
+- **[Standalone Files](standalone-files.html)** — Share code between projects
+- **[Bulk Fixes](bulk-fixes.html)** — Fix common package linting issues
+
+## Funding
+
+The authors gratefully acknowledge the support of the UK Research and
+Innovation AI programme of the Engineering and Physical Sciences Research
+Council [EPSRC grant EP/Y028392/1](https://gtr.ukri.org/projects?ref=EP%2FY028392%2F1).

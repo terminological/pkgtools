@@ -10,9 +10,18 @@ undo(pkg = ".")
 \item{pkg}{the package}
 }
 \value{
-nothing
+nothing - called for side effects
 }
 \description{
 Reverts to last state committed by \code{pkgtools}, and stashes any unstaged changes.
+All \code{pkgtools} functions that modify files commit before making changes and
+record the commit hash. This function rolls back to that commit.
+}
+\examples{
+if (FALSE) {
+  # After making changes with fix_unqualified_fns_bulk():
+  undo()
+  # To redo the changes: gert::git_stash_pop()
+}
 }
 \concept{usethis}

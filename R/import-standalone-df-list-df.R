@@ -42,6 +42,8 @@
 #'   mtcars_nest$details[[1]]$name[[1]]
 #' )
 #'
+#' Convert a nested dataframe to a multilevel list
+#' @noRd
 .df_to_list_of_lists = function(df) {
   if (nrow(df) == 1) {
     list = as.list(df)
@@ -93,6 +95,8 @@
 #'   mtcars_nest$details[[2]]
 #' )
 #'
+#' Convert a multilevel list to a nested dataframe
+#' @noRd
 .list_of_lists_to_df = function(list) {
   list_lengths = sapply(list, length)
   is_unnamed = is.null(names(list))

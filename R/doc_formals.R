@@ -11,7 +11,21 @@
 #'
 #' @keywords internal
 #' @export
+#' @examples
+#' test_fn = function(
+#'     arg = c("option one", "option two", "option three"),
+#'     def = 123,
+#'     ghi = def * 2
+#' ) {
+#'   arg = match.arg(arg)
+#' }
 #'
+#' # In a roxygen block:
+#' # \deqn{r}{doc_formals(test_fn, arg)}
+#'
+#' doc_formals(test_fn, arg)
+#' doc_formals(test_fn, def)
+#' doc_formals(test_fn, ghi)
 #' @examples
 #' #' A test function
 #' #'

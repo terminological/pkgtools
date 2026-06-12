@@ -39,8 +39,17 @@
 #' @inheritDotParams remotes::install_local
 #' @param load_lib load the package using a library command
 #'
-#' @return nothing
+#' @return a tibble with columns `package`, `gitpath`, `gitmoddate`, `version` (new
+#'   version), and `old_version`, or `NULL` if there were no packages to update.
 #' @export
+#' @examples
+#' if (FALSE) {
+#'   # Update the current package and all local dependencies:
+#'   unstable()
+#'
+#'   # Update a specific package path:
+#'   unstable("/home/user/Git/myotherpackage")
+#' }
 unstable = function(
   path = ".",
   ...,
@@ -49,9 +58,9 @@ unstable = function(
   quiet = TRUE,
   load_lib = TRUE
 ) {
-  #TODO: 1) vectorise
-  #TODO: 2) on.exit code to restart / sys.on.exit
-  #TODO: 3) check running context to make sure it is in globalenv before restarting.
+  # TODO: vectorise installation loop
+  # TODO: use on.exit for session restart / sys.on.exit
+  # TODO: verify we're in globalenv before restarting
 
   renv_mode = (path != "." && fs::file_exists(fs::path(getwd(), "renv.lock")))
   pkg = devtools::as.package(path)
@@ -166,7 +175,7 @@ unstable = function(
 
   pkgload::unregister(pkg$package)
   # restart R before loading
-  # TODO: check https://henrikbengtsson.github.io/startup/reference/restart.html
+  # See: https://henrikbengtsson.github.io/startup/reference/restart.html
   if (interactive()) {
     if (load_lib) {
       tmp = unique(c(rev(.packages()), pkg$package))

@@ -20,7 +20,7 @@ test_that("pkgtools_style_transformer unit test", {
   # source of the unit test:
   testthat::expect(rlang::caller_env(n = 2)$ok,
     failure_message = "Source link for failing @unit test.",
-    srcref = srcref(srcfile("../../R/pkgtools-styler.R"), c(36, 1, 36+1, 1))
+    srcref = srcref(srcfile("../../R/pkgtools-styler.R"), c(40, 1, 40+1, 1))
   )
 })
 

@@ -1,14 +1,19 @@
-#' Use '@unit' unit tests in your package
+#' Set up a package for pkgtools `@unit` tag usage
 #'
-#' This functions amends DESCRIPTION to set up pkgtools usage.
-#' Call it once when you're setting a new package.
+#' This function amends `DESCRIPTION` to register pkgtools as a build-time
+#' dependency and adds `pkgtools` to the Roxygen `packages` field. Call it
+#' once when setting up a new package that will use `@unit` and `@dparam`
+#' custom roxygen tags.
 #'
 #' @param path character path to the package
 #' @concept usethis
 #'
 #' @return Nothing: called for file system side effects.
 #' @export
-#'
+#' @examples
+#' if (FALSE) {
+#'   use_unit_test("/path/to/my/package")
+#' }
 use_unit_test = function(path = ".") {
   rlang::check_installed("desc")
 
@@ -18,7 +23,8 @@ use_unit_test = function(path = ".") {
   if (is.na(current_roxy)) {
     desc::desc_set(
       "Roxygen",
-      'list(markdown = TRUE, packages="pkgtools")'
+      'list(markdown = TRUE, packages="pkgtools")',
+      file = path
     )
   } else {
     current <- eval(parse(text = current_roxy))

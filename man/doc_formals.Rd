@@ -19,6 +19,20 @@ this is intended to be used in a Roxygen tag to document the
 default value or allowable values of a function
 }
 \examples{
+test_fn = function(
+    arg = c("option one", "option two", "option three"),
+    def = 123,
+    ghi = def * 2
+) {
+  arg = match.arg(arg)
+}
+
+# In a roxygen block:
+# \deqn{r}{doc_formals(test_fn, arg)}
+
+doc_formals(test_fn, arg)
+doc_formals(test_fn, def)
+doc_formals(test_fn, ghi)
 #' A test function
 #'
 #' @param arg a set of descriptions: `r doc_formals(test_fn, arg)`

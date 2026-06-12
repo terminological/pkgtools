@@ -17,9 +17,10 @@ install_local(
 \item{path}{the package (defaults to \code{.})}
 
 \item{...}{
-  Named arguments passed on to \code{\link[remotes:install_local]{remotes::install_local}}\describe{
+  Arguments passed on to \code{\link[remotes:install_local]{remotes::install_local}}
+  \describe{
     \item{\code{subdir}}{subdirectory within url bundle that contains the R package.}
-\item{\code{dependencies}}{Which dependencies do you want to check?
+    \item{\code{dependencies}}{Which dependencies do you want to check?
 Can be a character vector (selecting from "Depends", "Imports",
 "LinkingTo", "Suggests", or "Enhances"), or a logical vector.
 
@@ -36,14 +37,13 @@ common ones include:
 \item Config/Needs/website - for dependencies used in building the pkgdown site.
 \item Config/Needs/coverage for dependencies used in calculating test coverage.
 }}
-\item{\code{build}}{If \code{TRUE} build the package before installing.}
-\item{\code{build_opts}}{Options to pass to \verb{R CMD build}, only used when \code{build} is \code{TRUE}.}
-\item{\code{build_manual}}{If \code{FALSE}, don't build PDF manual ('--no-manual').}
-\item{\code{build_vignettes}}{If \code{FALSE}, don't build package vignettes ('--no-build-vignettes').}
-\item{\code{repos}}{A character vector giving repositories to use.}
-\item{\code{type}}{Type of package to \code{update}.}
-\item{\code{...}}{Other arguments passed on to \code{\link[utils:install.packages]{utils::install.packages()}}.}
-}}
+    \item{\code{build}}{If \code{TRUE} build the package before installing.}
+    \item{\code{build_opts}}{Options to pass to \verb{R CMD build}, only used when \code{build} is \code{TRUE}.}
+    \item{\code{build_manual}}{If \code{FALSE}, don't build PDF manual ('--no-manual').}
+    \item{\code{build_vignettes}}{If \code{FALSE}, don't build package vignettes ('--no-build-vignettes').}
+    \item{\code{repos}}{A character vector giving repositories to use.}
+    \item{\code{type}}{Type of package to \code{update}.}
+  }}
 
 \item{force}{do the install regardless of versions}
 
@@ -78,11 +78,9 @@ package version will remain in the \verb{<projroot>/renv/local} cellar until
 removed by hand.
 }
 \examples{
-\dontrun{
-dir <- tempfile()
-dir.create(dir)
-pkg <- download.packages("testthat", dir, type = "source")
-install_local(pkg[, 2])
+if (FALSE) {
+  # Install a local package, using renv if available:
+  install_local("/path/to/my/package")
 }
 }
 \seealso{

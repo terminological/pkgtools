@@ -14,9 +14,9 @@ test_that(".update_fenced_block unit test", {
   
 
   # double braces in mustache files, single braces in glue specs.
-  template <- "# {{name}} {{status}}"
+  template = "# {{name}} {{status}}"
   
-  input <- c(
+  input = c(
     "before",
     "#TEST test start ----",
     "# test original",
@@ -25,7 +25,7 @@ test_that(".update_fenced_block unit test", {
     "end"
   )
   
-  input <- .update_fenced_block(
+  input = .update_fenced_block(
     input,
     template,
     name = "test",
@@ -37,7 +37,7 @@ test_that(".update_fenced_block unit test", {
   
   testthat::expect_equal(input[3], "# test update")
   
-  input <- .update_fenced_block(
+  input = .update_fenced_block(
     input,
     template,
     name = "test2",
@@ -77,7 +77,7 @@ test_that(".delete_fenced_block unit test", {
   F2 = .delete_fenced_block
   
 
-  tmp <- .delete_fenced_block(
+  tmp = .delete_fenced_block(
     letters,
     .start_glue = letters[4],
     .end_glue = letters[10]
@@ -131,9 +131,9 @@ test_that(".glue_recover_pieces unit test", {
   F2 = .glue_recover_pieces
   
 
-  glue_spec <- "# {name}, {value1} and {value2} ----"
-  output <- rep("  # one, two and three ----", 5)
-  tmp <- .glue_recover_pieces(glue_spec, output)
+  glue_spec = "# {name}, {value1} and {value2} ----"
+  output = rep("  # one, two and three ----", 5)
+  tmp = .glue_recover_pieces(glue_spec, output)
   
   testthat::expect_equal(nrow(tmp), 5)
   testthat::expect_equal(trimws(output), glue::glue_data(tmp, glue_spec))
@@ -157,7 +157,7 @@ test_that(".glue_detect_output unit test", {
   F2 = .glue_detect_output
   
 
-  content <- c("sdlfksl", "  # X, Y and Z ----", "sdfskjfsdlk asdlkfjsdlkj")
+  content = c("sdlfksl", "  # X, Y and Z ----", "sdfskjfsdlk asdlkfjsdlkj")
   testthat::expect_equal(
     .glue_detect_output("# {name}, {value1} and {value2} ----", content),
     c(FALSE, TRUE, FALSE)

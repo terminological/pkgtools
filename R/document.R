@@ -10,10 +10,18 @@
 #'
 #' @inheritParams devtools::document
 #' @param project.dir the directory of the current (non package project)
-#' @concept renv
+#' @concept usethis
 #'
-#' @return nothing
+#' @return nothing - called for side effects
 #' @export
+#' @examples
+#' if (FALSE) {
+#'   # Document a package:
+#'   document()
+#'
+#'   # Document a non-package project:
+#'   document("/path/to/analysis/project")
+#' }
 document = function(project.dir = ".", roclets = NULL, quiet = FALSE) {
   desc_path <- fs::path_norm(fs::path(project.dir, "DESCRIPTION"))
   if (!fs::file_exists(desc_path)) {
@@ -34,8 +42,10 @@ document = function(project.dir = ".", roclets = NULL, quiet = FALSE) {
   assign("?", .help, envir = globalenv())
 }
 
-#TODO: devtools shims equivalent
+# TODO: implement devtools::document roxygenise shim for non-package projects
 
+#' Recursively find the nearest `man/` directory
+#' @noRd
 .get_man_dir = function(from = ".") {
   from = fs::path_abs(from)
   if (fs::path_dir(from) == from) {
@@ -48,6 +58,8 @@ document = function(project.dir = ".", roclets = NULL, quiet = FALSE) {
   }
 }
 
+#' Get topic paths from .Rd files in a man directory
+#' @noRd
 .topic_paths = function(man_dir = .get_man_dir()) {
   if (is.null(man_dir)) {
     return(list())
@@ -61,6 +73,8 @@ document = function(project.dir = ".", roclets = NULL, quiet = FALSE) {
   return(map)
 }
 
+#' Find the file path for a given topic name
+#' @noRd
 .find_path = function(topic) {
   map = .topic_paths()
   map = map[sapply(map, function(x) topic %in% x)]
@@ -70,6 +84,8 @@ document = function(project.dir = ".", roclets = NULL, quiet = FALSE) {
   return(names(map)[[1]])
 }
 
+#' Custom `?` help function that searches local `man/` directories
+#' @noRd
 .help = function(e1, e2) {
   e1_expr <- substitute(e1)
   if (is.name(e1_expr)) {

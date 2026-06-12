@@ -19,9 +19,10 @@ have all your other package code in a sibling directory, e.g. \verb{~/Git/pkg1},
 \verb{~/Git/pkg2}}
 
 \item{...}{
-  Named arguments passed on to \code{\link[remotes:install_local]{remotes::install_local}}\describe{
+  Arguments passed on to \code{\link[remotes:install_local]{remotes::install_local}}
+  \describe{
     \item{\code{subdir}}{subdirectory within url bundle that contains the R package.}
-\item{\code{dependencies}}{Which dependencies do you want to check?
+    \item{\code{dependencies}}{Which dependencies do you want to check?
 Can be a character vector (selecting from "Depends", "Imports",
 "LinkingTo", "Suggests", or "Enhances"), or a logical vector.
 
@@ -38,23 +39,13 @@ common ones include:
 \item Config/Needs/website - for dependencies used in building the pkgdown site.
 \item Config/Needs/coverage for dependencies used in calculating test coverage.
 }}
-\item{\code{upgrade}}{Should package dependencies be upgraded? One of "default", "ask", "always", or "never". "default"
-respects the value of the \code{R_REMOTES_UPGRADE} environment variable if set,
-and falls back to "ask" if unset. "ask" prompts the user for which out of
-date packages to upgrade. For non-interactive sessions "ask" is equivalent
-to "always". \code{TRUE} and \code{FALSE} are also accepted and correspond to
-"always" and "never" respectively.}
-\item{\code{force}}{Force installation, even if the remote state has not changed
-since the previous install.}
-\item{\code{quiet}}{If \code{TRUE}, suppress output.}
-\item{\code{build}}{If \code{TRUE} build the package before installing.}
-\item{\code{build_opts}}{Options to pass to \verb{R CMD build}, only used when \code{build} is \code{TRUE}.}
-\item{\code{build_manual}}{If \code{FALSE}, don't build PDF manual ('--no-manual').}
-\item{\code{build_vignettes}}{If \code{FALSE}, don't build package vignettes ('--no-build-vignettes').}
-\item{\code{repos}}{A character vector giving repositories to use.}
-\item{\code{type}}{Type of package to \code{update}.}
-\item{\code{...}}{Other arguments passed on to \code{\link[utils:install.packages]{utils::install.packages()}}.}
-}}
+    \item{\code{build}}{If \code{TRUE} build the package before installing.}
+    \item{\code{build_opts}}{Options to pass to \verb{R CMD build}, only used when \code{build} is \code{TRUE}.}
+    \item{\code{build_manual}}{If \code{FALSE}, don't build PDF manual ('--no-manual').}
+    \item{\code{build_vignettes}}{If \code{FALSE}, don't build package vignettes ('--no-build-vignettes').}
+    \item{\code{repos}}{A character vector giving repositories to use.}
+    \item{\code{type}}{Type of package to \code{update}.}
+  }}
 
 \item{force}{Force installation, even if the remote state has not changed
 since the previous install.}
@@ -71,7 +62,8 @@ to "always". \code{TRUE} and \code{FALSE} are also accepted and correspond to
 \item{load_lib}{load the package using a library command}
 }
 \value{
-nothing
+a tibble with columns \code{package}, \code{gitpath}, \code{gitmoddate}, \code{version} (new
+version), and \code{old_version}, or \code{NULL} if there were no packages to update.
 }
 \description{
 Vignette building uses a new session. Any changes in current project or
@@ -104,5 +96,14 @@ built and deployed locally in the \code{renv} local package directory (
 \verb{<proj root>/renv/local}) and installed from there. The \code{renv} local packages are
 placed under version control. At the moment it is a manual job to tidy this up once the
 development package is finalised and deployed
+}
+\examples{
+if (FALSE) {
+  # Update the current package and all local dependencies:
+  unstable()
+
+  # Update a specific package path:
+  unstable("/home/user/Git/myotherpackage")
+}
 }
 \concept{renv}

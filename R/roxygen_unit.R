@@ -164,8 +164,8 @@ roxy_tag_rd.roxy_tag_unit = function(x, base_path, env) {
       # make sure function still exists in the namespace being documented
       tmp = try(eval(parse(text = name), env), silent = TRUE)
       if (inherits(tmp, "try-error") || !is.function(tmp)) {
-        # TODO: This condition allows for unit testing of functions inside
-        # nested environments but these will not get documentation
+        # TODO: handle nested environments (functions inside functions)
+        # These won't get documentation in the current implementation
 
         test_lines = .delete_fenced_block(
           test_lines,

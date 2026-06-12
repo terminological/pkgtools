@@ -110,9 +110,12 @@ square brackets, for example: \verb{imports: [rlang (>= 1.0.0), purrr]}.
 }
 
 \examples{
-\dontrun{
-use_standalone("r-lib/rlang", file = "types-check")
-use_standalone("r-lib/rlang", file = "types-check", ref = "standalone-dep")
+if (FALSE) {
+  # Import a standalone file from a GitHub repo:
+  use_standalone("terminological/ggrrr", "codegen")
+
+  # Use a local copy (must exist in ~/Git/):
+  use_standalone("ggrrr", "codegen")
 }
 }
 \concept{standalone}

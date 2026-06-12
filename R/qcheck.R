@@ -1,5 +1,10 @@
 #' Check the package structure without running any code
 #'
+#' Runs `R CMD check` with `--no-examples --no-tests --ignore-vignettes` to
+#' catch structural issues (imports, global variables, encoding) without
+#' executing code. Also optionally runs `spelling::spell_check_package()` and
+#' `urlchecker::url_check()` if those packages are installed.
+#'
 #' @inheritDotParams devtools::check
 #' @param pkg the path of the package to check
 #' @param args additional r cmd check args
@@ -7,8 +12,13 @@
 #'
 #' @concept usethis
 #'
-#' @return a check result
+#' @return a check result (list) or `invisible(check)`
 #' @export
+#' @examples
+#' if (FALSE) {
+#'   check <- qcheck()
+#'   print(names(check))  # warnings, notes, errors, etc.
+#' }
 qcheck <- function(pkg = ".", ..., args = "", quiet = FALSE) {
   pkg <- devtools::as.package(pkg)
   if (quiet) {

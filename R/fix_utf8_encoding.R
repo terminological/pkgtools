@@ -1,4 +1,9 @@
-#' Fixes utf8 encoded characters in source files replaincg them with `\uXXXX`
+#' Fix non-ASCII (UTF-8) characters in source files
+#'
+#' Identifies source files flagged by `R CMD check` as containing
+#' non-ASCII characters, then replaces them with escaped `\uXXXX` sequences.
+#' All changes are committed before making modifications, so they can be
+#' reverted with [undo()].
 #'
 #' @param pkg the package to scan
 #' @param check output of a `devtools::check()` command

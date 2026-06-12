@@ -1,0 +1,156 @@
+# Package index
+
+## usethis style functions
+
+These functions typically exist to make package development simpler by
+fixing common errors in bulk. They assume the project is managed in a
+git repository and make changes that may need manual reversion
+
+- [`bump_dev_version()`](https://terminological.github.io/pkgtools/reference/bump_dev_version.md)
+  : Update the version of a package, incrementing dev versions.
+
+- [`document()`](https://terminological.github.io/pkgtools/reference/document.md)
+  : Document package and non-package projects
+
+- [`fix_check()`](https://terminological.github.io/pkgtools/reference/fix_check.md)
+  : Fix common check errors
+
+- [`fix_dependencies()`](https://terminological.github.io/pkgtools/reference/fix_dependencies.md)
+  : Fixes dependencies in the namespace file using the output of R CMD
+  check.
+
+- [`fix_global_variables()`](https://terminological.github.io/pkgtools/reference/fix_global_variables.md)
+  :
+
+  Adds global variables identified at
+  ``` R CMD check`` to a  ```globals.R\` file
+
+- [`fix_non_standard_files()`](https://terminological.github.io/pkgtools/reference/fix_non_standard_files.md)
+  :
+
+  Adds non standard and hidden files to the .`Rbuildignore` file
+
+- [`fix_unqualified_fns()`](https://terminological.github.io/pkgtools/reference/fix_unqualified_fns.md)
+  : Fix unqualified functions in active source pane
+
+- [`fix_unqualified_fns_bulk()`](https://terminological.github.io/pkgtools/reference/fix_unqualified_fns_bulk.md)
+  : Fix unqualified namespaced functions.
+
+- [`fix_utf8_encoding()`](https://terminological.github.io/pkgtools/reference/fix_utf8_encoding.md)
+  : Fix non-ASCII (UTF-8) characters in source files
+
+- [`migrate_to_pins()`](https://terminological.github.io/pkgtools/reference/migrate_to_pins.md)
+  : Migrate package data to a github hosted pin board
+
+- [`qcheck()`](https://terminological.github.io/pkgtools/reference/qcheck.md)
+  : Check the package structure without running any code
+
+- [`undo()`](https://terminological.github.io/pkgtools/reference/undo.md)
+  :
+
+  Undo a bulk `pkgtools` operation
+
+- [`use_template()`](https://terminological.github.io/pkgtools/reference/use_template.md)
+  : Use a template file
+
+- [`use_unit_test()`](https://terminological.github.io/pkgtools/reference/use_unit_test.md)
+  :
+
+  Set up a package for pkgtools `@unit` tag usage
+
+## Support for analysis projects
+
+`usethis` focusses on package projects, but similar functions are useful
+in analysis projects which may be maintained using `renv` rather than
+description files.
+
+- [`install_local()`](https://terminological.github.io/pkgtools/reference/install_local.md)
+  :
+
+  Install package locally using `renv` if available.
+
+- [`set_renv_repos()`](https://terminological.github.io/pkgtools/reference/set_renv_repos.md)
+  :
+
+  Adds new repositories to the beginning of an `renv` lockfile
+
+- [`unstable()`](https://terminological.github.io/pkgtools/reference/unstable.md)
+  : Reload a set of packages that are in development on the local
+  machine
+
+## Standalone files
+
+Standalones make a lot of sense for utility functions that are reused in
+many places but not exposed to the user. This set of tools help you
+setup and maintain them.
+
+- [`sync_standalone_to_master()`](https://terminological.github.io/pkgtools/reference/sync_standalone_to_master.md)
+  : Synchronise master version of standalone file with editor contents
+
+- [`update_standalone()`](https://terminological.github.io/pkgtools/reference/update_standalone.md)
+  : Update or create a standalone metadata block in the Rstudio editor.
+
+- [`use_standalone()`](https://terminological.github.io/pkgtools/reference/use_standalone.md)
+  :
+
+  Extended version of `use_standalone` that works with analysis projects
+
+## Editing utilities
+
+Some additional tools to help general editing tasks.
+
+- [`find_and_replace()`](https://terminological.github.io/pkgtools/reference/find_and_replace.md)
+  : Regex find and replace on a codebase
+
+- [`install_cli()`](https://terminological.github.io/pkgtools/reference/install_cli.md)
+  : Install pkgtools CLI tools
+
+- [`merge_code()`](https://terminological.github.io/pkgtools/reference/merge_code.md)
+  : Merge Code Versions using Shiny and CodeMirror 5 MergeView
+
+- [`run_commented_code()`](https://terminological.github.io/pkgtools/reference/run_commented_code.md)
+  : Execute commented out code
+
+- [`style_text()`](https://terminological.github.io/pkgtools/reference/style_text.md)
+  :
+
+  Style code in `pkgtools` style
+
+- [`switch_expect_equals()`](https://terminological.github.io/pkgtools/reference/switch_expect_equals.md)
+  : Switch expression for equality based test case.
+
+- [`switch_standalone_snapshot()`](https://terminological.github.io/pkgtools/reference/switch_standalone_snapshot.md)
+  : Switch global variable for hash based test case.
+
+- [`what_has_changed()`](https://terminological.github.io/pkgtools/reference/what_has_changed.md)
+  : Compare content of editor with last saved version
+
+## Roxygen tags
+
+Custom roxygen tags for adding unit tests and documenting formal
+paramters
+
+- [`roxy_tag_parse(`*`<roxy_tag_dparam>`*`)`](https://terminological.github.io/pkgtools/reference/roxy_tag_parse.roxy_tag_dparam.md)
+  :
+
+  Parser for `@dparam` tags
+
+- [`roxy_tag_parse(`*`<roxy_tag_unit>`*`)`](https://terminological.github.io/pkgtools/reference/roxy_tag_parse.roxy_tag_unit.md)
+  :
+
+  Parser for `@unit` tags
+
+- [`roxy_tag_rd(`*`<roxy_tag_dparam>`*`)`](https://terminological.github.io/pkgtools/reference/roxy_tag_rd.roxy_tag_dparam.md)
+  :
+
+  Support for `@dparam` tags
+
+- [`roxy_tag_rd(`*`<roxy_tag_unit>`*`)`](https://terminological.github.io/pkgtools/reference/roxy_tag_rd.roxy_tag_unit.md)
+  :
+
+  Support for `@unit` tags
+
+## Others
+
+- [`generate_data_description()`](https://terminological.github.io/pkgtools/reference/generate_data_description.md)
+  : Auto generate data documentation

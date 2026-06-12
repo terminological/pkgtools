@@ -14,29 +14,47 @@ generate_data_description(
 }
 \arguments{
 \item{data}{an arbitrary R object}
+
+\item{title}{the dataset title}
+
+\item{description}{one or more paragraphs of description (blank lines
+separate paragraphs)}
+
+\item{url}{optional source URL}
+
+\item{name}{the dataset name (defaults to the expression used for \code{data})}
 }
 \value{
 the data description block formatted in markdown
 }
 \description{
-Auto generate data documentation
+Generates a full roxygen2 documentation block (title, description, columns,
+usage tag, etc.) for an R object. Intended to be written to a \code{.Rd} file
+or pasted into a roxygen block. Works with data frames, named lists, and
+other R objects.
 }
 \examples{
+# Generate docs for a simple data frame:
 generate_data_description(
   iris,
   title = "The myiris dataset",
-  description = c("line 1 & test","line 2","","para 2", paste(rep("asda ",50),collapse="")),
+  description = c("line 1 & test", "line 2", "", "para 2",
+                  paste(rep("asda ", 50), collapse = "")),
   url = "http://example.com",
   name = "myiris"
 )
 
-nested = ggplot2::diamonds \%>\% tidyr::nest(details = -c(cut,color,clarity))
+# Nest a larger dataset (requires ggplot2):
+if (requireNamespace("ggplot2", quietly = TRUE)) {
+  nested <- ggplot2::diamonds \%>\% tidyr::nest(details = -c(cut, color, clarity))
 
-generate_data_description(
-  nested,
-  title = "The nested diamonds dataset",
-  description = "The ggplot2 diamonds data set nested",
-  url = "http://example.com",
-  name = "mydiamonds"
-)
+  generate_data_description(
+    nested,
+    title = "The nested diamonds dataset",
+    description = "The ggplot2 diamonds data set nested",
+    url = "http://example.com",
+    name = "mydiamonds"
+  )
 }
+}
+\concept{datasets}

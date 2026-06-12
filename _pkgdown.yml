@@ -1,6 +1,15 @@
 url: https://terminological.github.io/pkgtools/
 template:
   bootstrap: 5
+articles:
+- title: Guides
+  navbar: ~
+  contents:
+  - getting-started
+  - rstudio-addins
+  - standalone-files
+  - bulk-fixes
+  - custom-roxygen-tags
 reference:
 - title: usethis style functions
   desc: >

@@ -34,8 +34,8 @@
 }
 
 
-# move a file ensuring a backup exists. if the backup target exists
-# then move that to a backup backup.
+#' Safely move a file, creating backups if the target already exists
+#' @noRd
 .move_safe = function(file, new_file = paste0(file, ".old")) {
   if (fs::file_exists(new_file)) {
     .move_safe(file = new_file)
@@ -44,7 +44,8 @@
   return(new_file)
 }
 
-# write a file ensuring a backup exists
+#' Write a file ensuring a backup and git commit exist
+#' @noRd
 .write_safe = function(x, file, commit = "writing '%s'") {
   fs::dir_create(fs::path_dir(file))
   .commit_if_needed(file, sprintf(commit, file))
@@ -61,7 +62,8 @@
   return(unname(file))
 }
 
-# write a file ensuring a backup exists
+#' Write a file without safety checks (no backup, no commit)
+#' @noRd
 .write_unsafe = function(x, file) {
   if (inherits(x, "description")) {
     x$write(file = file)
@@ -75,6 +77,8 @@
   return(unname(file))
 }
 
+#' Write a file after interactive merge if it already exists
+#' @noRd
 .write_merge = function(x, file) {
   if (fs::file_exists(file)) {
     old = readr::read_file(file)
@@ -83,12 +87,8 @@
   readr::write_lines(x)
 }
 
-# vectorises isS3stdGeneric
-# .isGeneric = function(listOfFunctions) {
-#   unname(sapply(listOfFunctions, function(x) tryCatch(suppressWarnings(utils::isS3stdGeneric(x)), error = function(e) FALSE)))
-# }
-
-# escapes only utf8 characters in file
+#' Escape non-ASCII characters in a string as \uXXXX sequences
+#' @noRd
 .escape_utf8 = function(x) {
   x %>%
     stringi::stri_escape_unicode() %>%
@@ -98,7 +98,9 @@
 }
 
 
-# if no files then change is arbitrarily far in the past.
+#' Find the latest file modification time in a directory
+#'
+#' @noRd
 .latestchange = function(dir, exc = "[.](Rproj|Rhistory|git.*)") {
   max(c(
     as.POSIXct("1900-01-01"),
@@ -112,12 +114,14 @@
   ))
 }
 
-# Well do yah?
+#' Check if punk mode is enabled (skip merge dialogs)
+#' @noRd
 .punkmode = function() {
   getOption("pkgtools.punk_mode", FALSE)
 }
 
-# All the imports of a package
+#' Get the import packages of a named package
+#' @noRd
 .imports = function(packagename) {
   tryCatch(
     {

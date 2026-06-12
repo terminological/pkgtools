@@ -33,6 +33,11 @@
 #'
 #' @inherit remotes::install_local
 #' @export
+#' @examples
+#' if (FALSE) {
+#'   # Install a local package, using renv if available:
+#'   install_local("/path/to/my/package")
+#' }
 install_local = function(
   path = ".",
   ...,

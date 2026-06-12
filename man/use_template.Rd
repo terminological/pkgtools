@@ -23,6 +23,16 @@ if \code{name="myname"}. The first value of this list will be used for
 the written file name
 }
 \description{
-Use a template file
+Expands a whisker-based template file by substituting named placeholders.
+Templates are stored in \verb{inst/templates/} and selected from via a menu
+if \code{.template_name} is not specified. The resulting file is written to
+\verb{R/generated-*.R}.
+}
+\examples{
+# List available templates:
+# list.files(system.file("templates", package = "pkgtools"))
+
+# Use a template by name:
+# use_template("some_template", name = "mything", .destfile = "R/generated-mything.R")
 }
 \concept{usethis}
