@@ -1,4 +1,8 @@
 #' @keywords internal
-#' @docType package
 #' @name pkgtools-package
-NULL
+"_PACKAGE"
+
+
+# .onLoad = function(...) {
+#   as_character_rd <<- make_as_character_rd()
+# }

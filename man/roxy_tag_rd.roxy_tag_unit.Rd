@@ -23,7 +23,7 @@ testthat file.
 }
 \examples{
 # An example function definition:
-fn_definition <- "
+fn_definition = "
 #' This is a title
 #'
 #' This is the description.
@@ -43,7 +43,7 @@ f <- function() {
 # writes this to an .Rd file. This function is not intended to be used
 # outside of a call to `devtools::document`.
 
-fn_definition = gsub("@","@",fn_definition)
+fn_definition = gsub("@", "@", fn_definition)
 tmp = roxygen2::parse_text(fn_definition)
 print(tmp[[1]])
 }

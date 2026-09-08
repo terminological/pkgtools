@@ -11,7 +11,7 @@ test_that(".update_fenced_block unit test", {
   # Do not edit here - follow the link to the source file.
   # or navigate to topic with <F2>
   F2 = .update_fenced_block
-  
+
 
   # double braces in mustache files, single braces in glue specs.
   template = "# {{name}} {{status}}"
@@ -58,7 +58,7 @@ test_that(".update_fenced_block unit test", {
     .end_glue = "#TEST {name} end ----",
   )
 
-  # generates a failure if the overall test is failing with a link to the 
+  # generates a failure if the overall test is failing with a link to the
   # source of the unit test:
   testthat::expect(rlang::caller_env(n = 2)$ok,
     failure_message = "Source link for failing @unit test.",
@@ -75,7 +75,7 @@ test_that(".delete_fenced_block unit test", {
   # Do not edit here - follow the link to the source file.
   # or navigate to topic with <F2>
   F2 = .delete_fenced_block
-  
+
 
   tmp = .delete_fenced_block(
     letters,
@@ -112,7 +112,7 @@ test_that(".delete_fenced_block unit test", {
     c("a", "z")
   )
 
-  # generates a failure if the overall test is failing with a link to the 
+  # generates a failure if the overall test is failing with a link to the
   # source of the unit test:
   testthat::expect(rlang::caller_env(n = 2)$ok,
     failure_message = "Source link for failing @unit test.",
@@ -129,7 +129,7 @@ test_that(".glue_recover_pieces unit test", {
   # Do not edit here - follow the link to the source file.
   # or navigate to topic with <F2>
   F2 = .glue_recover_pieces
-  
+
 
   glue_spec = "# {name}, {value1} and {value2} ----"
   output = rep("  # one, two and three ----", 5)
@@ -138,7 +138,7 @@ test_that(".glue_recover_pieces unit test", {
   testthat::expect_equal(nrow(tmp), 5)
   testthat::expect_equal(trimws(output), glue::glue_data(tmp, glue_spec))
 
-  # generates a failure if the overall test is failing with a link to the 
+  # generates a failure if the overall test is failing with a link to the
   # source of the unit test:
   testthat::expect(rlang::caller_env(n = 2)$ok,
     failure_message = "Source link for failing @unit test.",
@@ -155,7 +155,7 @@ test_that(".glue_detect_output unit test", {
   # Do not edit here - follow the link to the source file.
   # or navigate to topic with <F2>
   F2 = .glue_detect_output
-  
+
 
   content = c("sdlfksl", "  # X, Y and Z ----", "sdfskjfsdlk asdlkfjsdlkj")
   testthat::expect_equal(
@@ -163,7 +163,7 @@ test_that(".glue_detect_output unit test", {
     c(FALSE, TRUE, FALSE)
   )
 
-  # generates a failure if the overall test is failing with a link to the 
+  # generates a failure if the overall test is failing with a link to the
   # source of the unit test:
   testthat::expect(rlang::caller_env(n = 2)$ok,
     failure_message = "Source link for failing @unit test.",

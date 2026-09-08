@@ -7,8 +7,6 @@
 set_renv_repos(..., .wd = here::here())
 }
 \arguments{
-\item{...}{a named list of repository urls}
-
 \item{.wd}{the working directory (defaults to \code{here::here()})}
 }
 \value{

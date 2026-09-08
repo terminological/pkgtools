@@ -16,35 +16,6 @@ install_local(
 \arguments{
 \item{path}{the package (defaults to \code{.})}
 
-\item{...}{
-  Arguments passed on to \code{\link[remotes:install_local]{remotes::install_local}}
-  \describe{
-    \item{\code{subdir}}{subdirectory within url bundle that contains the R package.}
-    \item{\code{dependencies}}{Which dependencies do you want to check?
-Can be a character vector (selecting from "Depends", "Imports",
-"LinkingTo", "Suggests", or "Enhances"), or a logical vector.
-
-\code{TRUE} is shorthand for "Depends", "Imports", "LinkingTo" and
-"Suggests". \code{NA} is shorthand for "Depends", "Imports" and "LinkingTo"
-and is the default. \code{FALSE} is shorthand for no dependencies (i.e.
-just check this package, not its dependencies).
-
-The value "soft" means the same as \code{TRUE}, "hard" means the same as \code{NA}.
-
-You can also specify dependencies from one or more additional fields,
-common ones include:
-\itemize{
-\item Config/Needs/website - for dependencies used in building the pkgdown site.
-\item Config/Needs/coverage for dependencies used in calculating test coverage.
-}}
-    \item{\code{build}}{If \code{TRUE} build the package before installing.}
-    \item{\code{build_opts}}{Options to pass to \verb{R CMD build}, only used when \code{build} is \code{TRUE}.}
-    \item{\code{build_manual}}{If \code{FALSE}, don't build PDF manual ('--no-manual').}
-    \item{\code{build_vignettes}}{If \code{FALSE}, don't build package vignettes ('--no-build-vignettes').}
-    \item{\code{repos}}{A character vector giving repositories to use.}
-    \item{\code{type}}{Type of package to \code{update}.}
-  }}
-
 \item{force}{do the install regardless of versions}
 
 \item{upgrade}{upgrade out of data CRAN packages}
@@ -52,6 +23,35 @@ common ones include:
 \item{quiet}{do it quietly}
 
 \item{wd}{the project root directory of the current project (defaults to \code{here::here()})}
+
+\item{...}{
+  Additional named arguments passed on to \code{\link[remotes:install_local]{remotes::install_local}}\describe{
+    \item{\code{subdir}}{subdirectory within url bundle that contains the R package.}
+\item{\code{dependencies}}{Which dependencies do you want to check?
+Can be a character vector (selecting from "Depends", "Imports",
+"LinkingTo", "Suggests", or "Enhances"), or a logical vector.
+
+TRUE is shorthand for "Depends", "Imports", "LinkingTo" and
+"Suggests". NA is shorthand for "Depends", "Imports" and "LinkingTo"
+and is the default. FALSE is shorthand for no dependencies (i.e.
+just check this package, not its dependencies).
+
+The value "soft" means the same as TRUE, "hard" means the same as NA.
+
+You can also specify dependencies from one or more additional fields,
+common ones include:
+
+ Config/Needs/website - for dependencies used in building the pkgdown site.
+ Config/Needs/coverage for dependencies used in calculating test coverage.
+}
+\item{\code{build}}{If TRUE build the package before installing.}
+\item{\code{build_opts}}{Options to pass to R CMD build, only used when build is TRUE.}
+\item{\code{build_manual}}{If FALSE, don't build PDF manual ('--no-manual').}
+\item{\code{build_vignettes}}{If FALSE, don't build package vignettes ('--no-build-vignettes').}
+\item{\code{repos}}{A character vector giving repositories to use.}
+\item{\code{type}}{Type of package to update.}
+\item{\code{...}}{Other arguments passed on to utils::install.packages().}
+}}
 }
 \description{
 \code{devtools::install_local} does not play well with \code{renv} in this version of

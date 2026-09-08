@@ -9,25 +9,28 @@ style_text(text, ..., transformers = pkgtools_style_transformer(...))
 \arguments{
 \item{text}{A character vector with text to style.}
 
-\item{...}{
-  Arguments passed on to \code{\link[styler:style_text]{styler::style_text}}, \code{\link{pkgtools_style_transformer}}
-  \describe{
-    \item{\code{style}}{A function that creates a style guide to use, by default
-\code{\link[styler]{tidyverse_style}}. Not used
-further except to construct the argument \code{transformers}. See
-\code{\link[styler:style_guides]{style_guides()}} for details.}
-    \item{\code{include_roxygen_examples}}{Whether or not to style code in roxygen
-examples.}
-    \item{\code{base_indention}}{Integer scalar indicating by how many spaces the whole
-output text should be indented. Note that this is not the same as splitting
-by line and add a \code{base_indention} spaces before the code in the case
-multi-line strings are present. See 'Examples'.}
-    \item{\code{width}}{the max width of the code (excludes indent hence approximate)}
-  }}
-
 \item{transformers}{A set of transformer functions. This argument is most
 conveniently constructed via the \code{style} argument and \code{...}. See
 'Examples'.}
+
+\item{...}{
+  Additional named arguments passed on to \code{\link[styler:style_text]{styler::style_text}}\describe{
+    \item{\code{...}}{Arguments passed on to the style function,
+see tidyverse_style() for the default argument.}
+\item{\code{style}}{A function that creates a style guide to use, by default
+tidyverse_style. Not used
+further except to construct the argument transformers. See
+style_guides() for details.}
+\item{\code{include_roxygen_examples}}{Whether or not to style code in roxygen
+examples.}
+\item{\code{base_indention}}{Integer scalar indicating by how many spaces the whole
+output text should be indented. Note that this is not the same as splitting
+by line and add a base_indention spaces before the code in the case
+multi-line strings are present. See 'Examples'.}
+}
+  Additional named arguments passed on to \code{\link[=pkgtools_style_transformer]{pkgtools_style_transformer}}\describe{
+    \item{\code{width}}{the max width of the code (excludes indent hence approximate)}
+}}
 }
 \value{
 the formatted code

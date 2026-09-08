@@ -11,7 +11,7 @@ test_that("roxy_tag_rd.roxy_tag_unit unit test", {
   # Do not edit here - follow the link to the source file.
   # or navigate to topic with <F2>
   F2 = roxy_tag_rd.roxy_tag_unit
-  
+
 
   testthat::expect_no_error(withCallingHandlers(
     {
@@ -24,7 +24,7 @@ test_that("roxy_tag_rd.roxy_tag_unit unit test", {
     }
   ))
 
-  # generates a failure if the overall test is failing with a link to the 
+  # generates a failure if the overall test is failing with a link to the
   # source of the unit test:
   testthat::expect(rlang::caller_env(n = 2)$ok,
     failure_message = "Source link for failing @unit test.",

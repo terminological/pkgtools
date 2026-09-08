@@ -1,7 +1,7 @@
 # from rex:::escape.character
 # escape a regex
 .escape = function(x) {
-  chars <- c(
+  chars = c(
     "*",
     ".",
     "?",
@@ -88,13 +88,18 @@
 }
 
 #' Escape non-ASCII characters in a string as \uXXXX sequences
+#' @unit
+#' testthat::expect_equal(
+#'   .escape_utf8("café\tcafé"),
+#'   "caf\\u00e9\tcaf\\u00e9"
+#' )
 #' @noRd
 .escape_utf8 = function(x) {
   x %>%
     stringi::stri_escape_unicode() %>%
-    stringr::str_replace_all("\\\\u([0-9A-F]{4})", "@UTF\\1UTF@") %>%
+    stringr::str_replace_all("\\\\u([0-9A-Fa-f]{4})", "@UTF\\1UTF@") %>%
     stringi::stri_unescape_unicode() %>%
-    stringr::str_replace_all("@UTF([0-9A-F]{4})UTF@", "\\\\u\\1")
+    stringr::str_replace_all("@UTF([0-9A-Fa-f]{4})UTF@", "\\\\u\\1")
 }
 
 

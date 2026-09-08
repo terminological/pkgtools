@@ -32,16 +32,16 @@ roxy_tag_parse.roxy_tag_unit = function(x) {
 #'
 #' @examples
 #' # An example function definition:
-#' fn_definition <- "
+#' fn_definition = "
 #' #' This is a title
 #' #'
 #' #' This is the description.
 #' #'
-#' #' @@md
-#' #' @@unit
+#' #' @md
+#' #' @unit
 #' #' # unit testing code here:
 #' #' testthat::expect_equal(f(), \"test\")
-#' #' @@export
+#' #' @export
 #' f <- function() {
 #'   return(\"test\")
 #' }
@@ -52,7 +52,7 @@ roxy_tag_parse.roxy_tag_unit = function(x) {
 #' # writes this to an .Rd file. This function is not intended to be used
 #' # outside of a call to `devtools::document`.
 #'
-#' fn_definition = gsub("@@","@",fn_definition)
+#' fn_definition = gsub("@", "@", fn_definition)
 #' tmp = roxygen2::parse_text(fn_definition)
 #' print(tmp[[1]])
 #' @unit
@@ -96,6 +96,7 @@ roxy_tag_rd.roxy_tag_unit = function(x, base_path, env) {
   test_meta = fs::path(base_path, "tests/testthat/unit-test-metadata.csv")
   test_path = gsub("/R/", "/tests/testthat/test-unit-", block$file)
   fs::dir_create(fs::path_dir(test_path))
+  test_path_rel = fs::path_rel(path = test_path, start = fs::path_home())
 
   # read in the metadata for the tests (or create empty one)
   if (fs::file_exists(test_meta)) {
@@ -120,7 +121,7 @@ roxy_tag_rd.roxy_tag_unit = function(x, base_path, env) {
 
   last_updated = suppressWarnings(max(
     metadata %>%
-      dplyr::filter(topic == .env$topic & file == test_path) %>%
+      dplyr::filter(topic == .env$topic & file == test_path_rel) %>%
       dplyr::pull(updated)
   ))
 
@@ -198,7 +199,6 @@ roxy_tag_rd.roxy_tag_unit = function(x, base_path, env) {
       fullpath = block$file,
       pkg = pkg,
       line = x$line,
-
       code = raw_code,
       # fences:
       .start_glue = start_glue,
@@ -211,7 +211,7 @@ roxy_tag_rd.roxy_tag_unit = function(x, base_path, env) {
     metadata = dplyr::bind_rows(
       metadata,
       dplyr::tibble(
-        file = test_path,
+        file = test_path_rel,
         topic = topic,
         updated = Sys.time()
       )
@@ -298,11 +298,11 @@ test_that(\"{{{name}}} unit test\", {
   # or navigate to topic with <F2>
   F2 = {{{name}}}
 {{/is_fn}}
-  
+
 
 {{{code}}}
 
-  # generates a failure if the overall test is failing with a link to the 
+  # generates a failure if the overall test is failing with a link to the
   # source of the unit test:
   testthat::expect(rlang::caller_env(n = 2)$ok,
     failure_message = \"Source link for failing @unit test.\",
@@ -315,7 +315,7 @@ no_test_code_wrapper = "
 testthat::expect_no_error(withCallingHandlers({
 
 {{{code}}}
-  
+
 }, warning = function(e) {
   message(\"Warning issued: \",e$message)
   invokeRestart(\"muffleWarning\")

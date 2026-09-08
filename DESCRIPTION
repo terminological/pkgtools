@@ -1,6 +1,6 @@
 Package: pkgtools
 Title: Code generation and linting functions for R packages
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: person(
   given = "Robert",
   family = "Challen",
@@ -12,7 +12,7 @@ Description: Perform common tasks and fix common errors in project and
   package.
 License: MIT + file LICENSE
 Encoding: UTF-8
-Roxygen: list(markdown = TRUE, packages="pkgtools")
+Roxygen: list(markdown = TRUE, packages = "pkgtools", roclets = c("collate", "pkgtools_rd", "namespace"))
 URL: https://terminological.github.io/pkgtools/index.html, https://github.com/terminological/pkgtools
 BugReports: https://github.com/terminological/pkgtools/issues
 Imports: 
@@ -60,4 +60,5 @@ Suggests:
     clipr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0
+Config/Needs/build: terminological/pkgtools

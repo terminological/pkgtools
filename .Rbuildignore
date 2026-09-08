@@ -10,3 +10,4 @@ man/dot-data_description_template.Rd
 ^@design$
 ^AGENTS\.md$
 ^\.Rprofile$
+^design$
